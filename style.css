@@ -1166,6 +1166,63 @@ body:has(#cart-sidebar.active) .theme-btn-neon {
         bottom: 80px;
     }
 }
+/* منع الزووم التلقائي في خانات الإدخال */
+input, select, textarea {
+    font-size: 16px !important;
+}
+
+/* لو عاوز تحافظ على شكل الخط صغير بس تخدع المتصفح */
+@media screen and (max-width: 768px) {
+    input, select, textarea {
+        font-size: 16px !important;
+    }
+}
+/* ضبط لوحة التحكم للموبايل */
+@media screen and (max-width: 768px) {
+    /* جعل الحاوية الرئيسية مرنة (تحت بعضها) */
+    .admin-container {
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    /* ضبط السايد بار (Sidebar) لو عندك */
+    .sidebar {
+        width: 100% !important;
+        height: auto !important;
+        position: relative;
+        margin-bottom: 20px;
+    }
+
+    /* ضبط الكروت (Stats Cards) لتكون تحت بعضها */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: 1fr !important; /* عمود واحد فقط */
+        gap: 15px;
+    }
+
+    /* جعل الجداول قابلة للتمرير يميناً ويساراً لمنع تدمير التصميم */
+    .table-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    table {
+        min-width: 600px; /* يضمن أن الجدول لن ينكمش بشكل قبيح */
+    }
+
+    /* تكبير الأزرار لتسهيل الضغط بالإصبع */
+    .btn-admin {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+    }
+
+    /* إخفاء العناصر غير الضرورية في الموبايل */
+    .desktop-only {
+        display: none;
+    }
+}
 
 
 .category-nav::-webkit-scrollbar {
