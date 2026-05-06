@@ -124,6 +124,52 @@
             color: #fff; font-family: 'Cairo'; font-size: 1rem;
         }
         #adminSearch:focus { border-color: var(--gold); outline: none; }
+        @media screen and (max-width: 768px) {
+    /* جعل الحاوية الرئيسية مرنة (تحت بعضها) */
+    .admin-container {
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    /* ضبط السايد بار (Sidebar) لو عندك */
+    .sidebar {
+        width: 100% !important;
+        height: auto !important;
+        position: relative;
+        margin-bottom: 20px;
+    }
+
+    /* ضبط الكروت (Stats Cards) لتكون تحت بعضها */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: 1fr !important; /* عمود واحد فقط */
+        gap: 15px;
+    }
+
+    /* جعل الجداول قابلة للتمرير يميناً ويساراً لمنع تدمير التصميم */
+    .table-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    table {
+        min-width: 600px; /* يضمن أن الجدول لن ينكمش بشكل قبيح */
+    }
+
+    /* تكبير الأزرار لتسهيل الضغط بالإصبع */
+    .btn-admin {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+    }
+
+    /* إخفاء العناصر غير الضرورية في الموبايل */
+    .desktop-only {
+        display: none;
+    }
+}
+
     </style>
 </head>
 <body>
