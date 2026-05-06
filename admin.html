@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة تحكم  | Bonjour Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        :root { 
+            --gold: #ffdf00; 
+            --gold-dark: #aa8a2e;
+            --bg-black: #0a0a0a; 
+            --card-bg: #111111; 
+        }
+        
+        body { 
+            font-family: 'Cairo', sans-serif; 
+            background: var(--bg-black); 
+            color: #fff; 
+            margin: 0; 
+            padding: 20px; 
+        }
+
+        /* شاشة الدخول الفخمة */
+        #login-overlay { 
+            position: fixed; 
+            inset: 0; 
+            background: radial-gradient(circle, #1a1a1a 0%, #000 100%); 
+            z-index: 1000; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+        }
+        .login-box { 
+            background: var(--card-bg); 
+            padding: 40px; 
+            border-radius: 24px; 
+            border: 1px solid var(--gold); 
+            text-align: center; 
+            width: 320px; 
+            box-shadow: 0 0 30px rgba(255, 223, 0, 0.1);
+        }
+        .login-box h2 { color: var(--gold); margin-bottom: 25px; letter-spacing: 2px; }
+        .login-box input { 
+            width: 100%; padding: 14px; margin-bottom: 20px; 
+            background: #1a1a1a; border: 1px solid #333; 
+            color: #fff; border-radius: 12px; text-align: center; 
+            font-size: 1.1rem; outline: none; transition: 0.3s;
+        }
+        .login-box input:focus { border-color: var(--gold); box-shadow: 0 0 10px rgba(255, 223, 0, 0.2); }
+        .login-box button { 
+            background: linear-gradient(45deg, var(--gold), var(--gold-dark)); 
+            color: #000; border: none; padding: 14px; width: 100%; 
+            border-radius: 12px; font-weight: 900; cursor: pointer; transition: 0.3s;
+        }
+        .login-box button:hover { transform: scale(1.02); filter: brightness(1.1); }
+
+        /* الهيدر */
+        .admin-header { text-align: center; margin-bottom: 40px; }
+        .admin-header h1 { 
+            color: var(--gold); font-size: 2.5rem; margin: 0; 
+            text-shadow: 0 0 15px rgba(255, 223, 0, 0.3);
+        }
+        
+        /* فورم الإضافة */
+        .add-form { 
+            background: var(--card-bg); padding: 25px; 
+            border-radius: 20px; margin-bottom: 30px; 
+            border: 1px solid #222; display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; 
+        }
+        .add-form input, .add-form select { 
+            background: #1a1a1a; border: 1px solid #333; 
+            color: #fff; padding: 12px; border-radius: 10px; 
+            font-family: 'Cairo'; outline: none;
+        }
+        .add-form input:focus { border-color: var(--gold); }
+        .add-form button { 
+            background: var(--gold); color: #000; border: none; 
+            border-radius: 10px; cursor: pointer; font-weight: bold; 
+            padding: 12px; transition: 0.3s;
+        }
+
+        /* الجدول */
+        .table-container { 
+            overflow-x: auto; background: var(--card-bg); 
+            border-radius: 20px; border: 1px solid #222; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        table { width: 100%; border-collapse: collapse; min-width: 900px; }
+        th { background: #1a1a1a; padding: 18px; text-align: center; color: var(--gold); font-size: 1rem; border-bottom: 2px solid #222; }
+        td { padding: 15px; border-bottom: 1px solid #1a1a1a; text-align: center; }
+        
+        /* تعديل المدخلات داخل الجدول */
+        .input-edit { 
+            background: rgba(255,255,255,0.05); border: 1px solid transparent; 
+            color: #fff; text-align: center; width: 90%; padding: 8px; 
+            border-radius: 8px; transition: 0.3s; font-family: 'Cairo'; 
+        }
+        .input-edit:focus { background: #222; border-color: var(--gold); outline: none; }
+        
+        /* أزرار الحالة */
+        .btn-status { 
+            padding: 8px 16px; border-radius: 8px; border: none; 
+            font-weight: bold; cursor: pointer; font-family: 'Cairo'; font-size: 0.85rem; 
+        }
+        .btn-visible { background: rgba(40, 167, 69, 0.2); color: #28a745; border: 1px solid #28a745; }
+        .btn-hidden { background: rgba(255, 255, 255, 0.1); color: #888; border: 1px solid #444; }
+        .row-is-hidden { opacity: 0.4; filter: grayscale(1); }
+        
+        .del-icon { 
+            background: rgba(255, 68, 68, 0.1); color: #ff4444; 
+            width: 35px; height: 35px; border-radius: 8px; border: 1px solid #ff4444;
+            cursor: pointer; transition: 0.3s;
+        }
+        .del-icon:hover { background: #ff4444; color: #fff; }
+
+        /* البحث */
+        .search-wrapper { margin-bottom: 25px; position: relative; }
+        #adminSearch { 
+            width: 100%; padding: 15px 20px; border-radius: 15px; 
+            background: var(--card-bg); border: 1px solid #333; 
+            color: #fff; font-family: 'Cairo'; font-size: 1rem;
+        }
+        #adminSearch:focus { border-color: var(--gold); outline: none; }
+    </style>
+</head>
+<body>
+
+    <div id="login-overlay">
+        <div class="login-box">
+            <h2 style="font-weight: 900;">BONJOUR ADMIN</h2>
+            <input type="password" id="pass-input" placeholder="كلمة السر الخاصة بالمدير">
+            <button onclick="checkLogin()">دخول للوحة التحكم 🔑</button>
+            <p id="err-msg" style="color:#ff4444; display:none; margin-top:15px; font-size: 0.9rem;">عذراً، كلمة المرور غير صحيحة!</p>
+        </div>
+    </div>
+
+    <div id="admin-content" style="display: none;">
+        <div class="admin-header">
+            <h1>لوحة إدارة بونجور</h1>
+            <p style="color: var(--gold-dark); font-weight: bold;">تحديث المنيو، الأسعار، والحالة</p>
+        </div> 
+
+        <div class="search-wrapper">
+            <input type="text" id="adminSearch" placeholder="🔍 ابحث عن صنف معين لتعديله..." oninput="loadData()">
+        </div>
+
+        <div class="add-form">
+            <input type="text" id="newName" placeholder="اسم الصنف">
+            <input type="number" id="newPrice" placeholder="السعر">
+            <input type="number" id="newDisc" placeholder="السعر بعد الخصم">
+            <input type="text" id="newBadge" placeholder="شارة (New, Hot)">
+            <select id="newCat">
+                <optgroup label="☕ المشروبات">
+                    <option value="coffee">القهوة</option>
+                    <option value="fresh">عصائر فريش</option>
+                    <option value="hot">مشروبات ساخنة</option>
+                    <option value="cold">مشروبات باردة</option>
+                </optgroup>
+            </select>
+            <input type="text" id="newImage" placeholder="رابط الصورة (URL)">
+            <button onclick="addItem()">إضافة صنف جديد +</button>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th width="20%">اسم الصنف</th>
+                        <th width="10%">السعر</th>
+                        <th width="10%">بعد الخصم</th>
+                        <th width="12%">الشارة</th>
+                        <th width="15%">القسم</th>
+                        <th width="15%">الحالة بالمنيو</th>
+                        <th width="10%">حذف</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // دمج بيانات Supabase الخاصة بك
+        const SUPABASE_URL = 'https://uhxgesfiramvubpemytj.supabase.co'; 
+        const SUPABASE_KEY = 'sb_publishable_wU30K91wj7Rsa4QqD0NUOg_ky7N_tGw'; 
+        const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        const ADMIN_PASS = "12345";
+
+        function checkLogin() {
+            const input = document.getElementById('pass-input').value;
+            if (input === ADMIN_PASS) {
+                document.getElementById('login-overlay').style.display = 'none';
+                document.getElementById('admin-content').style.display = 'block';
+                loadData();
+            } else {
+                document.getElementById('err-msg').style.display = 'block';
+            }
+        }
+
+        async function loadData() {
+            const { data, error } = await _supabase.from('products').select('*').order('id', {ascending: false});
+            if(error) return console.error(error);
+
+            const tbody = document.getElementById('table-body');
+            const searchTerm = document.getElementById('adminSearch').value.toLowerCase();
+
+            const filteredData = data.filter(item => 
+                item.name.toLowerCase().includes(searchTerm)
+            );
+
+            tbody.innerHTML = filteredData.map(item => `
+                <tr class="${item.is_hidden ? 'row-is-hidden' : ''}">
+                    <td><input class="input-edit" value="${item.name}" onchange="update(${item.id}, 'name', this.value)"></td>
+                    <td><input class="input-edit" type="number" value="${item.price}" onchange="update(${item.id}, 'price', this.value)"></td>
+                    <td><input class="input-edit" type="number" value="${item.disconunt_price || ''}" onchange="update(${item.id}, 'disconunt_price', this.value)"></td>
+                    <td><input class="input-edit" value="${item.badge || ''}" onchange="update(${item.id}, 'badge', this.value)"></td>
+                    <td style="font-size: 0.85rem; color: #aaa; font-weight: bold;">${item.category}</td>
+                    <td>
+                        <button class="btn-status ${item.is_hidden ? 'btn-hidden' : 'btn-visible'}" onclick="toggleHide(${item.id}, ${item.is_hidden})">
+                            ${item.is_hidden ? '🚫 مخفي الآن' : '👁️ ظاهر للعملاء'}
+                        </button>
+                    </td>
+                    <td><button class="del-icon" onclick="del(${item.id})">🗑️</button></td>
+                </tr>
+            `).join('');
+        }
+async function addItem() {
+    const name = document.getElementById('newName').value;
+    const price = parseFloat(document.getElementById('newPrice').value);
+    // تأكد من كتابة اسم العمود discount_price كما هو في الصورة
+    const discPrice = document.getElementById('newDisc').value ? parseFloat(document.getElementById('newDisc').value) : null;
+    const badge = document.getElementById('newBadge').value;
+    const category = document.getElementById('newCat').value;
+    const imageUrl = document.getElementById('newImage').value;
+
+    if(!name || !price) return alert("الاسم والسعر أساسيين!");
+
+    
+
+    const { error } = await _supabase.from('products').insert([{ 
+        name: name, 
+        price: price, 
+      discount_price: discPrice, // تم تعديل السبيلنج هنا
+        badge: badge,
+       
+        category: category,
+        image_url: imageUrl,
+        is_hidden: false // خليه ينزل متاح (False) عشان يظهر في المنيو علطول
+    }]);
+
+    if (error) {
+        alert("خطأ: " + error.message);
+    } else {
+        location.reload(); // ريفريش عشان تشوف الصنف الجديد
+    }
+}
+        async function update(id, field, value) {
+            const { error } = await _supabase.from('products').update({ [field]: value }).eq('id', id);
+            if (error) alert("خطأ في التحديث: " + error.message);
+        }
+
+        async function toggleHide(id, currentStatus) {
+    const { error } = await _supabase
+        .from('products')
+        .update({ is_hidden: !currentStatus })
+        .eq('id', id);
+
+    if (error) {
+        console.error(error);
+    } else {
+        loadData(); // إعادة تحميل البيانات لتحديث الكلمة واللون
+    }
+}
+
+        async function del(id) {
+            if(confirm("هل أنت متأكد من حذف هذا الصنف نهائياً من قائمة بونجور؟")) {
+                const { error } = await _supabase.from('products').delete().eq('id', id);
+                if(error) alert(error.message);
+                else loadData();
+            }
+        }
+        
+    </script>
+</body>
+</html>
