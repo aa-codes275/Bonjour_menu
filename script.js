@@ -21,7 +21,7 @@ async function loadMenu() {
 }
 function sendToWhatsApp() {
     const tableNum = document.getElementById('table-number').value;
-    const orderNote = document.getElementById('order-note')?.value || "لا يوجد"; // علامة الاستفهام للتأكد من وجود الحقل
+    const orderNote = document.getElementById('order-note')?.value || "لا يوجد";
 
     if (!tableNum) return alert("رقم الطاولة مطلوب");
 
@@ -32,7 +32,6 @@ function sendToWhatsApp() {
     cart.forEach((item, index) => {
         msg += `*${index + 1}- ${item.name}*\n`;
         
-        // إضافة الاختيارات للرسالة بشكل منظم
         if (item.userChoices) {
             for (const [key, val] of Object.entries(item.userChoices)) {
                 msg += `   - ${key}: ${val}\n`;
@@ -41,9 +40,15 @@ function sendToWhatsApp() {
         msg += `   السعر: ${item.price} EGP\n\n`;
     });
 
-    const total = cart.reduce((sum, item) => sum + parseFloat(item.price), 0);
+    // الحسبة الجديدة هنا
+    const subtotal = cart.reduce((sum, item) => sum + parseFloat(item.price), 0);
+    const tax = subtotal * 0.12; // حساب الـ 12%
+    const finalTotal = subtotal + tax; // الإجمالي بعد الضريبة
+
     msg += `--------------------------\n`;
-    msg += `💰 *الإجمالي: ${total} EGP*`;
+    msg += `💵 المجموع: ${subtotal.toFixed(2)} EGP\n`;
+    msg += `✨ القيمة المضافة (12%): ${tax.toFixed(2)} EGP\n`;
+    msg += `💰 *الإجمالي النهائي: ${finalTotal.toFixed(2)} EGP*`;
 
     window.open(`https://wa.me/201204911333?text=${encodeURIComponent(msg)}`);
 }
