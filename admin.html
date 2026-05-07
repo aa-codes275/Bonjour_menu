@@ -22,7 +22,7 @@
             padding: 20px; 
         }
 
-        /* شاشة الدخول الفخمة */
+    
         #login-overlay { 
             position: fixed; 
             inset: 0; 
@@ -56,14 +56,14 @@
         }
         .login-box button:hover { transform: scale(1.02); filter: brightness(1.1); }
 
-        /* الهيدر */
+
         .admin-header { text-align: center; margin-bottom: 40px; }
         .admin-header h1 { 
             color: var(--gold); font-size: 2.5rem; margin: 0; 
             text-shadow: 0 0 15px rgba(255, 223, 0, 0.3);
         }
         
-        /* فورم الإضافة */
+      
         .add-form { 
             background: var(--card-bg); padding: 25px; 
             border-radius: 20px; margin-bottom: 30px; 
@@ -82,7 +82,7 @@
             padding: 12px; transition: 0.3s;
         }
 
-        /* الجدول */
+  
         .table-container { 
             overflow-x: auto; background: var(--card-bg); 
             border-radius: 20px; border: 1px solid #222; 
@@ -92,7 +92,7 @@
         th { background: #1a1a1a; padding: 18px; text-align: center; color: var(--gold); font-size: 1rem; border-bottom: 2px solid #222; }
         td { padding: 15px; border-bottom: 1px solid #1a1a1a; text-align: center; }
         
-        /* تعديل المدخلات داخل الجدول */
+       
         .input-edit { 
             background: rgba(255,255,255,0.05); border: 1px solid transparent; 
             color: #fff; text-align: center; width: 90%; padding: 8px; 
@@ -100,7 +100,7 @@
         }
         .input-edit:focus { background: #222; border-color: var(--gold); outline: none; }
         
-        /* أزرار الحالة */
+      
         .btn-status { 
             padding: 8px 16px; border-radius: 8px; border: none; 
             font-weight: bold; cursor: pointer; font-family: 'Cairo'; font-size: 0.85rem; 
@@ -116,7 +116,6 @@
         }
         .del-icon:hover { background: #ff4444; color: #fff; }
 
-        /* البحث */
         .search-wrapper { margin-bottom: 25px; position: relative; }
         #adminSearch { 
             width: 100%; padding: 15px 20px; border-radius: 15px; 
@@ -125,14 +124,14 @@
         }
         #adminSearch:focus { border-color: var(--gold); outline: none; }
         @media screen and (max-width: 768px) {
-    /* جعل الحاوية الرئيسية مرنة (تحت بعضها) */
+  
     .admin-container {
         display: flex;
         flex-direction: column;
         padding: 10px;
     }
 
-    /* ضبط السايد بار (Sidebar) لو عندك */
+
     .sidebar {
         width: 100% !important;
         height: auto !important;
@@ -140,31 +139,31 @@
         margin-bottom: 20px;
     }
 
-    /* ضبط الكروت (Stats Cards) لتكون تحت بعضها */
+   
     .stats-grid {
         display: grid;
-        grid-template-columns: 1fr !important; /* عمود واحد فقط */
+        grid-template-columns: 1fr !important; 
         gap: 15px;
     }
 
-    /* جعل الجداول قابلة للتمرير يميناً ويساراً لمنع تدمير التصميم */
+  
     .table-wrapper {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
     }
 
     table {
-        min-width: 600px; /* يضمن أن الجدول لن ينكمش بشكل قبيح */
+        min-width: 600px; 
     }
 
-    /* تكبير الأزرار لتسهيل الضغط بالإصبع */
+  
     .btn-admin {
         width: 100%;
         padding: 12px;
         font-size: 16px;
     }
 
-    /* إخفاء العناصر غير الضرورية في الموبايل */
+   
     .desktop-only {
         display: none;
     }
@@ -235,7 +234,7 @@
     </div>
 
     <script>
-        // دمج بيانات Supabase الخاصة بك
+ 
         const SUPABASE_URL = 'https://uhxgesfiramvubpemytj.supabase.co'; 
         const SUPABASE_KEY = 'sb_publishable_wU30K91wj7Rsa4QqD0NUOg_ky7N_tGw'; 
         const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -283,7 +282,7 @@
 async function addItem() {
     const name = document.getElementById('newName').value;
     const price = parseFloat(document.getElementById('newPrice').value);
-    // تأكد من كتابة اسم العمود discount_price كما هو في الصورة
+
     const discPrice = document.getElementById('newDisc').value ? parseFloat(document.getElementById('newDisc').value) : null;
     const badge = document.getElementById('newBadge').value;
     const category = document.getElementById('newCat').value;
@@ -296,18 +295,18 @@ async function addItem() {
     const { error } = await _supabase.from('products').insert([{ 
         name: name, 
         price: price, 
-      discount_price: discPrice, // تم تعديل السبيلنج هنا
+      discount_price: discPrice, 
         badge: badge,
        
         category: category,
         image_url: imageUrl,
-        is_hidden: false // خليه ينزل متاح (False) عشان يظهر في المنيو علطول
+        is_hidden: false 
     }]);
 
     if (error) {
         alert("خطأ: " + error.message);
     } else {
-        location.reload(); // ريفريش عشان تشوف الصنف الجديد
+        location.reload(); 
     }
 }
         async function update(id, field, value) {
@@ -324,7 +323,7 @@ async function addItem() {
     if (error) {
         console.error(error);
     } else {
-        loadData(); // إعادة تحميل البيانات لتحديث الكلمة واللون
+        loadData(); 
     }
 }
 
