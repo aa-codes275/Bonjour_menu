@@ -44,7 +44,7 @@ function sendToWhatsApp() {
     const finalTotal = totalBeforeTax + tax;
 
     msg += `--------------------------\n`;
-    msg += `💧 مياه إجبارية (${peopleCount}): ${waterTotal} EGP\n`;
+    msg += `💧 مياه  (${peopleCount}): ${waterTotal} EGP\n`;
     msg += `✨ القيمة المضافة (12%): ${tax.toFixed(2)} EGP\n`;
     msg += `💰 *الإجمالي النهائي: ${finalTotal.toFixed(2)} EGP*`;
 
@@ -308,7 +308,7 @@ function updateCartUI() {
             <span>${subtotal.toFixed(2)} EGP</span>
         </div>
         <div style="display:flex; justify-content:space-between; font-size:14px; color:#00ff00; margin-bottom:5px;">
-            <span>مياه إجبارية (${peopleCount} أفراد):</span>
+            <span>مياه  (${peopleCount} أفراد):</span>
             <span>${waterPrice.toFixed(2)} EGP</span>
         </div>
         <div style="display:flex; justify-content:space-between; font-size:14px; color:#888; margin-bottom:5px;">
