@@ -23,15 +23,34 @@
             
         </div>
                <div class="extra-features">
- 
+    <!-- أيقونة التقييم -->
     
 </div>
         
 
-        <div class="location-bar-v2">
-            <img src="https://cdn-icons-png.flaticon.com/512/2838/2838912.png" alt="Map">
-            <span>حدائق أكتوبر، مساكن دهشور ,مول بيزنس بارك، ، محل رقم 6،.</span>
+    
+
+        <div class="location-bar-v2" style="display: flex; align-items: center; gap: 8px; flex-wrap: nowrap; overflow-x: auto; padding: 5px;">
+            <img src="https://cdn-icons-png.flaticon.com/512/2838/2838912.png" alt="Map" style="width: 20px; height: 20px;">
+            
+            <a href="https://maps.app.goo.gl/2mG3WticEp4gBSLU6?g_st=atm" target="_blank" 
+               style="text-decoration: none; display: flex; align-items: center; gap: 4px; background: rgba(255, 223, 0, 0.1); padding: 4px 8px; border-radius: 15px; border: 1px solid #ffdf00;"> 
+                <span style="font-size: 20px;">⭐</span>
+                <span style="color: #6f3206; font-size: 11px; font-weight: bold; white-space: nowrap;">رأيك يهمنا</span>
+            </a>
+
+            <div onclick="openPaymentModal()" 
+                 style="cursor: pointer; display: flex; align-items: center; gap: 4px; background: rgba(0, 255, 255, 0.1); padding: 4px 8px; border-radius: 15px; border: 1px solid #00ffff;">
+                <span style="font-size: 20px;">💳</span>
+                <span style="color: #7a220a; font-size: 11px; font-weight: bold; white-space: nowrap;">الدفع</span>
+            </div>
         </div>
+    </div>
+
+          
+    </div>
+        </div>
+        
     </div>
 </header>
 
@@ -42,17 +61,10 @@
              <span id="theme-icon">🌙</span>
              </button>
              
-             <div class="feature-item" onclick="openRatingModal()">
-        <span class="feature-icon">⭐</span>
-        <span id="rating-value" class="feature-badge"></span>
-    </div>
+             
     <p><h1 class="brand-name">       </h1></p>
 
-  
-    <div class="feature-item" onclick="openPaymentModal()">
-        <span class="feature-icon">💳</span>
-        <span class="feature-badge"></span>
-    </div>
+    
     
             <input type="text" id="searchInput" placeholder="ابحث هنا...">
             
@@ -61,7 +73,7 @@
 
         
                <div id="back-container" style="display: none; text-align: right; padding: 10px;">
-  
+    <!-- تعديل الزرار لينادي دالة التعامل مع العودة -->
                  <button onclick="goBack()" class="btn-back">    &#10094; 
                </button>
              </div>
@@ -145,7 +157,7 @@
      
         <div id="products-container" class="products-list"></div>
     </main>
-
+ <!-- نافذة تفاصيل المنتج -->
 <div id="product-page" class="product-page-overlay">
     <div class="product-page-content">
         <button class="new-back-arrow" onclick="closeProductPage()">
@@ -153,7 +165,7 @@
         </button>
        
         <div id="product-details">
-           
+            <!-- الصور والبيانات هتنزل هنا -->
         </div>
         <div class="cart-controls">
             <button class="add-to-cart-btn" onclick="addToCart()">إضافة للسلة</button>
@@ -161,19 +173,19 @@
     </div>
 </div>
 
-
+<!-- زر السلة العائم -->
 <div class="cart-floating-icon" onclick="toggleCartSidebar()">
     <span id="cart-count">0</span>
     🛒
 </div>
 <div class="action-buttons">
-  
+    <!-- زرار طلب الويتر الجديد -->
     <button class="waiter-btn" onclick="callWaiter()">
         <span class="waiter-icon">🔔</span>
         <small>اطلب ويتر</small>
     </button>
 
-
+<!-- السلة الجانبية -->
 <div id="cart-sidebar" class="cart-sidebar">
     <div class="cart-header">
           <h1 class="brand-name">Bonjour</h1>
@@ -198,9 +210,9 @@
     <div class="cart-footer">
         <div id="cart-total">إجمالي: 0 EGP</div>
         <div class="cart-details-fields" style="padding: 10px; background: #1a1a1a; border-radius: 8px; margin-bottom: 10px;">
- 
+    <input type="number" id="table-number" placeholder="رقم الطاولة" style="width: 100%; padding: 8px; margin-bottom: 10px; background: #222; border: 1px solid #333; color: white; border-radius: 5px;">
     <div class="cart-inputs" style="padding: 10px; border-top: 1px solid #333;">
-    <label style="color: #ffdf00; display: block; margin-bottom: 5px; font-size: 14px;">عدد الأفراد (إجباري):</label>
+    <label style="color: #ffdf00; display: block; margin-bottom: 5px; font-size: 14px;">عدد الأفراد (إجباري إزازة ميه لكل فرد):</label>
     <input type="number" id="people-count" 
            oninput="updateCartUI()" 
            placeholder="أدخل عدد الأفراد" 
@@ -218,24 +230,10 @@
     </div>
     
 </div>
-
-<div id="rating-modal" class="modal-overlay">
-    <div class="modal-content">
-        <button class="close-modal-x" onclick="closeRatingModal()">✕</button>
-        <h3>رأيك يهمنا في Bonjour ✨</h3>
-        <div class="stars-container">
-            <span class="star" data-value="5">⭐</span>
-            <span class="star" data-value="4">⭐</span>
-            <span class="star" data-value="3">⭐</span>
-            <span class="star" data-value="2">⭐</span>
-            <span class="star" data-value="1">⭐</span>
-        </div>
-        <textarea id="rating-comment" placeholder="اكتب ملاحظة جميلة عن المكان..."></textarea>
-        <button onclick="submitRating()" class="gold-btn">إرسال التقييم</button>
-    </div>
-</div>
+<!-- مودال التقييم -->
 
 
+<!-- مودال الدفع -->
 <div id="payment-modal" class="modal-overlay">
     <div class="modal-content">
         <button class="close-modal-x" onclick="closePaymentModal()">✕</button>
