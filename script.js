@@ -419,40 +419,14 @@ document.querySelectorAll('.star').forEach(star => {
 });
 
 
+
+
 async function submitRating() {
-    const commentField = document.getElementById('rating-comment');
-    const comment = commentField ? commentField.value : "";
-    const adminPhone = "201204911333";
+   
+    const pageUrl = "https://maps.app.goo.gl/2mG3WticEp4gBSLU6?g_st=atm"; 
 
-    if (selectedRatingValue === 0) {
-        alert("يا فنان اختر النجوم أولاً ⭐");
-        return;
-    }
-
-  
-    const starsEmoji = "⭐".repeat(selectedRatingValue);
-    const msg = `*تقييم جديد لـ Bonjour* ✨%0A%0A` +
-                `*التقييم:* ${starsEmoji} (${selectedRatingValue}/5)%0A` +
-                `*الملاحظة:* ${comment || 'بدون ملاحظات'}`;
     
-  
-    const whatsappUrl = `https://api.whatsapp.com/send?phone=${adminPhone}&text=${msg}`;
-
-    try {
-        // محاولة سريعة للحفظ في Supabase (اختياري)
-        if (typeof _supabase !== 'undefined') {
-            await _supabase.from('ratings').insert([{ 
-                stars: selectedRatingValue, 
-                comment: comment,
-                created_at: new Date() 
-            }]);
-        }
-    } catch (e) {
-        console.log("Supabase error ignored to open WhatsApp");
-    }
-
-    alert("شكراً لتقييمك! جاري تحويلك للواتساب..");
-    window.location.href = whatsappUrl; 
+    window.location.href = pageUrl;
 }
 
 document.addEventListener("DOMContentLoaded", () => {
