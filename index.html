@@ -23,7 +23,7 @@
             
         </div>
                <div class="extra-features">
-    <!-- أيقونة التقييم -->
+
     
 </div>
         
@@ -73,7 +73,7 @@
 
         
                <div id="back-container" style="display: none; text-align: right; padding: 10px;">
-    <!-- تعديل الزرار لينادي دالة التعامل مع العودة -->
+
                  <button onclick="goBack()" class="btn-back">    &#10094; 
                </button>
              </div>
@@ -157,7 +157,7 @@
      
         <div id="products-container" class="products-list"></div>
     </main>
- <!-- نافذة تفاصيل المنتج -->
+
 <div id="product-page" class="product-page-overlay">
     <div class="product-page-content">
         <button class="new-back-arrow" onclick="closeProductPage()">
@@ -165,7 +165,7 @@
         </button>
        
         <div id="product-details">
-            <!-- الصور والبيانات هتنزل هنا -->
+       
         </div>
         <div class="cart-controls">
             <button class="add-to-cart-btn" onclick="addToCart()">إضافة للسلة</button>
@@ -173,19 +173,19 @@
     </div>
 </div>
 
-<!-- زر السلة العائم -->
+
 <div class="cart-floating-icon" onclick="toggleCartSidebar()">
     <span id="cart-count">0</span>
     🛒
 </div>
 <div class="action-buttons">
-    <!-- زرار طلب الويتر الجديد -->
+    
     <button class="waiter-btn" onclick="callWaiter()">
         <span class="waiter-icon">🔔</span>
         <small>اطلب ويتر</small>
     </button>
 
-<!-- السلة الجانبية -->
+
 <div id="cart-sidebar" class="cart-sidebar">
     <div class="cart-header">
           <h1 class="brand-name">Bonjour</h1>
@@ -212,7 +212,7 @@
         <div class="cart-details-fields" style="padding: 10px; background: #1a1a1a; border-radius: 8px; margin-bottom: 10px;">
     <input type="number" id="table-number" placeholder="رقم الطاولة" style="width: 100%; padding: 8px; margin-bottom: 10px; background: #222; border: 1px solid #333; color: white; border-radius: 5px;">
     <div class="cart-inputs" style="padding: 10px; border-top: 1px solid #333;">
-    <label style="color: #ffdf00; display: block; margin-bottom: 5px; font-size: 14px;">عدد الأفراد (إجباري إزازة ميه لكل فرد):</label>
+    <label style="color: #ffdf00; display: block; margin-bottom: 5px; font-size: 14px;">عدد الأفراد :</label>
     <input type="number" id="people-count" 
            oninput="updateCartUI()" 
            placeholder="أدخل عدد الأفراد" 
@@ -230,10 +230,10 @@
     </div>
     
 </div>
-<!-- مودال التقييم -->
 
 
-<!-- مودال الدفع -->
+
+
 <div id="payment-modal" class="modal-overlay">
     <div class="modal-content">
         <button class="close-modal-x" onclick="closePaymentModal()">✕</button>
