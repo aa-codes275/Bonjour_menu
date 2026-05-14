@@ -1216,6 +1216,41 @@ body:has(#cart-sidebar.active) .theme-btn-neon {
     flex-grow: 1; /* عشان تاخد باقي المساحة لتحت */
     margin-top: 10px !important; /* نعدل الـ margin القديم */
 }
+/* السطر ده معناه: أول ما السلة تفتح وتكون نشطة، اخفي حاوية زرار الباك فوراً */
+body:has(#cart-sidebar.active) #back-container {
+    display: none !important;
+}
+
+
+/* --- كود تسريع المنيو الخارق للموبيلات القديمة والحديثة --- */
+
+/* 1. إجبار معالج الموبايل (GPU) على تشغيل السلة والصفحات العايمة بطاقة كاملة */
+.cart-sidebar, #product-page, .modal-content, #waiter-modal {
+    will-change: transform, opacity; /* بيقول للموبايل جهز نفسك للأنميشن */
+    -webkit-transform: translate3d(0, 0, 0); /* السطر السحري لتشغيل كارت الشاشة في الموبيلات القديمة */
+    transform: translate3d(0, 0, 0);
+    -webkit-backface-visibility: hidden; /* بيمنع الرمشة والهز في شاشات الآيفون القديمة */
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+/* 2. تسريع وتنعيم السكرول (التمرير) في الأقسام والمنتجات */
+.category-nav, #products-container, #cart-items-list {
+    -webkit-overflow-scrolling: touch !important; /* سكرول حريري وسريع جداً على الآيفون والآيباد القديم */
+    scroll-behavior: smooth;
+    overscroll-behavior-y: contain; /* بيمنع الصفحة كلها تتهز وأنت بتعمل سكرول جوه السلة */
+}
+
+/* 3. إلغاء تأخير الضغط (300ms Delay) للموبيلات القديمة */
+button, .item-row, .star, #cart-icon-container, .nav-item {
+    touch-action: manipulation !important; /* أول ما العميل يلمس الشاشة الزرار بيستجيب في نفس الفيمتو ثانية */
+    cursor: pointer;
+}
+
+/* 4. كود إخفاء زرار الباك "سرفس" لما السلة تفتح (اللي طلبته) */
+body:has(#cart-sidebar.active) #back-container {
+    display: none !important;
+}
 
 /* --- إعدادات الموبايل العالمية --- */
 @media screen and (max-width: 768px) {
