@@ -219,7 +219,7 @@ window.onclick = function(event) {
 function addToCart() {
     if (!currentProduct) return;
 
-    let extraPrice = 0; // متغير جديد لجمع الزيادات
+    let extraPrice = 0; 
     const selectedOptions = {};
     const selects = document.querySelectorAll('.product-option-select');
     
@@ -227,7 +227,6 @@ function addToCart() {
         const optionName = select.getAttribute('data-option-name');
         selectedOptions[optionName] = select.value;
 
-        // 🟢 التعديل الأهم: سحب السعر من الـ data-price اللي ضفناه في الـ Option
         const selectedOptionElement = select.options[select.selectedIndex];
         const priceModifier = parseFloat(selectedOptionElement.getAttribute('data-price')) || 0;
         extraPrice += priceModifier;
@@ -238,7 +237,6 @@ function addToCart() {
 
     const orderItem = {
         name: currentProduct.name,
-        // 🟢 الحسبة الجديدة: السعر الأساسي + سعر الإضافات (زي الدبل)
         price: parseFloat(currentProduct.price) + extraPrice,
         userChoices: selectedOptions,
         itemNote: specialNote, 
@@ -247,16 +245,15 @@ function addToCart() {
 
     cart.push(orderItem);
     
-    // 1. تحديث بيانات السلة والعداد والحسبة (الـ 12%)
+    // 1. تحديث بيانات السلة والعداد والحسبة (الـ 12% خدمة)
     updateCartUI();
     
-    // 2. قفل صفحة الأوبشنز فوراً
+    // 2. قفل صفحة الأوبشنز فوراً عشان العميل يكمل طلب
     closeProductPage();
 
-    // 3. إظهار السلة تلقائياً
-    openCart(); 
+    // ❌ تم حذف سطر openCart(); من هنا عشان السلة متفتحش لوحدها ❌
 
-    // 4. حركة اختيارية: Bounce Effect
+    // 3. حركة الـ Bounce Effect (عشان العميل يعرف إن المنتج اتضاف للسلة فوق)
     const cartIcon = document.getElementById('cart-icon-container');
     if(cartIcon) {
         cartIcon.classList.add('bounce-animation');
@@ -324,7 +321,7 @@ function updateCartUI() {
             <span>${waterPrice.toFixed(2)} EGP</span>
         </div>
         <div style="display:flex; justify-content:space-between; font-size:14px; color:#888; margin-bottom:5px;">
-            <span> Extra (12%):</span>
+            <span>  (12%):Service</span>
             <span>${tax.toFixed(2)} EGP</span>
         </div>
         <div style="display:flex; justify-content:space-between; font-size:18px; color:#ff0000; font-weight:bold; border-top:1px solid #444; padding-top:5px;">
