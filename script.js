@@ -44,8 +44,8 @@ function sendToWhatsApp() {
     const finalTotal = totalBeforeTax + tax;
 
     msg += `--------------------------\n`;
-    msg += `💧 مياه إجبارية (${peopleCount}): ${waterTotal} EGP\n`;
-    msg += `✨ القيمة المضافة (12%): ${tax.toFixed(2)} EGP\n`;
+    msg += `💧 مياه  (${peopleCount}): ${waterTotal} EGP\n`;
+    msg += `✨   (12%)Service: ${tax.toFixed(2)} EGP\n`;
     msg += `💰 *الإجمالي النهائي: ${finalTotal.toFixed(2)} EGP*`;
 
     window.open(`https://wa.me/201204911333?text=${encodeURIComponent(msg)}`);
