@@ -1,4 +1,4 @@
-
+// استبدل الرابط والمفتاح بالبيانات اللي هنجيبها من الإعدادات
 const SUPABASE_URL = 'https://uhxgesfiramvubpemytj.supabase.co'; 
 const SUPABASE_KEY = 'sb_publishable_wU30K91wj7Rsa4QqD0NUOg_ky7N_tGw'; 
 
@@ -8,7 +8,7 @@ let menuData = [];
 let cart = [];
 let currentProduct = null;
 
-
+// 2. تحميل البيانات عند فتح الصفحة
 async function loadMenu() {
     try {
         const { data, error } = await _supabase.from('products').select('*');
@@ -21,22 +21,22 @@ async function loadMenu() {
 }
 function sendToWhatsApp() {
     const tableNum = document.getElementById('table-number').value;
-    const peopleCount = parseInt(document.getElementById('people-count')?.value || 0); 
+    const peopleCount = parseInt(document.getElementById('people-count')?.value || 0); // سحب عدد الأفراد
     const orderNote = document.getElementById('order-note')?.value || "لا يوجد";
 
     if (!tableNum) return alert("من فضلك ادخل رقم الطاولة");
     if (!peopleCount || peopleCount <= 0) return alert("من فضلك ادخل عدد الأفراد");
 
-    let msg = `*طلب جديد من Bonjour* ☕\n`;
-    msg += `📍 طاولة: ${tableNum}\n`;
-    msg += `👥 عدد الأفراد: ${peopleCount}\n`; 
+    let msg = `*طلب جديد من Bonjour* \n`;
+    msg += ` طاولة: ${tableNum}\n`;
+    msg += ` عدد الأفراد: ${peopleCount}\n`; // إضافة عدد الأفراد للرسالة
     msg += `--------------------------\n`;
 
     cart.forEach((item, index) => {
         msg += `*${index + 1}- ${item.name}* (${item.price} EGP)\n`;
     });
 
-  
+    // حسبة الميه والضريبة في الواتساب
     const subtotal = cart.reduce((sum, item) => sum + parseFloat(item.price), 0);
     const waterTotal = peopleCount * 12;
     const totalBeforeTax = subtotal + waterTotal;
@@ -44,13 +44,13 @@ function sendToWhatsApp() {
     const finalTotal = totalBeforeTax + tax;
 
     msg += `--------------------------\n`;
-    msg += `💧 مياه  (${peopleCount}): ${waterTotal} EGP\n`;
+    msg += `💧 مياه إجبارية (${peopleCount}): ${waterTotal} EGP\n`;
     msg += `✨ القيمة المضافة (12%): ${tax.toFixed(2)} EGP\n`;
     msg += `💰 *الإجمالي النهائي: ${finalTotal.toFixed(2)} EGP*`;
 
     window.open(`https://wa.me/201204911333?text=${encodeURIComponent(msg)}`);
 }
-
+// 3. عرض الأصناف في المنيو الرئيسي
 function showCategory(cat) {
     const container = document.getElementById('products-container');
     const nav = document.querySelector('.category-nav');
@@ -58,7 +58,7 @@ function showCategory(cat) {
 
     container.innerHTML = "";
     nav.style.display = 'none';
-    backBtn.style.display = 'block'; 
+    backBtn.style.display = 'block'; // بنظهر زرار الباك بتاعك هنا
 
    const filtered = menuData.filter(p => p.category === cat && !p.is_hidden);
 
@@ -84,17 +84,17 @@ function showCategory(cat) {
 function handleBackAction() {
     const productPage = document.getElementById('product-page');
     
-   
+    // 1. لو صفحة المنتج (اللي فيها الصور والاوبشنز) هي اللي مفتوحة
     if (productPage.style.display === "block") {
-        closeProductPage();
+        closeProductPage(); // اقفل صفحة المنتج بس وارجع لقائمة الأصناف
     } 
-   
+    // 2. لو إحنا في قائمة الأصناف (زي القهوة) وعاوزين نرجع للأقسام
     else {
-        goBack();
+        goBack(); // ارجع لشاشة الأقسام الرئيسية (المنيو الكبير)
     }
 }
 
-
+// 4. فتح صفحة المنتج المنفصلة
 function openProductPage(product) {
     currentProduct = product; 
     
@@ -116,18 +116,19 @@ function openProductPage(product) {
                         <label style="display:block; margin-bottom:5px; color:#ffdf00; font-weight:bold;">${key}:</label>
                         <select class="product-option-select" data-option-name="${key}" style="width:100%; padding:12px; background:#1a1a1a; color:white; border:1px solid #333; border-radius:8px; font-family:'Cairo';">`;
 
-               
+                // 🟢 هنا التعديل الذكي عشان نفرق بين النص والـ Object
                 if (Array.isArray(value)) {
                     value.forEach(opt => {
                         if (typeof opt === 'object') {
-                           
+                            // لو أوبشن فيه سعر (زي الحجم الجديد)
                             optionsHTML += `<option value="${opt.name}" data-price="${opt.price}">${opt.name} ${opt.price > 0 ? '(+' + opt.price + ' ج.م)' : ''}</option>`;
                         } else {
-                            
+                            // لو نص عادي (زي السكر والنوع القديم)
                             optionsHTML += `<option value="${opt}" data-price="0">${opt}</option>`;
                         }
                     });
                 } else {
+                    // للتعامل مع البيانات لو جاية كنص مفصول بفاصلة
                     const optionsArray = value.toString().split(',').map(opt => opt.trim());
                     optionsArray.forEach(opt => {
                         optionsHTML += `<option value="${opt}" data-price="0">${opt}</option>`;
@@ -160,36 +161,46 @@ function closeProductPage() {
     const page = document.getElementById('product-page');
     page.style.display = "none";
     
-    
+    // سطر إضافي عشان الصفحة الرئيسية ترجع تعمل سكرول عادي
     document.body.style.overflow = "auto";
 }
 function openCart() {
-    const cartDrawer = document.getElementById('cart-drawer'); // تأكد من الـ ID بتاع حاوية السلة عندك
+    const cartDrawer = document.getElementById('cart-sidebar'); // تأكد إن الـ ID هو cart-sidebar
     if (cartDrawer) {
-        cartDrawer.style.display = "block";
+        // بنضمن إنها تظهر في النص
+        cartDrawer.style.display = "flex"; 
+        setTimeout(() => {
+            cartDrawer.classList.add('active');
+        }, 10);
         
+        // تضليل الخلفية (اختياري لو عندك overlay)
+        const overlay = document.getElementById('cart-overlay');
+        if(overlay) overlay.classList.add('active');
+
+        document.body.style.overflow = "hidden"; // منع سكرول الصفحة
     }
 }
-
+// دالة فتح مودال التقييم
 function openRatingModal() {
     const modal = document.getElementById('rating-modal');
     if (modal) {
         modal.style.display = 'flex';
-      
+        // إضافة أنيميشن خفيف للظهور
         modal.querySelector('.modal-content').style.transform = 'scale(1)';
     }
 }
 
-
+// دالة فتح مودال الدفع (انستا باي والمحفظة)
 function openPaymentModal() {
     const modal = document.getElementById('payment-modal');
     if (modal) {
         modal.style.display = 'flex';
-      
+        // إضافة أنيميشن خفيف للظهور
         modal.querySelector('.modal-content').style.transform = 'scale(1)';
     }
 }
 
+// دالة إغلاق المودالات
 function closeRatingModal() {
     document.getElementById('rating-modal').style.display = 'none';
 }
@@ -198,7 +209,7 @@ function closePaymentModal() {
     document.getElementById('payment-modal').style.display = 'none';
 }
 
-
+// إغلاق المودال عند الضغط في أي مكان خارجه (زيادة احترافية)
 window.onclick = function(event) {
     const rateModal = document.getElementById('rating-modal');
     const payModal = document.getElementById('payment-modal');
@@ -208,7 +219,7 @@ window.onclick = function(event) {
 function addToCart() {
     if (!currentProduct) return;
 
-    let extraPrice = 0;
+    let extraPrice = 0; // متغير جديد لجمع الزيادات
     const selectedOptions = {};
     const selects = document.querySelectorAll('.product-option-select');
     
@@ -216,7 +227,7 @@ function addToCart() {
         const optionName = select.getAttribute('data-option-name');
         selectedOptions[optionName] = select.value;
 
-       
+        // 🟢 التعديل الأهم: سحب السعر من الـ data-price اللي ضفناه في الـ Option
         const selectedOptionElement = select.options[select.selectedIndex];
         const priceModifier = parseFloat(selectedOptionElement.getAttribute('data-price')) || 0;
         extraPrice += priceModifier;
@@ -227,7 +238,7 @@ function addToCart() {
 
     const orderItem = {
         name: currentProduct.name,
-       
+        // 🟢 الحسبة الجديدة: السعر الأساسي + سعر الإضافات (زي الدبل)
         price: parseFloat(currentProduct.price) + extraPrice,
         userChoices: selectedOptions,
         itemNote: specialNote, 
@@ -236,16 +247,16 @@ function addToCart() {
 
     cart.push(orderItem);
     
-   
+    // 1. تحديث بيانات السلة والعداد والحسبة (الـ 12%)
     updateCartUI();
     
-  
+    // 2. قفل صفحة الأوبشنز فوراً
     closeProductPage();
 
-   
+    // 3. إظهار السلة تلقائياً
     openCart(); 
 
-   
+    // 4. حركة اختيارية: Bounce Effect
     const cartIcon = document.getElementById('cart-icon-container');
     if(cartIcon) {
         cartIcon.classList.add('bounce-animation');
@@ -257,10 +268,10 @@ function updateCartUI() {
     const count = document.getElementById('cart-count');
     const totalDisp = document.getElementById('cart-total');
     
-    
+    // --- الجزء المضاف لسحب عدد الأفراد ---
     const peopleInput = document.getElementById('people-count');
     const peopleCount = peopleInput ? parseInt(peopleInput.value) || 0 : 0;
-
+    // ----------------------------------
 
     if (!list || !totalDisp) return; 
 
@@ -294,12 +305,13 @@ function updateCartUI() {
             </div>`;
     });
     
-   
+    // --- الحسبة المعدلة شاملة المياه (10 جنيه للفرد) ---
     const waterPrice = peopleCount * 12; 
     const subtotalWithWater = subtotal + waterPrice;
     const tax = subtotalWithWater * 0.12; 
     const finalTotal = subtotalWithWater + tax;
-  
+    // ----------------------------------------------
+
     if (count) count.innerText = cart.length;
     
     totalDisp.innerHTML = `
@@ -312,7 +324,7 @@ function updateCartUI() {
             <span>${waterPrice.toFixed(2)} EGP</span>
         </div>
         <div style="display:flex; justify-content:space-between; font-size:14px; color:#888; margin-bottom:5px;">
-            <span>قيمة مضافة (12%):</span>
+            <span> Extra (12%):</span>
             <span>${tax.toFixed(2)} EGP</span>
         </div>
         <div style="display:flex; justify-content:space-between; font-size:18px; color:#ff0000; font-weight:bold; border-top:1px solid #444; padding-top:5px;">
@@ -327,9 +339,33 @@ function removeFromCart(index) {
     cart.splice(index, 1);
     updateCartUI();
 }
-
 function toggleCartSidebar() {
-    document.getElementById('cart-sidebar').classList.toggle('active');
+    const cart = document.getElementById('cart-sidebar');
+    const overlay = document.getElementById('cart-overlay');
+    
+    if (!cart) return; // تأمين لو الـ ID مش موجود
+
+    if (cart.classList.contains('active')) {
+        // حالة الإغلاق
+        cart.classList.remove('active');
+        if (overlay) overlay.classList.remove('active');
+        
+        setTimeout(() => {
+            cart.style.display = "none";
+            if (overlay) overlay.style.display = "none";
+        }, 300);
+        document.body.style.overflow = "auto";
+    } else {
+        // حالة الفتح (بدل ما ننادي دالة تانية، كتبنا الكود هنا)
+        cart.style.display = "flex"; 
+        if (overlay) overlay.style.display = "block";
+
+        setTimeout(() => {
+            cart.classList.add('active');
+            if (overlay) overlay.classList.add('active');
+        }, 10);
+        document.body.style.overflow = "hidden";
+    }
 }
 
 function goBack() {
@@ -342,11 +378,11 @@ const themeToggle = document.getElementById('theme-toggle');
 const themeIcon = document.getElementById('theme-icon');
 const htmlRoot = document.documentElement;
 
-
+// التحقق من الثيم المحفوظ أو استخدام الثيم الافتراضي
 const savedTheme = localStorage.getItem('Bonjour-theme') || 'coffee';
 if (savedTheme === 'gold') {
     htmlRoot.setAttribute('data-theme', 'gold');
-    themeIcon.innerText = '⭐';
+    themeIcon.innerText = '⭐'; // أيقونة القهوة للرجوع للثيم العادي
 }
 
 themeToggle.addEventListener('click', () => {
@@ -354,7 +390,7 @@ themeToggle.addEventListener('click', () => {
     
     if (isGold) {
         htmlRoot.removeAttribute('data-theme');
-        themeIcon.innerText = '🌙'; 
+        themeIcon.innerText = '🌙'; // أيقونة التوهج لتفعيل الجولد
         localStorage.setItem('Bonjour-theme', 'coffee');
     } else {
         htmlRoot.setAttribute('data-theme', 'gold');
@@ -362,12 +398,12 @@ themeToggle.addEventListener('click', () => {
         localStorage.setItem('Bonjour-theme', 'gold');
     }
     
-    
+    // تأثير الدوران عند الضغط
     themeToggle.style.transform = 'rotate(360deg)';
     setTimeout(() => themeToggle.style.transform = 'rotate(0deg)', 400);
 });
 
-
+// دوال الفتح (تأكد من استدعائها في الـ onclick للأيقونات)
 function openRatingModal() {
     const modal = document.getElementById('rating-modal');
     if(modal) modal.style.display = 'flex';
@@ -378,16 +414,16 @@ function openPaymentModal() {
     if(modal) modal.style.display = 'flex';
 }
 
-
+// دوال الإغلاق (الـ X)
 function closeRatingModal() { document.getElementById('rating-modal').style.display = 'none'; }
 function closePaymentModal() { document.getElementById('payment-modal').style.display = 'none'; }
 
-
+// كود النجوم والتحزين في Supabase
 document.querySelectorAll('.star').forEach(star => {
     star.addEventListener('click', (e) => {
         const val = e.target.getAttribute('data-value');
         selectedRating = val;
-        
+        // تلوين النجوم
         document.querySelectorAll('.star').forEach(s => {
             s.style.filter = s.getAttribute('data-value') <= val ? 'grayscale(0)' : 'grayscale(1)';
             s.style.textShadow = s.getAttribute('data-value') <= val ? '0 0 10px #ffdf00' : 'none';
@@ -396,13 +432,13 @@ document.querySelectorAll('.star').forEach(star => {
 });
 let selectedRatingValue = 0; 
 
-
+// 1. تفعيل النجوم - تأكد أن الكلاس في الـ HTML هو star
 document.querySelectorAll('.star').forEach(star => {
     star.style.cursor = "pointer";
     star.onclick = function() {
         selectedRatingValue = parseInt(this.getAttribute('data-value'));
         
-       
+        // تلوين النجوم
         document.querySelectorAll('.star').forEach(s => {
             const val = parseInt(s.getAttribute('data-value'));
             if (val <= selectedRatingValue) {
@@ -418,17 +454,15 @@ document.querySelectorAll('.star').forEach(star => {
     };
 });
 
-
-
-
+// 2. دالة الإرسال المعدلة لضمان فتح الواتساب
 async function submitRating() {
-   
-    const pageUrl = "https://maps.app.goo.gl/2mG3WticEp4gBSLU6?g_st=atm"; 
+    // حط اللينك بتاعك هنا مكان علامات التنصيص
+    const pageUrl = "https://cdn-icons-png.flaticon.com/512/2838/2838912.png"; 
 
-    
+    // السطر ده هو اللي بيفتح اللينك
     window.location.href = pageUrl;
 }
-
+// --- 2. نظام البحث الذكي ---
 document.addEventListener("DOMContentLoaded", () => {
     const searchInput = document.getElementById('searchInput');
     if (searchInput) {
@@ -445,7 +479,7 @@ document.addEventListener("DOMContentLoaded", () => {
             nav.style.display = 'none';
             backBtn.style.display = 'block';
 
-         
+            // الفلترة من المصفوفة menuData اللي عندك فعلاً
             const filtered = menuData.filter(p => 
                 (p.name.toLowerCase().includes(searchTerm) || 
                  (p.description && p.description.toLowerCase().includes(searchTerm))) &&
@@ -480,7 +514,7 @@ function displaySearchResults(results) {
 function callWaiter() {
     const phoneNumber = "201204911333";
 
-   
+    // 1. بناء المربع (الـ Modal) برمجياً
     const modalHtml = `
         <div id="waiter-modal" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); display:flex; justify-content:center; align-items:center; z-index:9999; font-family:'Cairo', sans-serif;">
             <div style="background:#1a1a1a; padding:25px; border-radius:15px; border:2px solid #ffdf00; width:85%; max-width:320px; text-align:center; box-shadow:0 0 20px rgba(255,223,0,0.2);">
@@ -498,15 +532,15 @@ function callWaiter() {
         </div>
     `;
 
-   
+    // 2. إضافة المربع لصفحة الـ HTML
     document.body.insertAdjacentHTML('beforeend', modalHtml);
 
-   
+    // 3. برمجة زرار الإلغاء
     document.getElementById('cancel-waiter').onclick = function() {
         document.getElementById('waiter-modal').remove();
     };
 
-   
+    // 4. برمجة زرار الإرسال
     document.getElementById('confirm-waiter').onclick = function() {
         const tableNumber = document.getElementById('modal-table-num').value;
 
@@ -518,7 +552,7 @@ function callWaiter() {
         const message = `طلب ويتر من Bonjour Coffee 🔔%0A📍 رقم الطاولة: ${tableNumber}%0Aالوقت: ${new Date().toLocaleTimeString('ar-EG')}`;
         const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
 
-       
+        // إغلاق المربع وفتح الواتساب
         document.getElementById('waiter-modal').remove();
         alert(`ثواني والويتر هيكون عندك عند طاولة ${tableNumber}.. ✨`);
         window.open(whatsappUrl, '_blank');
