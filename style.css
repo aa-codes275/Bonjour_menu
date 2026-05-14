@@ -106,23 +106,8 @@
     overflow-y: auto;
     animation: slideUp 0.3s ease-out;
 }
-/* --- السلة الجانبية (Cart Sidebar) --- */
-.cart-sidebar {
-    position: fixed;
-    top: 0;
-    left: -100%;
-    width: 85%;
-    max-width: 320px;
-    height: 100%;
-    background: var(--card-bg);
-    z-index: 4000;
-    transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    border-right: 2px solid var(--main-red);
-    display: flex;
-    flex-direction: column;
-}
-/* --- أزرار التحكم --- */
-/* زرار إضافة للسلة الاحترافي */
+
+
 .add-to-cart-btn {
     width: 100%;
     padding: 16px;
@@ -1076,8 +1061,8 @@ body:has(#cart-sidebar.active) .theme-btn-neon {
     top: 50% !important;
     left: 50% !important;
     transform: translate(-50%, -50%) scale(0.8);
-    width: 90%;
-    max-width: 340px;
+    width: 88%;
+    max-width: 330px;
     max-height: 85vh; /* ارتفاع ممتاز يسمح بظهور منتجات كتير */
     background: rgba(20, 20, 20, 0.98) !important;
     border: 1px solid rgba(255, 223, 0, 0.5) !important;
@@ -1143,13 +1128,23 @@ body:has(#cart-sidebar.active) .theme-btn-neon {
 
 .cart-row input, #order-note {
     background: #000 !important;
-    border: 1px solid #333 !important;
+    border: 1px solid #444 !important; /* خليت الحدود أفتح شوية */
     border-radius: 10px !important;
-    color: #fff;
-    padding: 8px !important;
-    font-size: 8px !important;
+    color: #fff; /* لون الكتابة لما الزبون يكتب */
+    padding: 8px !important; /* كبرت المسافة جوه المربع عشان الخط يرتاح */
+    
+    /* التعديل الجوهري هنا */
+    font-size: 9px !important; /* كبرت الخط من 8 لـ 14 عشان يتشاف */
+    font-weight: 600; /* خليت الخط تقيل شوية */
     outline: none;
     text-align: center;
+    font-family: 'Reem Kufi', sans-serif;
+}
+/* ده بيتحكم في الكلام اللي جوه المربع قبل ما الزبون يلمسه */
+.cart-row input::placeholder, #order-note::placeholder {
+    color: rgba(255, 255, 255, 0.7) !important; /* خليت اللون أبيض واضح بنسبة 70% */
+    font-size: 13px;
+    font-weight: 500;
 }
 
 #order-note { height: 20px; resize: none; }
@@ -1202,158 +1197,71 @@ body:has(#cart-sidebar.active) .theme-btn-neon {
     box-shadow: 0 0 8px #ffdf00;
 }
 
-
-@media (max-width: 480px) {
-    .search-wrapper {
-        width: 90%; 
-        margin: 10px auto;
-    }
-
-    #searchInput {
-        height: 40px;
-        font-size: 0.9rem; 
-        padding: 0 45px 0 15px; 
-    }
-
-    .theme-btn-neon {
-        width: 35px; 
-        height: 35px;
-        left: 15px; 
-    }
-    
-    .theme-btn-neon span {
-        font-size: 16px;
-    }
-}
-@media screen and (max-width: 600px) {
-    
-   
-    .glass-header {
-        padding: 10px;
-    }
-    .glass-header h1 {
-        font-size: 18px;
-    }
-
-   
-    .category-nav {
-        gap: 8px;
-        padding: 10px 5px;
-        -webkit-overflow-scrolling: touch; 
-    }
-    .nav-item {
-        padding: 6px 14px;
-        font-size: 12px;
-    }
-
- 
-    .mini-card {
-        width: 92%; 
-        max-width: none;
-        padding: 8px;
-        gap: 8px;
-    }
-
-    .mini-card img {
-        width: 70px;
-        height: 70px;
-    }
-
-    .product-info h3 {
-        font-size: 14px;
-        margin-bottom: 2px;
-    }
-
-   
-    .glass-select {
-        height: 30px;
-        font-size: 12px;
-    }
-
-    .add-btn {
-        padding: 8px 12px;
-        font-size: 11px;
-    }
-
-  
-    .sidebar-cart {
-        width: 85%;
-    }
-
-
-    .cart-floating-btn {
-        width: 50px;
-        height: 50px;
-        bottom: 15px;
-        right: 15px;
-    }
-
-    .mini-toast {
-        width: auto;
-        left: 20px;
-        right: 20px;
-        text-align: center;
-        bottom: 80px;
-    }
-}
-/* منع الزووم التلقائي في خانات الإدخال */
-input, select, textarea {
-    font-size: 16px !important;
+/* 1. العنوان (Bonjour) هيفضل فوق خالص */
+.cart-title {
+    order: 1 !important;
 }
 
-/* لو عاوز تحافظ على شكل الخط صغير بس تخدع المتصفح */
+/* 2. منطقة الإجمالي والمدخلات والزرار (كل الـ footer) هنطلعه فوق */
+.cart-footer {
+    order: 2 !important;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px; /* مسافة بسيطة قبل الطلبات */
+}
+
+/* 3. قائمة المنتجات (الطلبات) تنزل تحت */
+#cart-items-list {
+    order: 3 !important;
+    flex-grow: 1; /* عشان تاخد باقي المساحة لتحت */
+    margin-top: 10px !important; /* نعدل الـ margin القديم */
+}
+
+/* --- إعدادات الموبايل العالمية --- */
 @media screen and (max-width: 768px) {
-    input, select, textarea {
-        font-size: 16px !important;
-    }
-}
-/* ضبط لوحة التحكم للموبايل */
-@media screen and (max-width: 768px) {
-    /* جعل الحاوية الرئيسية مرنة (تحت بعضها) */
-    .admin-container {
-        display: flex;
+    
+    /* 1. السلة: بتسنتر نفسها وبتاخد مساحة ذكية من أي شاشة */
+    .cart-sidebar {
+        width: 92vw !important; /* 92% من عرض الشاشة */
+        max-width: 350px !important; 
+        max-height: 85dvh !important; /* dvh وحدة قياس بتعرف طول الشاشة الحقيقي حتى مع وجود شريط المتصفح */
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) scale(1);
+        border-radius: 20px !important;
+        padding: 15px !important;
+        display: none; /* بتظهر flex في الـ active */
         flex-direction: column;
-        padding: 10px;
     }
 
-    /* ضبط السايد بار (Sidebar) لو عندك */
-    .sidebar {
+    /* 2. المدخلات (الصفوف): تقسيم ذكي للمساحة */
+    .cart-row {
+        display: flex !important;
+        gap: 8px !important;
         width: 100% !important;
-        height: auto !important;
-        position: relative;
-        margin-bottom: 20px;
     }
 
-    /* ضبط الكروت (Stats Cards) لتكون تحت بعضها */
-    .stats-grid {
-        display: grid;
-        grid-template-columns: 1fr !important; /* عمود واحد فقط */
-        gap: 15px;
+    .cart-row input {
+        flex: 1 !important; /* كل input بياخد نص المساحة بالمللي */
+        min-width: 0; /* بيمنع خروج المربع بره الشاشة */
+        height: 45px !important;
+        font-size: 14px !important; /* مقاس مريح للعين */
     }
 
-    /* جعل الجداول قابلة للتمرير يميناً ويساراً لمنع تدمير التصميم */
-    .table-wrapper {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-    }
-
-    table {
-        min-width: 600px; /* يضمن أن الجدول لن ينكمش بشكل قبيح */
-    }
-
-    /* تكبير الأزرار لتسهيل الضغط بالإصبع */
-    .btn-admin {
-        width: 100%;
-        padding: 12px;
-        font-size: 16px;
-    }
-
-    /* إخفاء العناصر غير الضرورية في الموبايل */
-    .desktop-only {
-        display: none;
+    /* 3. زرار التأكيد: حجم مثالي للضغط بالإصبع */
+    .checkout-btn {
+        width: 100% !important;
+        min-height: 50px !important;
+        font-size: 16px !important;
+        border-radius: 12px !important;
+        margin-top: 15px !important;
     }
 }
 
+/* --- منع الزوم التلقائي البايخ في الآيفون --- */
+input, select, textarea {
+    font-size: 16px !important; /* المتصفحات بتمنع الزوم لو الخط 16 فأعلى */
+}
 
 .category-nav::-webkit-scrollbar {
     display: none;
