@@ -1,44 +1,44 @@
 :root { 
-    --dark-brown: #3e2723;
-    --light-beige: #f5f5dc;
-    --accent-gold: #a1887f;
+    --dark-brown: #3e2723; /* بني غامق جداً للأسماء والأسعار */
+    --light-beige: #f5f5dc; /* البيج الفاتح للخلفيات */
+    --accent-gold: #a1887f; /* لون توهج هادئ يليق مع البيج */
 }
 
-
+/* أسماء المنتجات */
 .item-name, .product-main-title { 
     color: var(--dark-brown) !important; 
     font-weight: 900; 
 }
 
-
+/* الأسعار */
 .item-price, .product-price { 
-    color: #5d4037 !important; 
+    color: #5d4037 !important; /* بني متوسط عشان يظهر بوضوح */
     font-weight: bold;
 }
 
-
+/* تغيير التوهج (Shadows) والبراويز من الأحمر للبني */
 .product-main-img { 
     border: 2px solid var(--accent-gold) !important; 
-    box-shadow: 0 0 15px rgba(62, 39, 35, 0.2);
+    box-shadow: 0 0 15px rgba(62, 39, 35, 0.2); /* توهج بني خفيف بدل الأحمر */
 }
 
 
 
-
+/* المجموعات (Options) */
 .option-group { 
-    background: rgba(215, 204, 200, 0.3);
+    background: rgba(215, 204, 200, 0.3); /* بيج شفاف */
     border: 1px solid var(--accent-gold);
     color: var(--dark-brown);
 }
-
+/* وضعية الجولد الموهج والمربعات الفخمة */
 [data-theme="gold"] {
-    --Bonjour-red: #ffdf00;    
-    --dark-bg: #000000;     
+    --Bonjour-red: #ffdf00;      /* جولد ساطع */
+    --dark-bg: #000000;       /* أسود معتم تماماً */
     --gold-neon: #ffdf00;
-    --border-radius-main: 8px;
+    --border-radius-main: 8px; /* تحويل للمربعات */
 }
 
-
+/* تحديث زرار التبديل (Theme Button) */
 .theme-btn-neon {
     position: absolute;
     left: 25px; 
@@ -49,25 +49,25 @@
     height: 45px;
     border-radius: 50%;
     cursor: pointer;
-   
+    /* توهج يخطف العين */
     box-shadow: 0 0 15px var(--Bonjour-red), inset 0 0 5px var(--Bonjour-red);
     display: flex;
     align-items: center;
     justify-content: center;
     transition: 0.4s;
-    z-index: 10006; 
+    z-index: 10006; /* رفع الطبقة عشان يظهر فوق كل حاجة */
 }
 
-
+/* تأثير المربعات لما الثيم يكون جولد */
 [data-theme="gold"] .nav-item, 
 [data-theme="gold"] .icon-circle, 
 
 [data-theme="gold"] .add-to-cart-btn,
 [data-theme="gold"] .item-row {
-    height: 125px !important;    
-    padding: 0px 0px !important; 
-    margin: 8px 15px !important;
-    border-radius: 8px !important; 
+    height: 125px !important;    /* تقليل الارتفاع (السمك) */
+    padding: 0px 0px !important; /* تقليل الفراغ الداخلي */
+    margin: 8px 15px !important;  /* تقليل المسافة بين المستطيلات */
+    border-radius: 8px !important; /* المربعات الفخمة اللي طلبتها */
     display: flex !important;
     align-items: center !important;
 }
@@ -78,7 +78,7 @@
     border-radius: 6px !important;
 }
 
-
+/* صفحة المنتج (Product Page) بلمسة الجلد والجولد */
 .product-page-overlay {
     display: none;
     position: fixed;
@@ -87,13 +87,13 @@
     width: 100%;
     height: 100%;
     background: var(--dark-bg);
-    background-image: url('https://www.transparenttextures.com/patterns/leather.png');
+    background-image: url('https://www.transparenttextures.com/patterns/leather.png'); /* ملمس الجلد */
     z-index: 3000;
     overflow-y: auto;
     animation: slideUp 0.3s ease-out;
 }
 
-
+/* --- صفحة المنتج (Product Page) --- */
 .product-page-overlay {
     display: none;
     position: fixed;
@@ -106,7 +106,7 @@
     overflow-y: auto;
     animation: slideUp 0.3s ease-out;
 }
-
+/* --- السلة الجانبية (Cart Sidebar) --- */
 .cart-sidebar {
     position: fixed;
     top: 0;
@@ -121,16 +121,17 @@
     display: flex;
     flex-direction: column;
 }
-
+/* --- أزرار التحكم --- */
+/* زرار إضافة للسلة الاحترافي */
 .add-to-cart-btn {
     width: 100%;
     padding: 16px;
     margin-top: 20px;
-   
+    /* تدرج ذهبي انسيابي */
     background: linear-gradient(45deg, #ffdf00, #aa8a2e) !important;
     border: none !important;
-    border-radius: 12px !important; 
-    color: #000 !important;
+    border-radius: 12px !important; /* مربعات فخمة */
+    color: #000 !important; /* نص أسود لتباين عالي */
     font-size: 18px !important;
     font-weight: 800 !important;
     font-family: 'Cairo', sans-serif !important;
@@ -144,24 +145,24 @@
     text-transform: uppercase;
 }
 
-
+/* تأثير عند الوقوف بالماوس (Hover) */
 .add-to-cart-btn:hover {
-    transform: translateY(-4px) !important;
-    box-shadow: 0 8px 25px rgba(255, 223, 0, 0.5) !important; 
-    filter: brightness(1.1);
+    transform: translateY(-4px) !important; /* يترفع لفوق */
+    box-shadow: 0 8px 25px rgba(255, 223, 0, 0.5) !important; /* التوهج يزيد */
+    filter: brightness(1.1); /* يفتح لونه سنة */
 }
 
-
+/* تأثير عند الضغط (Active) */
 .add-to-cart-btn:active {
-    transform: scale(0.96) !important; 
+    transform: scale(0.96) !important; /* يصغر سنة كأنه انضغط حقيقي */
 }
 
-
+/* أيقونة السلة داخل الزرار */
 .add-to-cart-btn::after {
     content: '🛒';
     font-size: 20px;
 }
-
+/* --- تنسيق قائمة السلة --- */
 #cart-items-list {
     flex-grow: 1;
     overflow-y: auto;
@@ -169,7 +170,7 @@
 }
 
 .checkout-btn {
-    background: #25d366; 
+    background: #25d366; /* لون الواتساب */
     color: white;
     border: none;
     width: 100%;
@@ -179,7 +180,7 @@
     cursor: pointer;
 }
 
-
+/* --- تحسين شكل عناصر المنيو الرئيسية --- */
 .item-row {
     background: var(--card-bg);
     margin: 10px;
@@ -209,9 +210,10 @@
 
 
 body {
+    /* شلنا الـ linear-gradient عشان الصورة تظهر بألوانها الأصلية */
     background-image: url('6028237241802493065_121.jpg');
     background-size: cover;
-    background-position: center; 
+    background-position: center; /* بيخلي الصورة متسنترة في نص الشاشة */
     background-repeat: no-repeat;
     background-attachment: fixed;
     color: white;
@@ -222,7 +224,7 @@ body {
     display: flex;
     gap: 10px;
     align-items: center;
-    position: fixed; 
+    position: fixed; /* أو حسب تصميمك */
     bottom: 20px;
     right: 20px;
     z-index: 999;
@@ -231,7 +233,7 @@ body {
 .waiter-btn {
     background: rgba(255, 64, 0, 0.644) !important;
     border: 1px solid #ff1100 !important;
-    border-radius: 12px !important; 
+    border-radius: 12px !important; /* نفس المربعات الفخمة */
     color: #88471d !important;
     padding: 5px 8px !important;
     cursor: pointer !important;
@@ -253,7 +255,7 @@ body {
     margin-top: 2px;
 }
 
-
+/* تنسيق سريع لزرار السلة عشان يظبط جنبه */
 .cart-btn {
     background: #530000 !important;
     color: #000 !important;
@@ -267,7 +269,7 @@ body {
 }
 .extra-features {
     position: absolute;
-    left: 80px; 
+    left: 80px; /* بجانب زرار الثيم */
     top: 15px;
     display: flex;
     gap: 15px;
@@ -280,7 +282,7 @@ body {
     border: 1px solid #ffdf00;
     width: 40px;
     height: 40px;
-    border-radius: 8px; 
+    border-radius: 8px; /* مربعات فخمة */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -311,16 +313,16 @@ body {
     box-shadow: 0 0 5px #ffdf00;
 }
 
-
+/* إخفاء هذه الأيقونات عند فتح السلة */
 .hide-features {
     display: none !important;
 }
 .modal-overlay {
-    display: none; 
+    display: none; /* مخفي افتراضياً */
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.95); 
-    z-index: 99999;
+    background: rgba(0, 0, 0, 0.95); /* خلفية سوداء جداً */
+    z-index: 99999; /* أعلى رقم عشان يظهر فوق كل حاجة */
     align-items: center;
     justify-content: center;
     backdrop-filter: blur(8px);
@@ -332,7 +334,7 @@ body {
     padding: 30px 20px;
     width: 85%;
     max-width: 350px;
-    border-radius: 12px;
+    border-radius: 12px; /* المربعات اللي طلبتها */
     position: relative;
     text-align: center;
     box-shadow: 0 0 30px rgba(255, 223, 0, 0.4);
@@ -361,10 +363,10 @@ body {
     from { transform: scale(0.5); opacity: 0; }
     to { transform: scale(1); opacity: 1; }
 }
-
+/* تنسيق النجوم التفاعلية */
 .stars-selector {
     display: flex;
-    flex-direction: row-reverse; 
+    flex-direction: row-reverse; /* عشان التلوين يشتغل صح من اليمين للشمال */
     justify-content: center;
     gap: 8px;
     margin: 20px 0;
@@ -372,25 +374,25 @@ body {
 
 
 
-
+/* حركة التلوين عند الوقوف بالماوس أو الاختيار */
 .star-item:hover,
 .star-item:hover ~ .star-item,
 .star-item.selected,
-
+/* النجوم في حالتها العادية (مطفية تماماً) */
 .star-item {
     font-size: 35px;
-    color: #444 !important;
+    color: #444 !important; /* لون رمادي مطفي */
     cursor: pointer;
     transition: 0.3s;
 }
 
-
+/* النجوم المختارة (منورة) */
 .star-item.selected {
-    color: #ffdf00 !important; 
+    color: #ffdf00 !important; /* جولد بونجور */
     text-shadow: 0 0 10px rgba(255, 223, 0, 0.8) !important;
 }
 
-
+/* صندوق الملاحظات */
 .comment-box-wrapper {
     margin-bottom: 20px;
 }
@@ -400,7 +402,7 @@ body {
     height: 60px;
     background: #1a1a1a;
     border: 1px solid #333;
-    border-radius: 8px; 
+    border-radius: 8px; /* المربعات الفخمة */
     color: #fff;
     padding: 12px;
     font-family: 'Cairo', sans-serif;
@@ -413,14 +415,14 @@ body {
     box-shadow: 0 0 10px rgba(255, 223, 0, 0.2);
     outline: none;
 }
-
+/* الزرار الجولد الموهج */
 .gold-btn {
     width: 100%;
     padding: 14px;
     margin-top: 10px;
-    background: linear-gradient(45deg, #ffdf00, #aa8a2e); 
+    background: linear-gradient(45deg, #ffdf00, #aa8a2e); /* تدرج ذهبي فخم */
     border: none;
-    border-radius: 8px;
+    border-radius: 8px; /* المربعات اللي اتفقنا عليها */
     color: #000;
     font-weight: 800;
     font-size: 16px;
@@ -429,31 +431,32 @@ body {
     text-transform: uppercase;
     letter-spacing: 1px;
     transition: 0.4s all ease;
-    box-shadow: 0 4px 15px rgba(255, 223, 0, 0.3); 
+    box-shadow: 0 4px 15px rgba(255, 223, 0, 0.3); /* توهج خفيف تحت الزرار */
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-
+/* تأثير عند الوقوف بالماوس أو اللمس */
 .gold-btn:hover {
-    background: linear-gradient(45deg, #fff3a0, #ffdf00);
-    transform: translateY(-3px); 
-    box-shadow: 0 8px 25px rgba(255, 223, 0, 0.6); 
+    background: linear-gradient(45deg, #fff3a0, #ffdf00); /* يفتح لونه كأنه بيلمع */
+    transform: translateY(-3px); /* يترفع لفوق سنة */
+    box-shadow: 0 8px 25px rgba(255, 223, 0, 0.6); /* التوهج يزيد */
 }
 
-
+/* تأثير عند الضغط */
 .gold-btn:active {
-    transform: scale(0.95);
+    transform: scale(0.95); /* يضغط لجوه */
 }
 
-
+/* زرار الإلغاء أو "فهمت" لو عاوزه بشكل أخف شوية */
 .gold-btn-outline {
     background: transparent;
     border: 2px solid #ffdf00;
     color: #ffdf00;
 }
-
+/* الحاوية: خليناها شفافة تماماً عشان اللوجو يظهر لوحده */
+/* --- مسح الخلفية البيضاء تماماً وإظهار الاسم فقط --- */
 
 .main-logo-img {
     width: 180px; 
@@ -461,17 +464,20 @@ body {
     display: block;
     margin: 0 auto;
 
-  
+    /* الخدعة هنا: darken بيمسح أي لون أفتح من الخلفية (يعني الأبيض هيختفي) */
     mix-blend-mode: darken; 
     
-   
+    /* زيادة التباين عشان الحروف تظهر حادة والبيضاء يطير تماماً */
     filter: contrast(1.2) brightness(1); 
     
-   
+    /* لو الاسم لونه باهت وعاوزه يظهر أسود صريح، فعل السطر اللي جاي: */
+    /* filter: grayscale(1) contrast(200%); */
+
+    /* حركة النبض (بدون ألوان إضافية - نبض في الحجم فقط) */
     animation: simple-pulse 3s infinite ease-in-out;
 }
 
-
+/* حركة نبض هادية للحجم فقط عشان الاسم ميفضلش ثابت وممل */
 @keyframes simple-pulse {
     0% {
         transform: scale(1);
@@ -485,10 +491,10 @@ body {
 }
 
 .brand-name {
-    color: #3e2723 !important;
+    color: #3e2723 !important; /* اللون البني الغامق الأساسي */
     font-weight: 900;
     text-transform: uppercase;
-   
+    /* تأثير التوهج البني */
     text-shadow: 0 0 10px rgba(121, 85, 72, 0.8), 
                  0 0 20px rgba(161, 136, 127, 0.5); 
     letter-spacing: 2px;
@@ -686,15 +692,15 @@ body {
     flex-direction: column; 
     gap: 2px;
 }
-
+/* إجبار السلة إنها تكون فوق أي زرار مهما حصل */
 #cart-drawer, #cart-sidebar, .cart-overlay {
-    z-index: 999999 !important; 
+    z-index: 999999 !important; /* رقم خيالي عشان نضمن السيادة */
     position: fixed !important;
 }
 
-
+/* تأمين زرار الثيم */
 .theme-btn-neon {
-    z-index: 10006;
+    z-index: 10006; /* أقل بكتير من السلة */
 }
 
 
@@ -859,7 +865,7 @@ body {
 }
 .btn-back {
     position: relative;
-    z-index: 4000 !important; 
+    z-index: 4000 !important; /* عشان يظهر فوق صفحة المنتج والسلة */
 }
 
 #back-container {
@@ -910,7 +916,7 @@ html, body {
     position: relative;
     touch-action: pan-y; 
 }
-
+/* صفحة المنتج */
 .product-page-overlay {
     display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background: #000; z-index: 3000; overflow-y: auto;
@@ -920,12 +926,13 @@ html, body {
 .option-group { background: #111; padding: 15px; margin: 10px 0; border-radius: 10px; text-align: right; }
 .option-item { display: flex; justify-content: space-between; margin: 10px 0; border-bottom: 1px solid #222; padding-bottom: 5px; }
 
+/* السلة الجانبية */
 .cart-sidebar {
     position: fixed; top: 0; left: -100%; width: 300px; height: 100%;
     background: #111; transition: 0.4s; z-index: 4000; border-right: 2px solid #ff0000;
     display: flex; flex-direction: column;
 }
-
+/* حركة اهتزاز بسيطة لأيقونة السلة عند الإضافة */
 @keyframes bounce {
     0%, 100% { transform: scale(1); }
     50% { transform: scale(1.2); }
@@ -935,7 +942,7 @@ html, body {
     animation: bounce 0.5s ease-in-out;
 }
 
-
+/* تأكد إن عداد السلة واضح وتصميمه شيك */
 #cart-count {
     background: #ff0000;
     color: white;
@@ -955,13 +962,14 @@ html, body {
     align-items: center; justify-content: center; z-index: 2500; cursor: pointer;
 }
 #cart-count { position: absolute; top: -5px; right: -5px; background: white; color: red; padding: 2px 7px; border-radius: 50%; font-size: 12px; }
-
+/* الخلفية الأساسية اللي هتمسك الصفحة كلها */
 .product-page-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+    /* الخلفية هنا هتمسك الشاشة كلها */
     background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), 
                 url('6028237241802493065_121.jpg') no-repeat center center !important;
     background-size: cover !important;
@@ -969,28 +977,28 @@ html, body {
     z-index: 10000;
     display: none;
     overflow-y: auto;
-    padding: 0;
+    padding: 0; /* شلنا الـ padding عشان المحتوى يملأ الفراغ */
 }
 
-
+/* تعديل صندوق المحتوى عشان ميبقاش فيه برواز أسود منفصل */
 .product-page-content {
     padding: 20px;
     text-align: center;
-    background: transparent !important; 
+    background: transparent !important; /* خليناه شفاف عشان يظهر الخلفية اللي وراه */
     min-height: 100%;
 }
 
-
+/* تعديل مجموعات الأوبشنز عشان تكون واضحة فوق الخلفية */
 .option-group {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(5px); 
+    background: rgba(255, 255, 255, 0.1); /* خلفية فاتحة جداً وشفافة */
+    backdrop-filter: blur(5px); /* تأثير زجاجي شيك */
     padding: 15px;
     margin: 10px 0;
     border-radius: 15px;
     text-align: right;
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
-
+/* تصميم زرار السهم (تأثير الجلد والتوهج) */
 .new-back-arrow {
     position: absolute;
     top: 15px;
@@ -1004,44 +1012,45 @@ html, body {
     align-items: center;
     justify-content: center;
     z-index: 10005;
- 
+    
+    /* شكل الجلد الأسود */
     background: radial-gradient(circle at center, #333 0%, #000 100%);
-   
+    /* توهج أسود عميق مع لمسة نيون أحمر هادي */
     box-shadow: 0 0 15px rgba(0, 0, 0, 1), 
                 inset 0 0 8px rgba(255, 255, 255, 0.1),
                 0 0 5px rgba(255, 0, 0, 0.2); 
     transition: 0.3s all ease;
 }
 
-
+/* شكل السهم (أحمر متوهج) */
 .arrow-icon::before {
     content: '';
     width: 10px;
     height: 10px;
     border-top: 3px solid #ff0000;
     border-right: 3px solid #ff0000;
-    transform: rotate(225deg); 
+    transform: rotate(225deg); /* اتجاه السهم للخلف */
     display: block;
 }
 
 .new-back-arrow:hover {
     transform: scale(1.1);
-    box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.5); /* زيادة التوهج عند الوقوف عليه */
 }
 
-
+/* لو السلة واخدة كلاس active أو show الزرار يختفي فوراً */
 #cartSidebar.active ~ .theme-btn-neon,
 #cartSidebar.show ~ .theme-btn-neon,
 .cart-sidebar.active ~ .theme-btn-neon {
     display: none !important;
 }
 
-
+/* حل بديل لو الزرار مش جنب السلة في الكود */
 body:has(#cartSidebar.active) .theme-btn-neon,
 body:has(.cart-sidebar.active) .theme-btn-neon {
     display: none !important;
 }
-
+/* 1. الحل الشامل: لو السلة مفتوحة، اخفي الأيقونة العائمة فوراً */
 body:has(#cart-sidebar.active) .cart-floating-icon,
 body:has(.cart-sidebar.active) .cart-floating-icon,
 body.cart-open .cart-floating-icon {
@@ -1051,17 +1060,147 @@ body.cart-open .cart-floating-icon {
     pointer-events: none !important;
 }
 
-
+/* 2. الحل الاحتياطي: لو الزرار جنب السلة في الكود */
 #cart-sidebar.active ~ .cart-floating-icon,
 .cart-sidebar.active ~ .cart-floating-icon {
     display: none !important;
 }
 
-
+/* 3. تأكيد إخفاء زرار الثيم معاها في نفس اللحظة */
 body:has(#cart-sidebar.active) .theme-btn-neon {
     display: none !important;
 }
 
+.cart-sidebar {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) scale(0.8);
+    width: 90%;
+    max-width: 340px;
+    max-height: 85vh; /* ارتفاع ممتاز يسمح بظهور منتجات كتير */
+    background: rgba(20, 20, 20, 0.98) !important;
+    border: 1px solid rgba(255, 223, 0, 0.5) !important;
+    border-radius: 25px !important;
+    padding: 15px !important;
+    display: none;
+    flex-direction: column;
+    z-index: 10000;
+    box-shadow: 0 0 40px rgba(0,0,0,0.8);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.cart-sidebar.active {
+    display: flex !important;
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+}
+
+/* زرار الإكس (X) - متسنتر وشيك */
+.close-cart {
+    position: absolute;
+    top: 15px;
+    left: 15px; /* عشان المنيو عربي فخليناه شمال */
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffdf00;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s;
+}
+
+.close-cart:hover { background: #ff0000; color: #fff; }
+
+/* منطقة المنتجات - هي دي اللي بتاخد المساحة الكبيرة */
+#cart-items-list {
+    flex-grow: 1;
+    overflow-y: auto;
+    margin: 40px 0 10px 0; /* مسافة عشان الإكس والعنوان */
+    padding-right: 5px;
+}
+
+/* المربعات (متوسطنة وملمومة) */
+.cart-inputs-container {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 10px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.cart-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.cart-row input, #order-note {
+    background: #000 !important;
+    border: 1px solid #333 !important;
+    border-radius: 10px !important;
+    color: #fff;
+    padding: 8px !important;
+    font-size: 8px !important;
+    outline: none;
+    text-align: center;
+}
+
+#order-note { height: 20px; resize: none; }
+
+/* زرار الإرسال */
+.checkout-btn {
+    background: #ffdf00 !important;
+    color: #000 !important;
+    font-weight: bold;
+    border-radius: 12px !important;
+    height: 45px;
+    margin-top: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+
+/* تأكد إن السطر ده أول سطر في ملف الـ CSS خالص */
+@import url('https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400..700&display=swap');
+
+.cart-title {
+    font-family: 'Reem Kufi', sans-serif;
+    text-align: center;
+    font-size: 24px !important;
+    font-weight: 700;
+    margin: 10px 0 20px 0;
+    display: block; /* عشان التوسط يظبط */
+    
+    /* التدرج اللوني المصلح */
+    background: linear-gradient(180deg, #ffdf00 0%, #d4af37 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: #ffdf00; /* لون احتياطي لو المتصفح قديم */
+
+    /* التوهج */
+    text-shadow: 0 0 10px rgba(255, 223, 0, 0.3);
+    
+    position: relative;
+}
+
+/* الخط اللي تحت الكلمة */
+.cart-title::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #ffdf00, transparent);
+    margin: 8px auto 0;
+    box-shadow: 0 0 8px #ffdf00;
+}
 
 
 @media (max-width: 480px) {
@@ -1157,26 +1296,27 @@ body:has(#cart-sidebar.active) .theme-btn-neon {
         bottom: 80px;
     }
 }
-
+/* منع الزووم التلقائي في خانات الإدخال */
 input, select, textarea {
     font-size: 16px !important;
 }
 
+/* لو عاوز تحافظ على شكل الخط صغير بس تخدع المتصفح */
 @media screen and (max-width: 768px) {
     input, select, textarea {
         font-size: 16px !important;
     }
 }
-
+/* ضبط لوحة التحكم للموبايل */
 @media screen and (max-width: 768px) {
- 
+    /* جعل الحاوية الرئيسية مرنة (تحت بعضها) */
     .admin-container {
         display: flex;
         flex-direction: column;
         padding: 10px;
     }
 
-  
+    /* ضبط السايد بار (Sidebar) لو عندك */
     .sidebar {
         width: 100% !important;
         height: auto !important;
@@ -1184,31 +1324,31 @@ input, select, textarea {
         margin-bottom: 20px;
     }
 
-   
+    /* ضبط الكروت (Stats Cards) لتكون تحت بعضها */
     .stats-grid {
         display: grid;
-        grid-template-columns: 1fr !important; 
+        grid-template-columns: 1fr !important; /* عمود واحد فقط */
         gap: 15px;
     }
 
-   
+    /* جعل الجداول قابلة للتمرير يميناً ويساراً لمنع تدمير التصميم */
     .table-wrapper {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
     }
 
     table {
-        min-width: 600px; 
+        min-width: 600px; /* يضمن أن الجدول لن ينكمش بشكل قبيح */
     }
 
- 
+    /* تكبير الأزرار لتسهيل الضغط بالإصبع */
     .btn-admin {
         width: 100%;
         padding: 12px;
         font-size: 16px;
     }
 
-  
+    /* إخفاء العناصر غير الضرورية في الموبايل */
     .desktop-only {
         display: none;
     }
