@@ -23,7 +23,7 @@
             
         </div>
                <div class="extra-features">
-
+    <!-- أيقونة التقييم -->
     
 </div>
         
@@ -73,7 +73,7 @@
 
         
                <div id="back-container" style="display: none; text-align: right; padding: 10px;">
-
+    <!-- تعديل الزرار لينادي دالة التعامل مع العودة -->
                  <button onclick="goBack()" class="btn-back">    &#10094; 
                </button>
              </div>
@@ -157,7 +157,7 @@
      
         <div id="products-container" class="products-list"></div>
     </main>
-
+ <!-- نافذة تفاصيل المنتج -->
 <div id="product-page" class="product-page-overlay">
     <div class="product-page-content">
         <button class="new-back-arrow" onclick="closeProductPage()">
@@ -165,7 +165,7 @@
         </button>
        
         <div id="product-details">
-       
+            <!-- الصور والبيانات هتنزل هنا -->
         </div>
         <div class="cart-controls">
             <button class="add-to-cart-btn" onclick="addToCart()">إضافة للسلة</button>
@@ -173,67 +173,44 @@
     </div>
 </div>
 
-
+<!-- زر السلة العائم -->
 <div class="cart-floating-icon" onclick="toggleCartSidebar()">
     <span id="cart-count">0</span>
     🛒
 </div>
 <div class="action-buttons">
-    
+    <!-- زرار طلب الويتر الجديد -->
     <button class="waiter-btn" onclick="callWaiter()">
         <span class="waiter-icon">🔔</span>
         <small>اطلب ويتر</small>
     </button>
 
-
+<!-- السلة الجانبية -->
 <div id="cart-sidebar" class="cart-sidebar">
-    <div class="cart-header">
-          <h1 class="brand-name">Bonjour</h1>
-       <button onclick="toggleCartSidebar()" style="
-        background: rgba(255, 223, 0, 0.1) !important;
-        border: 1px solid #ffdf00 !important;
-        color: #ffdf00 !important;
-        width: 35px !important;
-        height: 35px !important;
-        border-radius: 8px !important;
-        font-size: 18px !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        cursor: pointer !important;
-        transition: 0.3s !important;
-        outline: none !important;
-    ">✕</button>
-    </div>
+   <button class="close-cart" onclick="toggleCartSidebar()">✕</button>
     
-    <div id="cart-items-list"></div>
+   <h2 class="cart-title"> Bonjour</h2>
+    <div id="cart-items-list">
+        </div>
+
     <div class="cart-footer">
-        <div id="cart-total">إجمالي: 0 EGP</div>
-        <div class="cart-details-fields" style="padding: 10px; background: #1a1a1a; border-radius: 8px; margin-bottom: 10px;">
-    <input type="number" id="table-number" placeholder="رقم الطاولة" style="width: 100%; padding: 8px; margin-bottom: 10px; background: #222; border: 1px solid #333; color: white; border-radius: 5px;">
-    <div class="cart-inputs" style="padding: 10px; border-top: 1px solid #333;">
-    <label style="color: #ffdf00; display: block; margin-bottom: 5px; font-size: 14px;">عدد الأفراد :</label>
-    <input type="number" id="people-count" 
-           oninput="updateCartUI()" 
-           placeholder="أدخل عدد الأفراد" 
-           min="1" 
-           style="width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #ffdf00; color: white; border-radius: 8px; margin-bottom: 10px; outline: none;">
-    
-    <input type="number" id="table-number" 
-           placeholder="رقم الطاولة" 
-           style="width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 8px;">
-</div>
-    
-    <textarea id="order-note" placeholder="ملاحظات إضافية (اختياري)..." rows="2" style="width: 100%; padding: 8px; background: #222; border: 1px solid #333; color: white; border-radius: 5px; font-family: 'Cairo', sans-serif; resize: none;"></textarea>
-</div>
-        <button class="checkout-btn" onclick="sendToWhatsApp()">إرسال الطلب </button>
+        <div id="cart-total" style="color:#ffdf00; text-align:center; font-weight:bold; margin-bottom:10px;">0.00 EGP</div>
+        
+        <div class="cart-inputs-container">
+            <div class="cart-row">
+                <input type="number" id="people-count" placeholder=" عدد الافراد " oninput="updateCartUI()">
+                <input type="number" id="table-number" placeholder="رقم الطاولة">
+            </div>
+            <textarea id="order-note" placeholder=" ملاحظاتك (اختياري)..."></textarea>
+        </div>
+
+        <button class="checkout-btn" onclick="sendToWhatsApp()">تأكيد الطلب</button>
     </div>
-    
 </div>
+<!-- مودال التقييم -->
 
 
-
-
+<!-- مودال الدفع -->
 <div id="payment-modal" class="modal-overlay">
     <div class="modal-content">
         <button class="close-modal-x" onclick="closePaymentModal()">✕</button>
