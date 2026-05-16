@@ -1,234 +1,235 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Bonjour_Menu </title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;900&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Bonjour Menu</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="logo-wrapper">
-        <img src="6028237241802493099_121.jpg" alt="Bonjour " class="main-logo-img">
-    </div>
-   <header class="top-bar">
-    <div class="main-header-content">
-        
-        
-        
-        <div class="contact-icons-row">
-            <a href="https://www.facebook.com/share/1DuaAPoJSN/" target="_blank" class="social-icon">
-                <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook">
-            </a>
-            
-        </div>
-               <div class="extra-features">
-    <!-- أيقونة التقييم -->
-    
+
+<div class="ambient-glow"></div>
+
+<!-- ===== LOGO ===== -->
+<div class="logo-section">
+  <div class="logo-ring-wrap">
+    <svg viewBox="0 0 140 140">
+      <defs>
+        <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%"   stop-color="rgba(255,223,0,0)"/>
+          <stop offset="70%"  stop-color="rgba(255,223,0,0)"/>
+          <stop offset="100%" stop-color="rgba(255,223,0,0.6)"/>
+        </linearGradient>
+      </defs>
+      <circle cx="70" cy="70" r="66" fill="none" stroke="url(#ringGrad)" stroke-width="5" stroke-linecap="round"/>
+    </svg>
+  </div>
+  <div class="logo-circle" id="logo-circle">
+    <img src="WhatsApp Image 2026-05-01 at 12.35.57 AM.jpeg" alt="Bonjour"
+         onload="this.style.display='block'"
+         onerror="this.style.display='none';document.getElementById('logo-emoji').style.display='block'">
+    <span id="logo-emoji" style="display:none"></span>
+  </div>
+  <h1 class="brand-title">Bonjour</h1>
+  <div class="brand-line"></div>
 </div>
-        
 
-    
-
-        <div class="location-bar-v2" style="display: flex; align-items: center; gap: 8px; flex-wrap: nowrap; overflow-x: auto; padding: 5px;">
-            <img src="https://cdn-icons-png.flaticon.com/512/2838/2838912.png" alt="Map" style="width: 20px; height: 20px;">
-            
-            <a href="https://maps.app.goo.gl/2mG3WticEp4gBSLU6?g_st=atm" target="_blank" 
-               style="text-decoration: none; display: flex; align-items: center; gap: 4px; background: rgba(255, 223, 0, 0.1); padding: 4px 8px; border-radius: 15px; border: 1px solid #ffdf00;"> 
-                <span style="font-size: 20px;">⭐</span>
-                <span style="color: #6f3206; font-size: 11px; font-weight: bold; white-space: nowrap;">رأيك يهمنا</span>
-            </a>
-
-            <div onclick="openPaymentModal()" 
-                 style="cursor: pointer; display: flex; align-items: center; gap: 4px; background: rgba(0, 255, 255, 0.1); padding: 4px 8px; border-radius: 15px; border: 1px solid #00ffff;">
-                <span style="font-size: 20px;">💳</span>
-                <span style="color: #7a220a; font-size: 11px; font-weight: bold; white-space: nowrap;">الدفع</span>
-            </div>
-        </div>
-    </div>
-
-          
-    </div>
-        </div>
-        
-    </div>
+<!-- ===== TOP BAR ===== -->
+<header class="top-bar">
+  <div class="top-bar-inner">
+    <a href="https://www.facebook.com/share/1DuaAPoJSN/" target="_blank" class="pill pill-blue" title="فيسبوك">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="#4a9eff">
+        <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.513c-1.491 0-1.956.93-1.956 1.887v2.267h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/>
+      </svg>
+    </a>
+    <a href="https://maps.app.goo.gl/2mG3WticEp4gBSLU6?g_st=atm" target="_blank" class="pill pill-gold" title="رأيك يهمنا">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+      </svg>
+      رأيك يهمنا
+    </a>
+    <button onclick="openPayment()" class="pill pill-cyan" style="font-family:'Cairo';cursor:pointer;">
+      <span>💳</span>
+    </button>
+  </div>
 </header>
 
+<main style="position:relative;z-index:1;">
 
-    <main>  
-        <div class="search-wrapper">
-            <button id="theme-toggle" class="theme-btn-neon">
-             <span id="theme-icon">🌙</span>
-             </button>
-             
-             
-    <p><h1 class="brand-name">       </h1></p>
+  <!-- Search -->
+  <div class="search-wrap">
+    <input id="searchInput" type="text" placeholder="🔍 بحث  ...">
+  </div>
 
-    
-    
-            <input type="text" id="searchInput" placeholder="ابحث هنا...">
-            
-        </div>
-        
+  <!-- Categories Grid -->
+  <div class="cats-grid">
 
-        
-               <div id="back-container" style="display: none; text-align: right; padding: 10px;">
-    <!-- تعديل الزرار لينادي دالة التعامل مع العودة -->
-                 <button onclick="goBack()" class="btn-back">    &#10094; 
-               </button>
-             </div>
-
-       <section class="category-nav">
-    <div class="nav-item active" onclick="showCategory('coffee', this)">
-        <div class="icon-circle">
-            <img src="WhatsApp Image 2026-05-01 at 12.38.42 AM - Copy.jpeg" alt="">
-        </div>
-        
-        
-        <span>القهوة</span>
-    </div>
-       
-
-         <div class="nav-item" onclick="showCategory('hot', this)">
-        <div class="icon-circle">
-            <img src="2506866_0.jpg" alt="ساخن">
-        </div>
-        <span>مشروبات ساخنة</span>
-    </div>
-
-    <div class="nav-item" onclick="showCategory('ice', this)">
-        <div class="icon-circle">
-            <img src="544544156kkkk55.jpg" alt="بارد">
-        </div>
-        <span>مشروبات باردة</span>
-    </div>
-        
-    <div class="nav-item" onclick="showCategory('fresh', this)">
-        <div class="icon-circle">
-            <img src="jfndlblk654dfb465b46545.jpg" alt="">
-        </div>
-        <span>عصائر فريش</span>
-    </div>
-
-    <div class="nav-item active" onclick="showCategory('soda', this)">
-        <div class="icon-circle">
-            <img src="wp105554454554997132.jpg" alt="">
-        </div>
-        <span> مشروبات غازيه</span>
-    </div>
-
-    <div class="nav-item active" onclick="showCategory('icen', this)">
-        <div class="icon-circle">
-            <img src="downl78455454545454oad.jpg" alt="">
-        </div>
-        <span>انتعاشة</span>
-    </div>
-
-    <div class="nav-item active" onclick="showCategory('DESEART', this)">
-        <div class="icon-circle">
-            <img src="gfdgdzdf65645.jpg" alt="">
-        </div>
-        <span>الحلويات</span>
-    </div>
-
-     <div class="nav-item active" onclick="showCategory('mix', this)">
-        <div class="icon-circle">
-            <img src="Hand_pouring_coffee_202606564563231238.jpg" alt="">
-        </div>
-        <span>اختراع العميل</span>
-    </div>
-
-    <div class="nav-item active" onclick="showCategory('extra', this)">
-        <div class="icon-circle">
-            <img src="thumb-tea-with-lemon-and-mint-cup-of-tea-tea-party-te5645464564566544a-concepts-lemon.jpg" alt="">
-        </div>
-        <span>الاضافات</span>
-    </div>
-
-    <div class="nav-item active" onclick="showCategory('shisha', this)">
-        <div class="icon-circle">
-            <img src="6551651511.png" alt="">
-        </div>
-        <span>شيشة</span>
-    </div>
-
-    
-</section>
-     
-        <div id="products-container" class="products-list"></div>
-    </main>
- <!-- نافذة تفاصيل المنتج -->
-<div id="product-page" class="product-page-overlay">
-    <div class="product-page-content">
-        <button class="new-back-arrow" onclick="closeProductPage()">
-            <span class="arrow-icon"></span>
-        </button>
-       
-        <div id="product-details">
-            <!-- الصور والبيانات هتنزل هنا -->
-        </div>
-        <div class="cart-controls">
-            <button class="add-to-cart-btn" onclick="addToCart()">إضافة للسلة</button>
-        </div>
-    </div>
-</div>
-
-<!-- زر السلة العائم -->
-<div class="cart-floating-icon" onclick="toggleCartSidebar()">
-    <span id="cart-count">0</span>
-    🛒
-</div>
-<div class="action-buttons">
-    <!-- زرار طلب الويتر الجديد -->
-    <button class="waiter-btn" onclick="callWaiter()">
-        <span class="waiter-icon">🔔</span>
-        <small>اطلب ويتر</small>
+    <!-- الكل: 3 orbiting dots -->
+    <button class="cat-btn active" data-cat="all" onclick="setCat(null)">
+      <span class="cat-ico">
+        <span class="anim-icon ico-all"><i></i><i></i><i></i></span>
+      </span>
+      <span class="cat-lbl">الكل</span>
     </button>
 
-<!-- السلة الجانبية -->
-<div id="cart-sidebar" class="cart-sidebar">
-   <button class="close-cart" onclick="toggleCartSidebar()">✕</button>
-    
-   <h2 class="cart-title"> Bonjour</h2>
-    <div id="cart-items-list">
-        </div>
+    <!-- القهوة: cup + steam -->
+    <button class="cat-btn" data-cat="coffee" onclick="setCat('coffee')">
+      <span class="cat-ico">
+        <span class="anim-icon ico-coffee"><i></i><i></i><i></i></span>
+      </span>
+      <span class="cat-lbl">القهوة</span>
+    </button>
 
-    <div class="cart-footer">
-        <div id="cart-total" style="color:#ffdf00; text-align:center; font-weight:bold; margin-bottom:10px;">0.00 EGP</div>
-        
-        <div class="cart-inputs-container">
-            <div class="cart-row">
-                <input type="number" id="people-count" placeholder=" عدد الافراد " oninput="updateCartUI()">
-                <input type="number" id="table-number" placeholder="رقم الطاولة">
-            </div>
-            <textarea id="order-note" placeholder=" ملاحظاتك (اختياري)..."></textarea>
-        </div>
+    <!-- ساخنة: pulsing flame -->
+    <button class="cat-btn" data-cat="hot" onclick="setCat('hot')">
+      <span class="cat-ico">
+        <span class="anim-icon ico-hot"></span>
+      </span>
+      <span class="cat-lbl">مشروبات ساخنة</span>
+    </button>
 
-        <button class="checkout-btn" onclick="sendToWhatsApp()">تأكيد الطلب</button>
-    </div>
+    <!-- باردة: spinning snowflake -->
+    <button class="cat-btn" data-cat="ice" onclick="setCat('ice')">
+      <span class="cat-ico">
+        <span class="anim-icon ico-ice"><i></i><i></i><i></i></span>
+      </span>
+      <span class="cat-lbl">مشروبات بارده</span>
+    </button>
+
+    <!-- فريش: bouncing orange -->
+    <button class="cat-btn" data-cat="fresh" onclick="setCat('fresh')">
+      <span class="cat-ico">
+        <span class="anim-icon ico-fresh"></span>
+      </span>
+      <span class="cat-lbl">عصائر فريش</span>
+    </button>
+
+    <!-- غازية: rising bubbles -->
+    <button class="cat-btn" data-cat="soda" onclick="setCat('soda')">
+      <span class="cat-ico">
+        <span class="anim-icon ico-soda"><i></i><i></i><i></i></span>
+      </span>
+      <span class="cat-lbl">مشروبات غازية</span>
+    </button>
+
+    <!-- انتعاشة: cool pulse ring -->
+    <button class="cat-btn" data-cat="icen" onclick="setCat('icen')">
+      <span class="cat-ico">
+        <span class="anim-icon ico-icen"></span>
+      </span>
+      <span class="cat-lbl">انتعاشة</span>
+    </button>
+
+    <!-- حلويات: twinkling star -->
+    <button class="cat-btn" data-cat="DESEART" onclick="setCat('DESEART')">
+      <span class="cat-ico">
+        <span class="anim-icon ico-desert"><i></i><i></i></span>
+      </span>
+      <span class="cat-lbl">حلويات</span>
+    </button>
+
+    <!-- اختراع: two orbiting dots -->
+    <button class="cat-btn" data-cat="mix" onclick="setCat('mix')">
+      <span class="cat-ico">
+        <span class="anim-icon ico-mix"><i></i><i></i></span>
+      </span>
+      <span class="cat-lbl">اختراع العميل</span>
+    </button>
+
+    <!-- إضافات: spinning plus -->
+    <button class="cat-btn" data-cat="extra" onclick="setCat('extra')">
+      <span class="cat-ico">
+        <span class="anim-icon ico-extra"></span>
+      </span>
+      <span class="cat-lbl">إضافات</span>
+    </button>
+
+    <!-- شيشة: rising smoke waves -->
+    <button class="cat-btn" data-cat="shisha" onclick="setCat('shisha')">
+      <span class="cat-ico">
+        <span class="anim-icon ico-shisha"><i></i><i></i><i></i></span>
+      </span>
+      <span class="cat-lbl">شيشة</span>
+    </button>
+
+  </div>
+
+  <!-- Products -->
+  <div id="products" class="products-grid">
+    <div class="skeleton"></div><div class="skeleton"></div>
+    <div class="skeleton"></div><div class="skeleton"></div>
+    <div class="skeleton"></div><div class="skeleton"></div>
+  </div>
+
+</main>
+
+<!-- ===== PRODUCT SHEET ===== -->
+<div id="prod-back" class="backdrop" onclick="closeProduct()"></div>
+<div id="product-sheet" class="sheet">
+  <div class="sheet-handle"></div>
+  <button class="close-btn" onclick="closeProduct()">✕</button>
+  <div id="p-img" class="p-img-wrap"></div>
+  <h2 id="p-name"  class="p-name"></h2>
+  <p  id="p-price" class="p-price"></p>
+  <div id="p-opts"></div>
+  <label class="opt-label">ملاحظات إضافية:</label>
+  <textarea id="p-note" class="note-ta" placeholder="هل تريد إضافة أي تعديل على طلبك؟..."></textarea>
+  <button class="add-cart-btn" onclick="addToCart()">إضافة للسلة </button>
 </div>
-<!-- مودال التقييم -->
 
-
-<!-- مودال الدفع -->
-<div id="payment-modal" class="modal-overlay">
-    <div class="modal-content">
-        <button class="close-modal-x" onclick="closePaymentModal()">✕</button>
-        
-        <h3>بيانات الدفع 💳</h3>
-        <div class="payment-info">
-            <p>دفع InstaPay أو محفظة:</p>
-            <h2 class="neon-number">01204911333</h2>
-            <p style="font-size: 12px; color: #aaa;">"شكراً لاختيارك Bonjour.. استمتع بقهوتك وفي انتظارك تاني!"</p>
-        </div>
-        <button onclick="closePaymentModal()" class="gold-btn">Bonjour</button>
+<!-- ===== CART SHEET ===== -->
+<div id="cart-back" class="backdrop" onclick="closeCart()" style="z-index:29999;"></div>
+<div id="cart-sheet" class="sheet" style="z-index:30000;max-height:88vh;">
+  <div class="sheet-handle" style="flex-shrink:0;"></div>
+  <div class="cart-head">
+    <button class="close-btn" style="position:static;" onclick="closeCart()">✕</button>
+    <h2 class="cart-title">🛒 Bonjour</h2>
+  </div>
+  <div id="cart-list" class="cart-list"></div>
+  <div class="cart-foot">
+    <div class="cart-row-inputs">
+      <input id="people-n" type="number" class="cart-in" placeholder="عدد الأفراد" oninput="renderTotal()">
+      <input id="table-n"  type="number" class="cart-in" placeholder="رقم الطاولة">
     </div>
+    <textarea id="order-note" class="cart-ta" placeholder="ملاحظاتك (اختياري)..."></textarea>
+    <div id="total-box" class="total-box"></div>
+    <button class="wa-btn" onclick="sendWA()"><span style="font-size:20px"></span>تأكيد الطلب</button>
+  </div>
 </div>
 
+<!-- ===== PAYMENT ===== -->
+<div id="pay-backdrop" class="backdrop" onclick="closePayment()" style="z-index:39999;"></div>
+<div id="pay-modal">
+  <div class="pay-box" onclick="event.stopPropagation()">
+    <button class="close-btn" onclick="closePayment()">✕</button>
+    <div style="font-size:48px;margin-bottom:10px;">💳</div>
+    <h3 style="font-size:20px;font-weight:900;margin-bottom:4px;">بيانات الدفع</h3>
+    <div class="pay-inner">
+      <p style="font-size:13px;color:rgba(255,255,255,0.55);margin-bottom:6px;">دفع محفظة:</p>
+      <div class="pay-number">01204911333</div>
+    </div>
+    <p style="font-size:12px;color:rgba(255,255,255,0.38);line-height:1.6;">
+      برجاء تصوير الشاشة بعد الدفع وإرسالها مع الطلب
+    </p>
+  </div>
+</div>
 
+<!-- ===== TOAST ===== -->
+<div id="toast"><span>✅</span><span id="toast-txt"></span></div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="script.js"></script>
+<!-- ===== FABs ===== -->
+<div class="fabs">
+  <button class="fab fab-waiter" onclick="callWaiter()">
+    <span style="font-size:20px;">🔔</span>
+    <span class="fab-lbl">ويتر</span>
+  </button>
+  <button class="fab fab-cart" onclick="openCart()">
+    🛒
+    <span id="cart-badge" class="cart-badge">0</span>
+  </button>
+</div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="script.js"></script>
 </body>
 </html>
