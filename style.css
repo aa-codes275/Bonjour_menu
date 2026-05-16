@@ -1,1303 +1,714 @@
-:root { 
-    --dark-brown: #3e2723; /* بني غامق جداً للأسماء والأسعار */
-    --light-beige: #f5f5dc; /* البيج الفاتح للخلفيات */
-    --accent-gold: #a1887f; /* لون توهج هادئ يليق مع البيج */
-}
-
-/* أسماء المنتجات */
-.item-name, .product-main-title { 
-    color: var(--dark-brown) !important; 
-    font-weight: 900; 
-}
-
-/* الأسعار */
-.item-price, .product-price { 
-    color: #5d4037 !important; /* بني متوسط عشان يظهر بوضوح */
-    font-weight: bold;
-}
-
-/* تغيير التوهج (Shadows) والبراويز من الأحمر للبني */
-.product-main-img { 
-    border: 2px solid var(--accent-gold) !important; 
-    box-shadow: 0 0 15px rgba(62, 39, 35, 0.2); /* توهج بني خفيف بدل الأحمر */
-}
-
-
-
-/* المجموعات (Options) */
-.option-group { 
-    background: rgba(215, 204, 200, 0.3); /* بيج شفاف */
-    border: 1px solid var(--accent-gold);
-    color: var(--dark-brown);
-}
-/* وضعية الجولد الموهج والمربعات الفخمة */
-[data-theme="gold"] {
-    --Bonjour-red: #ffdf00;      /* جولد ساطع */
-    --dark-bg: #000000;       /* أسود معتم تماماً */
-    --gold-neon: #ffdf00;
-    --border-radius-main: 8px; /* تحويل للمربعات */
-}
-
-/* تحديث زرار التبديل (Theme Button) */
-.theme-btn-neon {
-    position: absolute;
-    left: 25px; 
-    background: rgba(0, 0, 0, 0.8);
-    border: 2px solid var(--Bonjour-red);
-    color: var(--Bonjour-red);
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    cursor: pointer;
-    /* توهج يخطف العين */
-    box-shadow: 0 0 15px var(--Bonjour-red), inset 0 0 5px var(--Bonjour-red);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: 0.4s;
-    z-index: 10006; /* رفع الطبقة عشان يظهر فوق كل حاجة */
-}
-
-/* تأثير المربعات لما الثيم يكون جولد */
-[data-theme="gold"] .nav-item, 
-[data-theme="gold"] .icon-circle, 
-
-[data-theme="gold"] .add-to-cart-btn,
-[data-theme="gold"] .item-row {
-    height: 125px !important;    /* تقليل الارتفاع (السمك) */
-    padding: 0px 0px !important; /* تقليل الفراغ الداخلي */
-    margin: 8px 15px !important;  /* تقليل المسافة بين المستطيلات */
-    border-radius: 8px !important; /* المربعات الفخمة اللي طلبتها */
-    display: flex !important;
-    align-items: center !important;
-}
-[data-theme="gold"] .item-img img {
-    width: 80px !important;
-    height: 80px !important;
-    object-fit: cover;
-    border-radius: 6px !important;
-}
-
-/* صفحة المنتج (Product Page) بلمسة الجلد والجولد */
-.product-page-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: var(--dark-bg);
-    background-image: url('https://www.transparenttextures.com/patterns/leather.png'); /* ملمس الجلد */
-    z-index: 3000;
-    overflow-y: auto;
-    animation: slideUp 0.3s ease-out;
-}
-
-/* --- صفحة المنتج (Product Page) --- */
-.product-page-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: var(--dark-bg);
-    z-index: 3000;
-    overflow-y: auto;
-    animation: slideUp 0.3s ease-out;
-}
-
-
-.add-to-cart-btn {
-    width: 100%;
-    padding: 16px;
-    margin-top: 20px;
-    /* تدرج ذهبي انسيابي */
-    background: linear-gradient(45deg, #ffdf00, #aa8a2e) !important;
-    border: none !important;
-    border-radius: 12px !important; /* مربعات فخمة */
-    color: #000 !important; /* نص أسود لتباين عالي */
-    font-size: 18px !important;
-    font-weight: 800 !important;
-    font-family: 'Cairo', sans-serif !important;
-    cursor: pointer !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 12px !important;
-    transition: 0.4s all cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
-    box-shadow: 0 4px 15px rgba(255, 223, 0, 0.3) !important;
-    text-transform: uppercase;
-}
-
-/* تأثير عند الوقوف بالماوس (Hover) */
-.add-to-cart-btn:hover {
-    transform: translateY(-4px) !important; /* يترفع لفوق */
-    box-shadow: 0 8px 25px rgba(255, 223, 0, 0.5) !important; /* التوهج يزيد */
-    filter: brightness(1.1); /* يفتح لونه سنة */
-}
-
-/* تأثير عند الضغط (Active) */
-.add-to-cart-btn:active {
-    transform: scale(0.96) !important; /* يصغر سنة كأنه انضغط حقيقي */
-}
-
-/* أيقونة السلة داخل الزرار */
-.add-to-cart-btn::after {
-    content: '🛒';
-    font-size: 20px;
-}
-/* --- تنسيق قائمة السلة --- */
-#cart-items-list {
-    flex-grow: 1;
-    overflow-y: auto;
-    padding: 15px;
-}
-
-.checkout-btn {
-    background: #25d366; /* لون الواتساب */
-    color: white;
-    border: none;
-    width: 100%;
-    padding: 12px;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-/* --- تحسين شكل عناصر المنيو الرئيسية --- */
-.item-row {
-    background: var(--card-bg);
-    margin: 10px;
-    padding: 12px;
-    border-radius: 15px;
-    transition: 0.2s;
-}
-
-.item-row:active {
-    transform: scale(0.97);
-}
-
-.theme-btn-neon:hover {
-    box-shadow: 0 0 20px var(--Bonjour-red);
-    transform: scale(1.1);
-}
-
-
-.icon-circle, .btn-back, #searchInput, .item-row {
-    border-color: var(--Bonjour-red) !important;
-}
-
-.item-price, .brand-name {
-    color: var(--text-white);
-    text-shadow: 0 0 10px var(--Bonjour-red), 0 0 20px var(--Bonjour-red) !important;
-}
-
-
-body {
-    /* شلنا الـ linear-gradient عشان الصورة تظهر بألوانها الأصلية */
-    background-image: url('6028237241802493065_121.jpg');
-    background-size: cover;
-    background-position: center; /* بيخلي الصورة متسنترة في نص الشاشة */
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    color: white;
-    font-family: 'Cairo', sans-serif;
-    margin: 0;
-}
-.action-buttons {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    position: fixed; /* أو حسب تصميمك */
-    bottom: 20px;
-    right: 20px;
-    z-index: 999;
-}
-
-.waiter-btn {
-    background: rgba(255, 64, 0, 0.644) !important;
-    border: 1px solid #ff1100 !important;
-    border-radius: 12px !important; /* نفس المربعات الفخمة */
-    color: #88471d !important;
-    padding: 5px 8px !important;
-    cursor: pointer !important;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transition: 0.3s all ease;
-}
-
-.waiter-btn:hover {
-    background: #ff5e00 !important;
-    color: #000 !important;
-    transform: translateY(-3px);
-}
-
-.waiter-btn small {
-    font-size: 10px;
-    font-weight: bold;
-    margin-top: 2px;
-}
-
-/* تنسيق سريع لزرار السلة عشان يظبط جنبه */
-.cart-btn {
-    background: #530000 !important;
-    color: #000 !important;
-    border: none !important;
-    border-radius: 12px !important;
-    width: 45px;
-    height: 45px;
-    font-size: 20px;
-    cursor: pointer !important;
-    box-shadow: 0 4px 15px rgba(255, 223, 0, 0.3);
-}
-.extra-features {
-    position: absolute;
-    left: 80px; /* بجانب زرار الثيم */
-    top: 15px;
-    display: flex;
-    gap: 15px;
-    z-index: 10005;
-}
-
-.feature-item {
-    position: relative;
-    background: rgba(0, 0, 0, 0.8);
-    border: 1px solid #ffdf00;
-    width: 40px;
-    height: 40px;
-    border-radius: 8px; /* مربعات فخمة */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 0 10px rgba(255, 223, 0, 0.3);
-    transition: 0.3s;
-}
-
-.feature-item:hover {
-    box-shadow: 0 0 20px #ffdf00;
-    transform: translateY(-3px);
-}
-
-.feature-icon {
-    font-size: 18px;
-}
-
-.feature-badge {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    background: #ffdf00;
-    color: #000;
-    font-size: 10px;
-    font-weight: bold;
-    padding: 2px 5px;
-    border-radius: 4px;
-    box-shadow: 0 0 5px #ffdf00;
-}
-
-/* إخفاء هذه الأيقونات عند فتح السلة */
-.hide-features {
-    display: none !important;
-}
-.modal-overlay {
-    display: none; /* مخفي افتراضياً */
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.95); /* خلفية سوداء جداً */
-    z-index: 99999; /* أعلى رقم عشان يظهر فوق كل حاجة */
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(8px);
-}
-
-.modal-content {
-    background: #111;
-    border: 2px solid #ffdf00;
-    padding: 30px 20px;
-    width: 85%;
-    max-width: 350px;
-    border-radius: 12px; /* المربعات اللي طلبتها */
-    position: relative;
-    text-align: center;
-    box-shadow: 0 0 30px rgba(255, 223, 0, 0.4);
-    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.close-modal-x {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: none;
-    border: none;
-    color: #ffdf00;
-    font-size: 22px;
-    cursor: pointer;
-}
-
-.neon-number {
-    color: #ffdf00;
-    font-size: 24px;
-    text-shadow: 0 0 10px #ffdf00;
-    margin: 15px 0;
-}
-
-@keyframes popIn {
-    from { transform: scale(0.5); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-}
-/* تنسيق النجوم التفاعلية */
-.stars-selector {
-    display: flex;
-    flex-direction: row-reverse; /* عشان التلوين يشتغل صح من اليمين للشمال */
-    justify-content: center;
-    gap: 8px;
-    margin: 20px 0;
-}
-
-
-
-/* حركة التلوين عند الوقوف بالماوس أو الاختيار */
-.star-item:hover,
-.star-item:hover ~ .star-item,
-.star-item.selected,
-/* النجوم في حالتها العادية (مطفية تماماً) */
-.star-item {
-    font-size: 35px;
-    color: #444 !important; /* لون رمادي مطفي */
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-/* النجوم المختارة (منورة) */
-.star-item.selected {
-    color: #ffdf00 !important; /* جولد بونجور */
-    text-shadow: 0 0 10px rgba(255, 223, 0, 0.8) !important;
-}
-
-/* صندوق الملاحظات */
-.comment-box-wrapper {
-    margin-bottom: 20px;
-}
-
-#rating-comment {
-    width: 60%;
-    height: 60px;
-    background: #1a1a1a;
-    border: 1px solid #333;
-    border-radius: 8px; /* المربعات الفخمة */
-    color: #fff;
-    padding: 12px;
-    font-family: 'Cairo', sans-serif;
-    resize: none;
-    transition: 0.3s;
-}
-
-#rating-comment:focus {
-    border-color: #ffdf00;
-    box-shadow: 0 0 10px rgba(255, 223, 0, 0.2);
-    outline: none;
-}
-/* الزرار الجولد الموهج */
-.gold-btn {
-    width: 100%;
-    padding: 14px;
-    margin-top: 10px;
-    background: linear-gradient(45deg, #ffdf00, #aa8a2e); /* تدرج ذهبي فخم */
-    border: none;
-    border-radius: 8px; /* المربعات اللي اتفقنا عليها */
-    color: #000;
-    font-weight: 800;
-    font-size: 16px;
-    font-family: 'Cairo', sans-serif;
-    cursor: pointer;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    transition: 0.4s all ease;
-    box-shadow: 0 4px 15px rgba(255, 223, 0, 0.3); /* توهج خفيف تحت الزرار */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* تأثير عند الوقوف بالماوس أو اللمس */
-.gold-btn:hover {
-    background: linear-gradient(45deg, #fff3a0, #ffdf00); /* يفتح لونه كأنه بيلمع */
-    transform: translateY(-3px); /* يترفع لفوق سنة */
-    box-shadow: 0 8px 25px rgba(255, 223, 0, 0.6); /* التوهج يزيد */
-}
-
-/* تأثير عند الضغط */
-.gold-btn:active {
-    transform: scale(0.95); /* يضغط لجوه */
-}
-
-/* زرار الإلغاء أو "فهمت" لو عاوزه بشكل أخف شوية */
-.gold-btn-outline {
-    background: transparent;
-    border: 2px solid #ffdf00;
-    color: #ffdf00;
-}
-/* الحاوية: خليناها شفافة تماماً عشان اللوجو يظهر لوحده */
-/* --- مسح الخلفية البيضاء تماماً وإظهار الاسم فقط --- */
-
-.main-logo-img {
-    width: 180px; 
-    height: auto;
-    display: block;
-    margin: 0 auto;
-
-    /* الخدعة هنا: darken بيمسح أي لون أفتح من الخلفية (يعني الأبيض هيختفي) */
-    mix-blend-mode: darken; 
-    
-    /* زيادة التباين عشان الحروف تظهر حادة والبيضاء يطير تماماً */
-    filter: contrast(1.2) brightness(1); 
-    
-    /* لو الاسم لونه باهت وعاوزه يظهر أسود صريح، فعل السطر اللي جاي: */
-    /* filter: grayscale(1) contrast(200%); */
-
-    /* حركة النبض (بدون ألوان إضافية - نبض في الحجم فقط) */
-    animation: simple-pulse 3s infinite ease-in-out;
-}
-
-/* حركة نبض هادية للحجم فقط عشان الاسم ميفضلش ثابت وممل */
-@keyframes simple-pulse {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.05);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
-.brand-name {
-    color: #3e2723 !important; /* اللون البني الغامق الأساسي */
-    font-weight: 900;
-    text-transform: uppercase;
-    /* تأثير التوهج البني */
-    text-shadow: 0 0 10px rgba(121, 85, 72, 0.8), 
-                 0 0 20px rgba(161, 136, 127, 0.5); 
-    letter-spacing: 2px;
-}
-
-
-.category-nav {
-    display: grid;
-    
-    grid-template-columns: repeat(4, 1fr); 
-    gap: 10px;     
-    padding: 15px;  
-    justify-items: center;
-    align-items: start;
-}
-
-.category-nav {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); 
-    gap: 8px;
-    padding: 15px 5px;
-    justify-items: center;
-}
-
-.nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    cursor: pointer;
-    width: 100%;
-}
-
-
-.icon-circle {
-    width: 75px;    
-    height: 95px;     
-    border-radius: 50%;
-    overflow: hidden;   
-    position: relative;
-    border: 2px solid #ff0000;
-    background: #000;
-   
-    box-shadow: 0 0 12px rgba(255, 0, 0, 0.6);
-    transition: 0.4s ease;
-}
-
-
-.icon-circle img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-
-.nav-item span {
-    font-size: 11px;
-    color: #642f07;
-    margin-top: 6px;
-    text-align: center;
-    font-weight: bold;
-}
-
-
-.nav-item.active .icon-circle, 
-.nav-item:hover .icon-circle {
-    box-shadow: 0 0 25px #ff0000;
-    transform: translateY(-5px);
-}
-
-.top-bar {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px 0 10px 0;
-    background: rgba(0, 0, 0, 0.9);
-    border-bottom: 1px solid var(--Bonjour-red);
-    width: 100%;
-}
-
-.main-header-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    gap: 15px;
-}
-
-
-.contact-icons-row {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-}
-
-
-.location-bar-v2 {
-    width: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 0, 0, 0.25), transparent);
-    color:  #46220e;
-    padding: 10px 0;
-    font-size: 11px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    border-top: 1px solid rgba(201, 143, 26, 0.329);
-    border-bottom: 1px solid rgba(255, 0, 0, 0.1);
-}
-
-.location-bar-v2 img {
-    width: 14px;
-   
-    filter: invert(18%) sepia(95%) saturate(7433%) hue-rotate(358deg) brightness(101%) contrast(117%);
-}
-
-
-.search-wrapper {
-    padding: 15px;
-    display: flex;
-    justify-content: center;
-    background: transparent;
-}
-
-#searchInput {
-    background: transparent !important;
-    border: none !important;
-    border-bottom: 2px solid var(--Bonjour-red) !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    color: #fff !important;
-    width: 85% !important;
-    max-width: 300px;
-    text-align: center;
-    font-family: 'Cairo', sans-serif;
-    outline: none !important;
-    padding: 10px 0;
-}
-
-#searchInput::placeholder {
-    color: rgba(255, 255, 255, 0.4);
-}
-
-
-.brand-name {
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    font-family: 'Great Vibes', cursive;
-    font-size: 38px;
-    color: #fff;
-    text-shadow: 0 0 10px var(--Bonjour-red), 0 0 20px var(--Bonjour-red);
-}
-.brand-name {
-    font-family: 'Great Vibes', cursive; 
-    font-size: 35px;
-    margin: 0;
-    
-  
-    color: #ffffff; 
-    
-
-    text-shadow: 
-        0 0 5px #b5abab,          
-        0 0 10px #ff0000,    
-        0 0 20px #ff0000,     
-        0 0 40px #ff0000;     
-        
-    letter-spacing: 1px;
-    font-weight: normal; 
-    transform: rotate(-5px);
-    display: inline-block;
-}
-
-
-.header-left-side {
-    display: flex;
-    align-items: center;
-    gap: 15px; 
-}
-
-
-.social-icon img {
-    width: 24px;
-    height: 24px;
-    display: block;
-}
-
-
-
-.whatsapp-container {
-    display: flex;
-    flex-direction: column; 
-    gap: 2px;
-}
-/* إجبار السلة إنها تكون فوق أي زرار مهما حصل */
-#cart-drawer, #cart-sidebar, .cart-overlay {
-    z-index: 999999 !important; /* رقم خيالي عشان نضمن السيادة */
-    position: fixed !important;
-}
-
-/* تأمين زرار الثيم */
-.theme-btn-neon {
-    z-index: 10006; /* أقل بكتير من السلة */
-}
-
-
-
-@media (min-width: 400px) {
-    .whatsapp-container {
-        flex-direction: row;
-        gap: 8px;
-    }
-}
-
-.whatsapp-simple {
-    display: flex;
-    align-items: center;
-    gap: 3px;
-    text-decoration: none;
-    color: #fff;
-    font-size: 10px; 
-    font-weight: bold;
-}
-
-.whatsapp-simple img {
-    width: 15px; 
-    height: 15px;
-}
-.location-bar {
-    background: linear-gradient(90deg, transparent, rgba(255, 0, 0, 0.2), transparent);
-    color: #fff;
-    text-align: center;
-    padding: 5px 0;
-    font-size: 11px;
-    border-bottom: 1px solid rgba(255, 0, 0, 0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    letter-spacing: 0.5px;
-}
-
-.location-bar img {
-    width: 14px;
-    height: 14px;
-   
-    filter: invert(18%) sepia(95%) saturate(7433%) hue-rotate(358deg) brightness(101%) contrast(117%);
-}
-
-.location-bar span {
-    font-weight: 300;
-    opacity: 0.9;
-    font-family: 'Cairo', sans-serif;
-}
-
-.social-icon:hover, .whatsapp-simple:hover {
-    opacity: 0.8;
-    transform: scale(1.05);
-}
-
-.nav-item.active .icon-circle, 
-.nav-item:hover .icon-circle {
-    box-shadow: 0 0 25px var(--Bonjour-red);
-    background: var(--Bonjour-red);
-    transform: scale(1.1);
-}
-
-.nav-item.active .icon-circle img,
-.nav-item:hover .icon-circle img {
-    filter: brightness(1) invert(0); 
-}
-
-.nav-item:hover .icon-circle, .nav-item.active .icon-circle {
-    box-shadow: 0 0 20px var(--Bonjour-red);
-    background: var(--Bonjour-red);
-    transform: scale(1.1);
-}
-
-.nav-item span { font-size: 12px; font-weight: bold; }
-
-
-
-
-.search-wrapper {
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-}
-
-#searchInput {
-    display: block;
-    margin: 15px auto;
-    width: 90%;
-    max-width: 50px;
-    
-  
-    background: rgba(0, 0, 0, 0.2) !important;
-    color: #fff !important;
-    
-
-    border: 2px solid var(--Bonjour-red) !important;
-    border-radius: 50px !important; 
-    
-   
-    box-shadow: 0 0 10px rgba(255, 0, 0, 0.4) !important;
-    
-  
-    padding: 12px 20px;
-    font-size: 16px;
-    outline: none !important;
-    text-align: center;
-    font-family: 'Cairo', sans-serif;
-    transition: 0.3s all ease;
-}
-
-
-#searchInput:focus {
-    box-shadow: 0 0 20px var(--Bonjour-red) !important;
-    background: rgba(0, 0, 0, 0.4) !important;
-}
-
-#searchInput::placeholder {
-    color: rgba(255, 255, 255, 0.6);
-}
-
-
-#searchInput:focus {
-    box-shadow: 0 0 20px #ff0000, inset 0 0 5px #ff0000;
-    transform: scale(1.02); 
-    border-color: #fff;
-}
-
-
-#searchInput::placeholder {
-    color: rgba(255, 255, 255, 0.5);
-    font-size: 14px;
-}
-.item-row {
-    display: flex; justify-content: space-between;
-    background: rgba(255, 255, 255, 0.03);
-    margin: 10px 20px; padding: 15px;
-    border-right: 4px solid var(--kapnos-red);
-    backdrop-filter: blur(10px);
-}
-
-.item-price { color: var(--kapnos-red); font-weight: bold; }
-.old-price { text-decoration: line-through; color: #777; font-size: 0.8rem; margin-left: 5px; }
-
-.btn-back {
-    background: #000; 
-    color: #ff0000;
-    border: 2px solid #ff0000;
-    padding: 10px 25px;
-    font-family: 'Cairo', sans-serif;
-    font-weight: bold;
-    border-radius: 30px;
-    cursor: pointer;
-    text-transform: uppercase;
-    transition: 0.4s;
-  
-    box-shadow: 0 0 10px rgba(255, 0, 0, 0.4), inset 0 0 5px rgba(255, 0, 0, 0.2);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-.btn-back {
-    position: relative;
-    z-index: 4000 !important; /* عشان يظهر فوق صفحة المنتج والسلة */
-}
-
-#back-container {
-    z-index: 4000 !important;
-}
-.btn-back:hover {
-    background: #ff0000;
-    color: #fff;
-    box-shadow: 0 0 25px #ff0000; 
-    transform: scale(1.05);
-}
-
-header, 
-.top-bar, 
-.brand-side, 
-.header-left-side, 
-.logo-wrapper,
-.main-header-content {
-    background: none !important;
-    background-color: transparent !important;
-    box-shadow: none !important;
-    border: none !important;
-}
-
-
-.top-bar {
-    padding-top: 20px !important;
-    padding-bottom: 10px !important;
-}
-
-
-.brand-name {
-    background: transparent !important;
-    -webkit-box-shadow: none !important;
-    box-shadow: none !important;
-}
-
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
 
-#searchInput {
-    font-size: 16px !important; 
-    touch-action: manipulation; 
+/* ===== VARIABLES ===== */
+:root {
+  --gold: #ffdf00;
+  --dark: #0a0a09;
+  --card-bg: rgba(20,20,18,0.92);
 }
 
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
 html, body {
-    overflow-x: hidden;
-    max-width: 100%;
-    position: relative;
-    touch-action: pan-y; 
-}
-/* صفحة المنتج */
-.product-page-overlay {
-    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: #000; z-index: 3000; overflow-y: auto;
-}
-.product-page-content { padding: 20px; text-align: center; }
-.product-main-img { width: 100%; max-height: 300px; object-fit: cover; border-radius: 15px; border: 2px solid #ff0000; }
-.option-group { background: #111; padding: 15px; margin: 10px 0; border-radius: 10px; text-align: right; }
-.option-item { display: flex; justify-content: space-between; margin: 10px 0; border-bottom: 1px solid #222; padding-bottom: 5px; }
-
-/* السلة الجانبية */
-.cart-sidebar {
-    position: fixed; top: 0; left: -100%; width: 300px; height: 100%;
-    background: #111; transition: 0.4s; z-index: 4000; border-right: 2px solid #ff0000;
-    display: flex; flex-direction: column;
-}
-/* حركة اهتزاز بسيطة لأيقونة السلة عند الإضافة */
-@keyframes bounce {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.2); }
+  background: var(--dark);
+  color: white;
+  font-family: 'Cairo', sans-serif;
+  direction: rtl;
+  overflow-x: hidden;
+  min-height: 100%;
+  padding-bottom: 100px;
 }
 
-.bounce-animation {
-    animation: bounce 0.5s ease-in-out;
+/* ===== AMBIENT GLOW ===== */
+.ambient-glow {
+  position: fixed; top: 15%; left: 50%; transform: translateX(-50%);
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(255,223,0,0.05) 0%, transparent 70%);
+  pointer-events: none; z-index: 0;
 }
 
-/* تأكد إن عداد السلة واضح وتصميمه شيك */
-#cart-count {
-    background: #ff0000;
-    color: white;
-    border-radius: 50%;
-    padding: 2px 6px;
-    font-size: 12px;
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    font-weight: bold;
-    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+/* ===== LOGO ===== */
+.logo-section {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 24px 0 12px; position: relative; z-index: 1;
 }
-.cart-sidebar.active { left: 0; }
-.cart-floating-icon {
-    position: fixed; bottom: 20px; left: 20px; background: #ff0000;
-    width: 60px; height: 60px; border-radius: 50%; display: flex;
-    align-items: center; justify-content: center; z-index: 2500; cursor: pointer;
+.logo-ring-wrap {
+  position: absolute; top: 16px; width: 140px; height: 140px;
+  animation: rotateFull 8s linear infinite;
 }
-#cart-count { position: absolute; top: -5px; right: -5px; background: white; color: red; padding: 2px 7px; border-radius: 50%; font-size: 12px; }
-/* الخلفية الأساسية اللي هتمسك الصفحة كلها */
-.product-page-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    /* الخلفية هنا هتمسك الشاشة كلها */
-    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), 
-                url('6028237241802493065_121.jpg') no-repeat center center !important;
-    background-size: cover !important;
-    background-attachment: fixed;
-    z-index: 10000;
-    display: none;
-    overflow-y: auto;
-    padding: 0; /* شلنا الـ padding عشان المحتوى يملأ الفراغ */
+.logo-ring-wrap svg { width: 140px; height: 140px; }
+
+@keyframes rotateFull { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+.logo-circle {
+  width: 110px; height: 110px; border-radius: 50%;
+  border: 2.5px solid var(--gold); background: #1a1a13;
+  position: relative; z-index: 2;
+  animation: pulseRing 2.5s ease-out infinite;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 38px; overflow: hidden;
+}
+.logo-circle img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+@keyframes pulseRing {
+  0%   { box-shadow: 0 0 0 0 rgba(255,223,0,0.55), 0 0 15px rgba(255,223,0,0.3); }
+  70%  { box-shadow: 0 0 0 12px rgba(255,223,0,0), 0 0 25px rgba(255,223,0,0.1); }
+  100% { box-shadow: 0 0 0 0 rgba(255,223,0,0), 0 0 15px rgba(255,223,0,0.3); }
 }
 
-/* تعديل صندوق المحتوى عشان ميبقاش فيه برواز أسود منفصل */
-.product-page-content {
-    padding: 20px;
-    text-align: center;
-    background: transparent !important; /* خليناه شفاف عشان يظهر الخلفية اللي وراه */
-    min-height: 100%;
+.brand-title {
+  font-size: 28px; font-weight: 900; letter-spacing: 4px; margin-top: 10px;
+  text-transform: uppercase; color: #fff;
+  text-shadow: 0 0 12px var(--gold), 0 0 24px rgba(255,223,0,0.25);
+  position: relative; z-index: 2;
+}
+.brand-line {
+  width: 60px; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin-top: 5px; position: relative; z-index: 2;
 }
 
-/* تعديل مجموعات الأوبشنز عشان تكون واضحة فوق الخلفية */
-.option-group {
-    background: rgba(255, 255, 255, 0.1); /* خلفية فاتحة جداً وشفافة */
-    backdrop-filter: blur(5px); /* تأثير زجاجي شيك */
-    padding: 15px;
-    margin: 10px 0;
-    border-radius: 15px;
-    text-align: right;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+/* ===== TOP BAR ===== */
+.top-bar {
+  background: rgba(10,10,9,0.93);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,223,0,0.2);
+  padding: 10px 14px; position: sticky; top: 0; z-index: 1000;
 }
-/* تصميم زرار السهم (تأثير الجلد والتوهج) */
-.new-back-arrow {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    width: 40px;
-    height: 40px;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10005;
-    
-    /* شكل الجلد الأسود */
-    background: radial-gradient(circle at center, #333 0%, #000 100%);
-    /* توهج أسود عميق مع لمسة نيون أحمر هادي */
-    box-shadow: 0 0 15px rgba(0, 0, 0, 1), 
-                inset 0 0 8px rgba(255, 255, 255, 0.1),
-                0 0 5px rgba(255, 0, 0, 0.2); 
-    transition: 0.3s all ease;
-}
+.top-bar-inner { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
 
-/* شكل السهم (أحمر متوهج) */
-.arrow-icon::before {
-    content: '';
-    width: 10px;
-    height: 10px;
-    border-top: 3px solid #ff0000;
-    border-right: 3px solid #ff0000;
-    transform: rotate(225deg); /* اتجاه السهم للخلف */
-    display: block;
+.pill {
+  flex-shrink: 0; padding: 5px 12px; border-radius: 20px;
+  font-family: 'Cairo'; font-size: 11px; font-weight: 700; cursor: pointer;
+  text-decoration: none; display: inline-flex; align-items: center; gap: 5px;
+  white-space: nowrap; border: 1px solid; transition: transform 0.15s;
+}
+.pill:active { transform: scale(0.93); }
+.pill-gold { background: rgba(255,223,0,0.10); border-color: rgba(255,223,0,0.38); color: var(--gold); }
+.pill-blue { background: rgba(24,119,242,0.12); border-color: rgba(24,119,242,0.42); color: #4a9eff; }
+.pill-cyan { background: rgba(0,255,255,0.08); border-color: rgba(0,255,255,0.38); color: #00ffff; }
+
+/* ===== SEARCH ===== */
+.search-wrap { padding: 14px 14px 8px; position: relative; }
+#searchInput {
+  width: 100%; padding: 11px 44px 11px 18px;
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,223,0,0.20);
+  border-radius: 30px; color: white; font-family: 'Cairo'; font-size: 14px;
+  outline: none; transition: border-color .2s, box-shadow .2s; text-align: right;
+}
+#searchInput:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(255,223,0,0.12); }
+#searchInput::placeholder { color: rgba(255,255,255,0.32); }
+
+/* ===== CATEGORIES GRID ===== */
+.cats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  padding: 6px 14px 16px;
 }
 
-.new-back-arrow:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 20px rgba(255, 0, 0, 0.5); /* زيادة التوهج عند الوقوف عليه */
+.cat-btn {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 6px; padding: 12px 4px 10px;
+  border-radius: 16px;
+  border: 1.5px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.04);
+  color: rgba(255,255,255,0.55);
+  font-family: 'Cairo'; font-weight: 700; cursor: pointer;
+  transition: all 0.25s ease;
+  -webkit-user-select: none; user-select: none;
+}
+.cat-btn:active { transform: scale(0.93); }
+
+.cat-ico {
+  display: flex; align-items: center; justify-content: center;
+  width: 30px; height: 30px;
 }
 
-/* لو السلة واخدة كلاس active أو show الزرار يختفي فوراً */
-#cartSidebar.active ~ .theme-btn-neon,
-#cartSidebar.show ~ .theme-btn-neon,
-.cart-sidebar.active ~ .theme-btn-neon {
-    display: none !important;
+.cat-lbl {
+  font-size: 11px; line-height: 1; display: block; text-align: center;
+  color: rgba(255,255,255,0.55); transition: color 0.25s;
 }
 
-/* حل بديل لو الزرار مش جنب السلة في الكود */
-body:has(#cartSidebar.active) .theme-btn-neon,
-body:has(.cart-sidebar.active) .theme-btn-neon {
-    display: none !important;
+.cat-btn.active {
+  background: linear-gradient(145deg, rgba(255,223,0,0.15), rgba(201,168,0,0.08));
+  border-color: rgba(255,223,0,0.6);
+  box-shadow: 0 4px 16px rgba(255,223,0,0.18), inset 0 1px 0 rgba(255,223,0,0.1);
 }
-/* 1. الحل الشامل: لو السلة مفتوحة، اخفي الأيقونة العائمة فوراً */
-body:has(#cart-sidebar.active) .cart-floating-icon,
-body:has(.cart-sidebar.active) .cart-floating-icon,
-body.cart-open .cart-floating-icon {
-    display: none !important;
-    opacity: 0 !important;
-    visibility: hidden !important;
-    pointer-events: none !important;
+.cat-btn.active .cat-lbl { color: var(--gold); }
+
+/* ===== ANIMATED ICONS BASE ===== */
+.anim-icon {
+  position: relative; width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center;
 }
 
-/* 2. الحل الاحتياطي: لو الزرار جنب السلة في الكود */
-#cart-sidebar.active ~ .cart-floating-icon,
-.cart-sidebar.active ~ .cart-floating-icon {
-    display: none !important;
+/* ─── الكل: 3 نقاط تدور ─── */
+.ico-all { animation: spin360 3s linear infinite; }
+.ico-all i {
+  position: absolute; width: 7px; height: 7px; border-radius: 50%;
+}
+.ico-all i:nth-child(1) { background: #ffdf00; top: 0; left: 50%; transform: translateX(-50%); }
+.ico-all i:nth-child(2) { background: #00cfff; bottom: 2px; left: 2px; }
+.ico-all i:nth-child(3) { background: #ff6464; bottom: 2px; right: 2px; }
+
+@keyframes spin360 { to { transform: rotate(360deg); } }
+
+/* ─── القهوة: كوب + بخار ─── */
+.ico-coffee::before {
+  content: '';
+  position: absolute; bottom: 2px;
+  width: 18px; height: 12px;
+  border: 2px solid rgba(255,200,100,0.85);
+  border-radius: 2px 2px 7px 7px;
+}
+.ico-coffee::after {
+  content: '';
+  position: absolute; bottom: 6px; right: 3px;
+  width: 5px; height: 7px;
+  border: 2px solid rgba(255,200,100,0.85);
+  border-left: none; border-radius: 0 5px 5px 0;
+}
+.ico-coffee i {
+  position: absolute; width: 2px; height: 7px;
+  background: rgba(255,200,100,0.6); border-radius: 2px;
+  animation: steamRise 1.6s ease-in-out infinite;
+}
+.ico-coffee i:nth-child(1) { left:  6px; animation-delay: 0s;    top: 2px; }
+.ico-coffee i:nth-child(2) { left: 50%; transform: translateX(-50%); animation-delay: 0.4s; top: 0; }
+.ico-coffee i:nth-child(3) { right: 6px; animation-delay: 0.8s; top: 2px; }
+
+@keyframes steamRise {
+  0%   { opacity: 0; transform: translateY(0) scaleX(1); }
+  40%  { opacity: 0.9; }
+  100% { opacity: 0; transform: translateY(-8px) scaleX(1.4); }
 }
 
-/* 3. تأكيد إخفاء زرار الثيم معاها في نفس اللحظة */
-body:has(#cart-sidebar.active) .theme-btn-neon {
-    display: none !important;
+/* ─── ساخنة: لهب ينبض ─── */
+.ico-hot::before {
+  content: '';
+  position: absolute;
+  width: 14px; height: 20px;
+  background: linear-gradient(180deg, #ff9500 0%, #ff4500 50%, #ff2200 100%);
+  border-radius: 50% 50% 30% 30% / 60% 60% 40% 40%;
+  animation: flamePulse 0.9s ease-in-out infinite alternate;
+  bottom: 2px;
+}
+.ico-hot::after {
+  content: '';
+  position: absolute; bottom: 4px;
+  width: 7px; height: 10px;
+  background: linear-gradient(180deg, #ffdf00 0%, #ff9500 100%);
+  border-radius: 50% 50% 30% 30% / 60% 60% 40% 40%;
+  animation: flamePulse 0.9s ease-in-out infinite alternate-reverse;
 }
 
-.cart-sidebar {
-    position: fixed !important;
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) scale(0.8);
-    width: 88%;
-    max-width: 330px;
-    max-height: 85vh; /* ارتفاع ممتاز يسمح بظهور منتجات كتير */
-    background: rgba(20, 20, 20, 0.98) !important;
-    border: 1px solid rgba(255, 223, 0, 0.5) !important;
-    border-radius: 25px !important;
-    padding: 15px !important;
-    display: none;
-    flex-direction: column;
-    z-index: 10000;
-    box-shadow: 0 0 40px rgba(0,0,0,0.8);
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+@keyframes flamePulse {
+  from { transform: scaleX(1)   scaleY(1)   rotate(-3deg); }
+  to   { transform: scaleX(0.9) scaleY(1.1) rotate(3deg); }
 }
 
-.cart-sidebar.active {
-    display: flex !important;
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 1;
+/* ─── باردة: ندفة ثلج تدور ─── */
+.ico-ice {
+  animation: spin360 4s linear infinite;
+}
+.ico-ice::before, .ico-ice::after {
+  content: ''; position: absolute;
+  width: 22px; height: 2px;
+  background: linear-gradient(90deg, rgba(100,220,255,0.9), rgba(160,240,255,1), rgba(100,220,255,0.9));
+  border-radius: 2px;
+}
+.ico-ice::after { transform: rotate(60deg); }
+.ico-ice i:nth-child(1) {
+  position: absolute; width: 22px; height: 2px;
+  background: linear-gradient(90deg, rgba(100,220,255,0.9), rgba(160,240,255,1), rgba(100,220,255,0.9));
+  border-radius: 2px; transform: rotate(120deg);
+}
+.ico-ice i:nth-child(2) {
+  position: absolute; width: 7px; height: 7px; border-radius: 50%;
+  background: rgba(160,240,255,0.8);
+}
+.ico-ice i:nth-child(3) {
+  position: absolute; width: 4px; height: 4px; border-radius: 50%;
+  background: rgba(200,248,255,0.6); top: 3px; left: 3px;
 }
 
-/* زرار الإكس (X) - متسنتر وشيك */
-.close-cart {
-    position: absolute;
-    top: 15px;
-    left: 15px; /* عشان المنيو عربي فخليناه شمال */
-    background: rgba(255, 255, 255, 0.1);
-    color: #ffdf00;
-    border: none;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    font-size: 18px;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: 0.3s;
+/* ─── فريش: كرة ترتد ─── */
+.ico-fresh::before {
+  content: '';
+  position: absolute;
+  width: 20px; height: 20px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #ffaa00, #ff6600);
+  box-shadow: 0 0 8px rgba(255,120,0,0.5);
+  animation: freshBounce 1s cubic-bezier(.36,.07,.19,.97) infinite;
+}
+.ico-fresh::after {
+  content: '';
+  position: absolute; top: 3px; right: 5px;
+  width: 5px; height: 5px; border-radius: 50%;
+  background: rgba(255,255,200,0.55);
 }
 
-.close-cart:hover { background: #ff0000; color: #fff; }
-
-/* منطقة المنتجات - هي دي اللي بتاخد المساحة الكبيرة */
-#cart-items-list {
-    flex-grow: 1;
-    overflow-y: auto;
-    margin: 40px 0 10px 0; /* مسافة عشان الإكس والعنوان */
-    padding-right: 5px;
+@keyframes freshBounce {
+  0%, 100% { transform: translateY(0) scale(1, 1); }
+  45%       { transform: translateY(-6px) scale(0.95, 1.05); }
+  55%       { transform: translateY(-6px) scale(0.95, 1.05); }
+  80%       { transform: translateY(1px) scale(1.05, 0.95); }
 }
 
-/* المربعات (متوسطنة وملمومة) */
-.cart-inputs-container {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 10px;
-    border-radius: 15px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+/* ─── غازية: فقاعات تصعد ─── */
+.ico-soda i {
+  position: absolute; border-radius: 50%;
+  background: rgba(120,200,255,0.7);
+  animation: bubbleRise 1.8s ease-in infinite;
+}
+.ico-soda i:nth-child(1) { width: 6px; height: 6px; left: 5px; bottom: 0; animation-delay: 0s; }
+.ico-soda i:nth-child(2) { width: 5px; height: 5px; left: 50%; transform: translateX(-50%); bottom: 0; animation-delay: 0.5s; }
+.ico-soda i:nth-child(3) { width: 4px; height: 4px; right: 5px; bottom: 0; animation-delay: 1s; }
+
+@keyframes bubbleRise {
+  0%   { transform: translateY(0);     opacity: 0.8; }
+  100% { transform: translateY(-24px); opacity: 0; }
 }
 
-.cart-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
+/* ─── انتعاشة: حلقة نبض باردة ─── */
+.ico-icen::before {
+  content: '';
+  position: absolute;
+  width: 18px; height: 18px; border-radius: 50%;
+  border: 2.5px solid rgba(140,220,255,0.9);
+  animation: coldPulse 1.2s ease-out infinite;
+}
+.ico-icen::after {
+  content: '';
+  position: absolute;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: rgba(180,240,255,0.9);
+  box-shadow: 0 0 8px rgba(140,220,255,0.9);
+  animation: coldPulse 1.2s ease-out infinite 0.6s;
 }
 
-.cart-row input, #order-note {
-    background: #000 !important;
-    border: 1px solid #444 !important; /* خليت الحدود أفتح شوية */
-    border-radius: 10px !important;
-    color: #fff; /* لون الكتابة لما الزبون يكتب */
-    padding: 8px !important; /* كبرت المسافة جوه المربع عشان الخط يرتاح */
-    
-    /* التعديل الجوهري هنا */
-    font-size: 9px !important; /* كبرت الخط من 8 لـ 14 عشان يتشاف */
-    font-weight: 600; /* خليت الخط تقيل شوية */
-    outline: none;
-    text-align: center;
-    font-family: 'Reem Kufi', sans-serif;
-}
-/* ده بيتحكم في الكلام اللي جوه المربع قبل ما الزبون يلمسه */
-.cart-row input::placeholder, #order-note::placeholder {
-    color: rgba(255, 255, 255, 0.7) !important; /* خليت اللون أبيض واضح بنسبة 70% */
-    font-size: 13px;
-    font-weight: 500;
+@keyframes coldPulse {
+  0%   { transform: scale(0.7); opacity: 1; }
+  100% { transform: scale(1.5); opacity: 0; }
 }
 
-#order-note { height: 20px; resize: none; }
+/* ─── حلويات: نجمة تتلألأ ─── */
+.ico-desert {
+  animation: starTwinkle 1.5s ease-in-out infinite alternate;
+}
+.ico-desert::before {
+  content: '★';
+  position: absolute; font-size: 22px; line-height: 1;
+  background: linear-gradient(135deg, #ffdf00, #ff9090, #ffdf00);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  filter: drop-shadow(0 0 6px rgba(255,200,100,0.8));
+}
+.ico-desert i:nth-child(1) {
+  position: absolute; width: 4px; height: 4px; border-radius: 50%;
+  background: #fff; top: 0; right: 2px;
+  animation: sparkle 1.5s ease-in-out infinite;
+}
+.ico-desert i:nth-child(2) {
+  position: absolute; width: 3px; height: 3px; border-radius: 50%;
+  background: #ffdf00; bottom: 1px; left: 2px;
+  animation: sparkle 1.5s ease-in-out infinite 0.7s;
+}
 
-/* زرار الإرسال */
-.checkout-btn {
-    background: #ffdf00 !important;
-    color: #000 !important;
-    font-weight: bold;
-    border-radius: 12px !important;
-    height: 45px;
-    margin-top: 10px;
-    border: none;
-    cursor: pointer;
+@keyframes starTwinkle {
+  from { filter: drop-shadow(0 0 3px rgba(255,200,100,0.4)); transform: scale(0.92) rotate(-8deg); }
+  to   { filter: drop-shadow(0 0 10px rgba(255,220,100,0.9)); transform: scale(1.08) rotate(8deg); }
+}
+@keyframes sparkle {
+  0%, 100% { opacity: 0; transform: scale(0); }
+  50%       { opacity: 1; transform: scale(1); }
+}
+
+/* ─── اختراع: نقطتان تتدوران حول بعض ─── */
+.ico-mix { animation: spin360 2s linear infinite; }
+.ico-mix i {
+  position: absolute; width: 9px; height: 9px; border-radius: 50%;
+}
+.ico-mix i:nth-child(1) { background: radial-gradient(circle, #ff9500, #ff4500); top: 2px; left: 2px; }
+.ico-mix i:nth-child(2) { background: radial-gradient(circle, #00cfff, #0066ff); bottom: 2px; right: 2px; }
+
+/* ─── إضافات: علامة + تدور ─── */
+.ico-extra {
+  animation: plusSpin 2s ease-in-out infinite;
+}
+.ico-extra::before {
+  content: '';
+  position: absolute; width: 20px; height: 3px; border-radius: 2px;
+  background: linear-gradient(90deg, #ffdf00, #c9a800);
+}
+.ico-extra::after {
+  content: '';
+  position: absolute; width: 3px; height: 20px; border-radius: 2px;
+  background: linear-gradient(180deg, #ffdf00, #c9a800);
+}
+
+@keyframes plusSpin {
+  0%   { transform: rotate(0deg)   scale(1); }
+  50%  { transform: rotate(180deg) scale(1.15); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+/* ─── شيشة: دخان يتصاعد ─── */
+.ico-shisha i {
+  position: absolute; width: 3px; border-radius: 3px;
+  background: rgba(200,200,220,0.5);
+  animation: smokeRise 2s ease-in-out infinite;
+}
+.ico-shisha i:nth-child(1) { height: 10px; left: 5px; bottom: 0; animation-delay: 0s; }
+.ico-shisha i:nth-child(2) { height: 14px; left: 50%; transform: translateX(-50%); bottom: 0; animation-delay: 0.4s; }
+.ico-shisha i:nth-child(3) { height: 10px; right: 5px; bottom: 0; animation-delay: 0.8s; }
+
+@keyframes smokeRise {
+  0%   { transform: translateY(0) scaleX(1);   opacity: 0.7; border-radius: 3px; }
+  50%  { transform: translateY(-8px) scaleX(2); opacity: 0.4; border-radius: 6px; }
+  100% { transform: translateY(-16px) scaleX(3); opacity: 0; border-radius: 10px; }
+}
+
+/* when active, brighten icons */
+.cat-btn.active .anim-icon { filter: brightness(1.3); }
+
+/* ===== PRODUCTS GRID ===== */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+  gap: 12px; padding: 0 12px 24px;
+}
+
+/* ===== SKELETON ===== */
+.skeleton {
+  border-radius: 18px; height: 220px;
+  background: linear-gradient(90deg,
+    rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.07) 50%, rgba(255,255,255,0.03) 75%);
+  background-size: 200% 100%; animation: shimmer 1.6s infinite;
+}
+@keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+/* ===== PRODUCT CARD ===== */
+.product-card {
+  background: var(--card-bg); border: 1px solid rgba(255,223,0,0.12);
+  border-radius: 18px; overflow: hidden; cursor: pointer;
+  display: flex; flex-direction: column;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  opacity: 0; animation: slideUp 0.4s ease forwards; transition: transform 0.2s;
+}
+.product-card:active { transform: scale(0.96); }
+.product-card:nth-child(1)  { animation-delay: 0.04s }
+.product-card:nth-child(2)  { animation-delay: 0.08s }
+.product-card:nth-child(3)  { animation-delay: 0.12s }
+.product-card:nth-child(4)  { animation-delay: 0.16s }
+.product-card:nth-child(5)  { animation-delay: 0.20s }
+.product-card:nth-child(6)  { animation-delay: 0.24s }
+.product-card:nth-child(7)  { animation-delay: 0.28s }
+.product-card:nth-child(8)  { animation-delay: 0.32s }
+.product-card:nth-child(9)  { animation-delay: 0.36s }
+.product-card:nth-child(10) { animation-delay: 0.40s }
+
+.card-img-wrap {
+  width: 100%; aspect-ratio: 1/1;
+  background: linear-gradient(135deg,#1a1a0d,#0d0d08);
+  position: relative; overflow: hidden;
+}
+.card-img-wrap img {
+  width:100%; height:100%; object-fit:cover;
+  position:absolute; top:0; left:0; transition: transform .4s ease;
+}
+.product-card:active .card-img-wrap img { transform: scale(1.05); }
+.card-img-gradient {
+  position: absolute; bottom:0; left:0; right:0; height: 40%;
+  background: linear-gradient(to bottom, transparent, rgba(12,12,10,0.7));
+  pointer-events: none;
+}
+.card-img-emoji {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 42px; opacity: 0.32;
+}
+.card-body {
+  padding: 10px 12px 12px; flex: 1;
+  display: flex; flex-direction: column; justify-content: space-between; gap: 8px;
+}
+.card-name  { font-size:14px; font-weight:700; color:#f0f0f0; line-height:1.4; text-align:right; }
+.card-footer { display:flex; justify-content:space-between; align-items:center; }
+.card-price {
+  font-weight:900; font-size:15px;
+  background: linear-gradient(135deg,#ffdf00,#c9a800);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.add-btn {
+  width:32px; height:32px; border-radius:50%;
+  background: linear-gradient(135deg,#ffdf00,#c9a800);
+  border:none; color:#000; font-weight:900; font-size:19px;
+  cursor:pointer; display:flex; align-items:center; justify-content:center;
+  box-shadow: 0 2px 10px rgba(255,223,0,0.35); flex-shrink: 0; line-height:1;
+}
+
+/* ===== OVERLAYS ===== */
+.backdrop {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.72);
+  backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); z-index: 10000;
+}
+.backdrop.open { display:block; animation: fadeIn .25s ease; }
+
+/* ===== BOTTOM SHEET ===== */
+.sheet {
+  display: none; position: fixed; bottom:0; left:0; right:0;
+  background: linear-gradient(180deg,#181816 0%,#0e0e0c 100%);
+  border: 1px solid rgba(255,223,0,0.2); border-radius: 24px 24px 0 0;
+  z-index: 20000; max-height: 90vh; overflow-y: auto;
+}
+.sheet.open { display:block; animation: slideFromBottom .35s cubic-bezier(.34,1.56,.64,1) forwards; }
+.sheet-handle {
+  width:40px; height:4px; background: rgba(255,223,0,0.3);
+  border-radius:4px; margin: 18px auto 16px;
+}
+.close-btn {
+  position: absolute; top:18px; right:18px;
+  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 50%; width:36px; height:36px; color: rgba(255,255,255,0.65);
+  font-size:15px; cursor:pointer; display:flex; align-items:center; justify-content:center;
+}
+
+/* ===== PRODUCT SHEET ===== */
+#product-sheet { padding: 0 20px 40px; }
+.p-img-wrap {
+  width:130px; height:130px; border-radius:20px; overflow:hidden; margin: 0 auto 14px;
+  border: 2px solid rgba(255,223,0,0.3);
+  box-shadow: 0 6px 25px rgba(0,0,0,0.6), 0 0 20px rgba(255,223,0,0.15);
+  background:#1a1a13; display:flex; align-items:center; justify-content:center; font-size:52px;
+}
+.p-img-wrap img { width:100%; height:100%; object-fit:cover; }
+.p-name  { text-align:center; font-size:22px; font-weight:900; color:#fff; margin-bottom:6px; }
+.p-price { text-align:center; font-size:16px; font-weight:700; color:var(--gold); margin-bottom:18px; }
+.opt-label { display:block; color:var(--gold); font-weight:700; font-size:14px; margin-bottom:7px; text-align:right; }
+.opt-select {
+  width:100%; padding:12px 38px 12px 12px; background: #141413;
+  border: 1px solid rgba(255,223,0,0.25); border-radius:12px; color:rgb(248,246,246);
+  font-family:'Cairo'; font-size:14px; outline:none; margin-bottom:14px;
+  appearance:none; -webkit-appearance:none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ffdf00' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-position:left 10px center; background-size:20px;
+}
+.opt-select option { background: #141413 !important; color: #ffffff !important; }
+.note-ta {
+  width:100%; padding:12px; background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,223,0,0.25); border-radius:12px; color:rgb(255,255,253);
+  font-family:'Cairo'; font-size:14px; resize:none; height:80px;
+  outline:none; display:block; margin-bottom:22px;
+}
+.note-ta::placeholder { color: rgba(255,255,255,0.28); }
+.add-cart-btn {
+  width:100%; padding:16px; background:linear-gradient(135deg,#ffdf00,#c9a800);
+  border:none; border-radius:16px; color:#000; font-weight:900; font-size:17px;
+  font-family:'Cairo'; cursor:pointer; box-shadow: 0 4px 20px rgba(255,223,0,0.42);
+}
+
+/* ===== CART SHEET ===== */
+#cart-sheet { z-index: 30000; max-height: 88vh; display: none; flex-direction: column; }
+#cart-sheet.open { display:flex; animation: slideFromBottom .35s cubic-bezier(.34,1.56,.64,1) forwards; }
+#cart-backdrop { z-index:29999; }
+.cart-head { display:flex; justify-content:space-between; align-items:center; padding: 0 20px 14px; flex-shrink:0; }
+.cart-head .close-btn { position:static; }
+.cart-title { color:white; font-weight:900; font-size:18px; text-align:right; }
+.cart-list { overflow-y:auto; flex:1; padding: 0 20px; }
+.cart-item {
+  display:flex; justify-content:space-between; align-items:flex-start;
+  background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.07);
+  padding:12px 14px; margin-bottom:8px; border-radius:14px;
+  animation: slideUp .3s ease forwards; opacity:0;
+}
+.ci-info { flex:1; }
+.ci-name    { color:white; font-weight:700; font-size:14px; text-align:right; }
+.ci-choices { color:rgba(255,255,255,0.42); font-size:11px; margin-top:3px; text-align:right; }
+.ci-note    { color:rgba(255,223,0,0.6); font-size:11px; margin-top:2px; text-align:right; }
+.ci-right   { display:flex; align-items:center; gap:10px; margin-right:10px; flex-shrink:0; }
+.ci-price   { color:var(--gold); font-weight:900; font-size:14px; }
+.rm-btn {
+  background:rgba(255,77,77,0.15); border:1px solid rgba(255,77,77,0.3);
+  border-radius:50%; width:28px; height:28px; color:#ff6666;
+  cursor:pointer; font-size:12px; display:flex; align-items:center; justify-content:center;
+}
+.cart-empty { text-align:center; padding:44px 20px; color:rgba(255,255,255,0.28); }
+.cart-foot { padding: 0 20px 4px; flex-shrink:0; }
+.cart-row-inputs { display:flex; gap:8px; margin-bottom:8px; }
+.cart-in {
+  flex:1; padding:10px 14px; background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,223,0,0.2); border-radius:12px; color:white;
+  font-family:'Cairo'; font-size:13px; outline:none; text-align:right;
+}
+.cart-ta {
+  width:100%; padding:10px 14px; background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,223,0,0.2); border-radius:12px; color:white;
+  font-family:'Cairo'; font-size:13px; resize:none; height:58px;
+  outline:none; text-align:right; margin-bottom:12px; display:block;
+}
+.total-box {
+  background:rgba(255,223,0,0.08); border:1px solid rgba(255,223,0,0.2);
+  border-radius:12px; padding:10px 14px; margin-bottom:12px;
+  text-align:right; font-size:12px; color:rgba(255,255,255,0.68); display:none;
+}
+.t-row { display:flex; justify-content:space-between; margin-bottom:3px; }
+.t-final {
+  color:var(--gold); font-weight:900; font-size:15px; margin-top:6px; padding-top:6px;
+  border-top:1px solid rgba(255,223,0,0.2); display:flex; justify-content:space-between;
+}
+.wa-btn {
+  width:100%; padding:15px; background:linear-gradient(135deg,#25d366,#128c4b);
+  border:none; border-radius:16px; color:white; font-weight:900; font-size:16px;
+  font-family:'Cairo'; cursor:pointer; box-shadow:0 4px 20px rgba(37,211,102,0.35);
+  display:flex; align-items:center; justify-content:center; gap:8px;
+}
+
+/* ===== PAYMENT MODAL ===== */
+#pay-backdrop { z-index:39999; }
+#pay-modal { display:none; position:fixed; inset:0; z-index:40000; align-items:center; justify-content:center; padding:20px; }
+#pay-modal.open { display:flex; animation:fadeIn .25s ease; }
+.pay-box {
+  background:linear-gradient(160deg,#1a1a0d,#0e0e08); border:1.5px solid rgba(255,223,0,0.35);
+  border-radius:24px; padding:30px 28px; width:100%; max-width:340px; text-align:center; color:white;
+  box-shadow:0 20px 60px rgba(0,0,0,0.8),0 0 30px rgba(255,223,0,0.15);
+  position:relative; animation:slideUp .3s ease;
+}
+.pay-box .close-btn { position:absolute; top:14px; right:14px; }
+.pay-inner { background:rgba(255,223,0,0.07); border:1px solid rgba(255,223,0,0.2); border-radius:16px; padding:14px 20px; margin:14px 0; }
+.pay-number { color:var(--gold); font-size:28px; font-weight:900; text-shadow:0 0 14px rgba(255,223,0,0.5); letter-spacing:2px; }
+
+/* ===== FABs ===== */
+.fabs { position:fixed; bottom:24px; left:18px; z-index:9999; display:flex; flex-direction:column; gap:12px; }
+.fab {
+  width:54px; height:54px; border-radius:50%; border:none; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  flex-direction:column; gap:1px; transition:transform .2s ease; position:relative; font-family:'Cairo';
+}
+.fab:active { transform:scale(0.89); }
+.fab-waiter { background:linear-gradient(135deg,#ff4500,#cc3300); color:white; box-shadow:0 4px 20px rgba(255,69,0,0.52); font-size:20px; }
+.fab-cart   { background:linear-gradient(135deg,#ffdf00,#c9a800); color:#000; box-shadow:0 4px 20px rgba(255,223,0,0.52); font-size:22px; }
+.fab-lbl { font-size:8px; font-weight:700; display:block; line-height:1; }
+.cart-badge {
+  position:absolute; top:-4px; right:-4px;
+  background:#ff4500; color:white; font-size:10px; font-weight:900; border-radius:50%;
+  min-width:18px; height:18px; display:none; align-items:center; justify-content:center;
+}
+
+/* ===== TOAST ===== */
+#toast {
+  position:fixed; bottom:102px; left:50%; transform:translateX(-50%);
+  background:linear-gradient(135deg,#1a1a0d,#2a2a10); border:1px solid var(--gold);
+  border-radius:30px; padding:12px 24px; color:white;
+  font-family:'Cairo'; font-weight:700; font-size:14px;
+  z-index:99999; white-space:nowrap; box-shadow:0 4px 25px rgba(255,223,0,0.32);
+  display:none; align-items:center; gap:8px;
+}
+#toast.show { display:flex; animation:toastIn .3s cubic-bezier(.34,1.56,.64,1) forwards; }
+
+/* ===== KEYFRAMES ===== */
+@keyframes slideUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+@keyframes slideFromBottom { from { opacity:0; transform:translateY(100%); } to { opacity:1; transform:translateY(0); } }
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@keyframes toastIn {
+  from { opacity:0; transform:translateX(-50%) translateY(18px) scale(0.9); }
+  to   { opacity:1; transform:translateX(-50%) translateY(0) scale(1); }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 360px) {
+  .cats-grid { grid-template-columns: repeat(4, 1fr); gap: 6px; padding: 6px 8px 14px; }
+  .cat-btn   { padding: 10px 2px 8px; }
+  .cat-lbl   { font-size: 10px; }
+  .anim-icon { width: 24px; height: 24px; }
+  .products-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; padding: 0 8px; }
+  .brand-title   { font-size: 22px; }
+  .pill          { padding: 4px 7px; font-size: 10px; }
+}
+@media (max-width: 480px) {
+  .products-grid   { grid-template-columns: repeat(2, 1fr); }
+  .top-bar         { padding: 8px 10px; }
+  .pill            { padding: 5px 9px; font-size: 10px; }
+  .search-wrap     { padding: 12px 10px 6px; }
+  .fab             { width: 50px; height: 50px; }
+  .fabs            { bottom: 18px; left: 14px; gap: 10px; }
+  .cart-row-inputs { flex-direction: column; }
+  .wa-btn          { font-size: 14px; padding: 13px; }
+  #toast           { font-size: 12px; padding: 10px 16px; bottom: 86px; }
+}
+@media (min-width: 481px) and (max-width: 768px) {
+  .cats-grid     { grid-template-columns: repeat(6, 1fr); }
+  .products-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (min-width: 769px) {
+  .cats-grid     { grid-template-columns: repeat(11, 1fr); }
+  .products-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+}
+@supports (padding: max(0px)) {
+  body  { padding-bottom: max(100px, calc(80px + env(safe-area-inset-bottom))); }
+  .fabs { bottom: max(24px, calc(16px + env(safe-area-inset-bottom))); }
+}
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  input, select, textarea { font-size: 16px !important; }
+}
+
+/* ===== KEYFRAMES ===== */
+@keyframes slideUp {
+  from { opacity:0; transform:translateY(24px); }
+  to   { opacity:1; transform:translateY(0);    }
+}
+@keyframes slideFromBottom {
+  from { opacity:0; transform:translateY(100%); }
+  to   { opacity:1; transform:translateY(0);    }
+}
+@keyframes fadeIn {
+  from { opacity:0; }
+  to   { opacity:1; }
+}
+@keyframes toastIn {
+  from { opacity:0; transform:translateX(-50%) translateY(18px) scale(0.9); }
+  to   { opacity:1; transform:translateX(-50%) translateY(0) scale(1);     }
+}
+/* ===== MOBILE RESPONSIVE ===== */
+
+/* موبايل صغير أقل من 360px */
+@media (max-width: 360px) {
+  .products-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; padding: 0 8px; }
+  .brand-title   { font-size: 22px; letter-spacing: 2px; }
+  .pill          { padding: 4px 7px; font-size: 10px; }
+  .cat-btn       { padding: 6px 12px; font-size: 11px; }
+  .card-name     { font-size: 12px; }
+  .card-price    { font-size: 13px; }
+}
+
+/* موبايل عادي أقل من 480px */
+@media (max-width: 480px) {
+  .products-grid   { grid-template-columns: repeat(2, 1fr); }
+  .top-bar         { padding: 8px 10px; }
+  .pill            { padding: 5px 9px; font-size: 10px; }
+  .search-wrap     { padding: 12px 10px 6px; }
+  #searchInput     { padding: 10px 14px; }
+  .cats-row        { padding: 4px 10px 12px; }
+  .cat-btn         { padding: 7px 14px; font-size: 12px; }
+  .fab             { width: 50px; height: 50px; }
+  .fabs            { bottom: 18px; left: 14px; gap: 10px; }
+  .cart-row-inputs { flex-direction: column; }
+  .wa-btn          { font-size: 14px; padding: 13px; }
+  #toast           { font-size: 12px; padding: 10px 16px; bottom: 86px; }
+}
+
+/* تابلت 481px → 768px */
+@media (min-width: 481px) and (max-width: 768px) {
+  .products-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* iPhone X+ شاشة البروزة */
+@supports (padding: max(0px)) {
+  body  { padding-bottom: max(100px, calc(80px + env(safe-area-inset-bottom))); }
+  .fabs { bottom: max(24px, calc(16px + env(safe-area-inset-bottom))); }
 }
 
 
-/* تأكد إن السطر ده أول سطر في ملف الـ CSS خالص */
-@import url('https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400..700&display=swap');
-
-.cart-title {
-    font-family: 'Reem Kufi', sans-serif;
-    text-align: center;
-    font-size: 24px !important;
-    font-weight: 700;
-    margin: 10px 0 20px 0;
-    display: block; /* عشان التوسط يظبط */
-    
-    /* التدرج اللوني المصلح */
-    background: linear-gradient(180deg, #ffdf00 0%, #d4af37 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: #ffdf00; /* لون احتياطي لو المتصفح قديم */
-
-    /* التوهج */
-    text-shadow: 0 0 10px rgba(255, 223, 0, 0.3);
-    
-    position: relative;
-}
-
-/* الخط اللي تحت الكلمة */
-.cart-title::after {
-    content: '';
-    display: block;
-    width: 50px;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, #ffdf00, transparent);
-    margin: 8px auto 0;
-    box-shadow: 0 0 8px #ffdf00;
-}
-
-/* 1. العنوان (Bonjour) هيفضل فوق خالص */
-.cart-title {
-    order: 1 !important;
-}
-
-/* 2. منطقة الإجمالي والمدخلات والزرار (كل الـ footer) هنطلعه فوق */
-.cart-footer {
-    order: 2 !important;
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px; /* مسافة بسيطة قبل الطلبات */
-}
-
-/* 3. قائمة المنتجات (الطلبات) تنزل تحت */
-#cart-items-list {
-    order: 3 !important;
-    flex-grow: 1; /* عشان تاخد باقي المساحة لتحت */
-    margin-top: 10px !important; /* نعدل الـ margin القديم */
-}
-/* السطر ده معناه: أول ما السلة تفتح وتكون نشطة، اخفي حاوية زرار الباك فوراً */
-body:has(#cart-sidebar.active) #back-container {
-    display: none !important;
-}
-
-
-/* --- كود تسريع المنيو الخارق للموبيلات القديمة والحديثة --- */
-
-/* 1. إجبار معالج الموبايل (GPU) على تشغيل السلة والصفحات العايمة بطاقة كاملة */
-.cart-sidebar, #product-page, .modal-content, #waiter-modal {
-    will-change: transform, opacity; /* بيقول للموبايل جهز نفسك للأنميشن */
-    -webkit-transform: translate3d(0, 0, 0); /* السطر السحري لتشغيل كارت الشاشة في الموبيلات القديمة */
-    transform: translate3d(0, 0, 0);
-    -webkit-backface-visibility: hidden; /* بيمنع الرمشة والهز في شاشات الآيفون القديمة */
-    backface-visibility: hidden;
-    perspective: 1000px;
-}
-
-/* 2. تسريع وتنعيم السكرول (التمرير) في الأقسام والمنتجات */
-.category-nav, #products-container, #cart-items-list {
-    -webkit-overflow-scrolling: touch !important; /* سكرول حريري وسريع جداً على الآيفون والآيباد القديم */
-    scroll-behavior: smooth;
-    overscroll-behavior-y: contain; /* بيمنع الصفحة كلها تتهز وأنت بتعمل سكرول جوه السلة */
-}
-
-/* 3. إلغاء تأخير الضغط (300ms Delay) للموبيلات القديمة */
-button, .item-row, .star, #cart-icon-container, .nav-item {
-    touch-action: manipulation !important; /* أول ما العميل يلمس الشاشة الزرار بيستجيب في نفس الفيمتو ثانية */
-    cursor: pointer;
-}
-
-/* 4. كود إخفاء زرار الباك "سرفس" لما السلة تفتح (اللي طلبته) */
-body:has(#cart-sidebar.active) #back-container {
-    display: none !important;
-}
-
-/* --- إعدادات الموبايل العالمية --- */
-@media screen and (max-width: 768px) {
-    
-    /* 1. السلة: بتسنتر نفسها وبتاخد مساحة ذكية من أي شاشة */
-    .cart-sidebar {
-        width: 92vw !important; /* 92% من عرض الشاشة */
-        max-width: 350px !important; 
-        max-height: 85dvh !important; /* dvh وحدة قياس بتعرف طول الشاشة الحقيقي حتى مع وجود شريط المتصفح */
-        top: 50% !important;
-        left: 50% !important;
-        transform: translate(-50%, -50%) scale(1);
-        border-radius: 20px !important;
-        padding: 15px !important;
-        display: none; /* بتظهر flex في الـ active */
-        flex-direction: column;
-    }
-
-    /* 2. المدخلات (الصفوف): تقسيم ذكي للمساحة */
-    .cart-row {
-        display: flex !important;
-        gap: 8px !important;
-        width: 100% !important;
-    }
-
-    .cart-row input {
-        flex: 1 !important; /* كل input بياخد نص المساحة بالمللي */
-        min-width: 0; /* بيمنع خروج المربع بره الشاشة */
-        height: 45px !important;
-        font-size: 14px !important; /* مقاس مريح للعين */
-    }
-
-    /* 3. زرار التأكيد: حجم مثالي للضغط بالإصبع */
-    .checkout-btn {
-        width: 100% !important;
-        min-height: 50px !important;
-        font-size: 16px !important;
-        border-radius: 12px !important;
-        margin-top: 15px !important;
-    }
-}
-
-/* --- منع الزوم التلقائي البايخ في الآيفون --- */
-input, select, textarea {
-    font-size: 16px !important; /* المتصفحات بتمنع الزوم لو الخط 16 فأعلى */
-}
-
-.category-nav::-webkit-scrollbar {
-    display: none;
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  input, select, textarea { font-size: 16px !important; }
 }
