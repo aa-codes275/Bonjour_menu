@@ -345,7 +345,7 @@
       <button class="fcat active" data-cat="all" onclick="setCatFilter('all')">الكل</button>
       <button class="fcat" data-cat="coffee"  onclick="setCatFilter('coffee')">☕ القهوة</button>
       <button class="fcat" data-cat="hot"     onclick="setCatFilter('hot')">🍵 ساخنة</button>
-      <button class="fcat" data-cat="cold"    onclick="setCatFilter('ice')">🧊 باردة</button>
+      <button class="fcat" data-cat="ice"    onclick="setCatFilter('ice')">🧊 باردة</button>
       <button class="fcat" data-cat="fresh"   onclick="setCatFilter('fresh')">🍊 فريش</button>
       <button class="fcat" data-cat="soda"    onclick="setCatFilter('soda')">🫧 غازية</button>
       <button class="fcat" data-cat="icen"    onclick="setCatFilter('icen')">❄️ انتعاشة</button>
@@ -399,7 +399,7 @@
         <select id="m-cat" class="modal-in">
           <option value="coffee"> القهوة</option>
           <option value="hot"> مشروبات ساخنة</option>
-          <option value="cold"> مشروبات باردة</option>
+          <option value="ice"> مشروبات باردة</option>
           <option value="fresh"> عصائر فريش</option>
           <option value="soda"> مشروبات غازية</option>
           <option value="icen"> انتعاشة</option>
@@ -482,7 +482,7 @@
 
   // ===== RENDER =====
   const CAT_LABELS = {
-    coffee:'القهوة', hot:'مشروبات ساخنة', cold:'مشروبات باردة',
+    coffee:'القهوة', hot:'مشروبات ساخنة', ice:'مشروبات باردة',
     fresh:'عصائر فريش', soda:'غازية', icen:'انتعاشة',
     DESEART:'حلويات', mix:'اختراع العميل', extra:'إضافات', shisha:'شيشة'
   };
