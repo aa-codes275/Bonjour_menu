@@ -1,340 +1,674 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة تحكم  | Bonjour Admin</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <style>
-        :root { 
-            --gold: #ffdf00; 
-            --gold-dark: #aa8a2e;
-            --bg-black: #0a0a0a; 
-            --card-bg: #111111; 
-        }
-        
-        body { 
-            font-family: 'Cairo', sans-serif; 
-            background: var(--bg-black); 
-            color: #fff; 
-            margin: 0; 
-            padding: 20px; 
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Bonjour Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    :root {
+      --gold: #ffdf00;
+      --gold2: #c9a800;
+      --dark: #0a0a09;
+      --card: #111110;
+      --card2: #181817;
+      --red: #ff4444;
+      --green: #28d468;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    body { font-family: 'Cairo', sans-serif; background: var(--dark); color: #fff; min-height: 100vh; }
 
-    
-        #login-overlay { 
-            position: fixed; 
-            inset: 0; 
-            background: radial-gradient(circle, #1a1a1a 0%, #000 100%); 
-            z-index: 1000; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-        }
-        .login-box { 
-            background: var(--card-bg); 
-            padding: 40px; 
-            border-radius: 24px; 
-            border: 1px solid var(--gold); 
-            text-align: center; 
-            width: 320px; 
-            box-shadow: 0 0 30px rgba(255, 223, 0, 0.1);
-        }
-        .login-box h2 { color: var(--gold); margin-bottom: 25px; letter-spacing: 2px; }
-        .login-box input { 
-            width: 100%; padding: 14px; margin-bottom: 20px; 
-            background: #1a1a1a; border: 1px solid #333; 
-            color: #fff; border-radius: 12px; text-align: center; 
-            font-size: 1.1rem; outline: none; transition: 0.3s;
-        }
-        .login-box input:focus { border-color: var(--gold); box-shadow: 0 0 10px rgba(255, 223, 0, 0.2); }
-        .login-box button { 
-            background: linear-gradient(45deg, var(--gold), var(--gold-dark)); 
-            color: #000; border: none; padding: 14px; width: 100%; 
-            border-radius: 12px; font-weight: 900; cursor: pointer; transition: 0.3s;
-        }
-        .login-box button:hover { transform: scale(1.02); filter: brightness(1.1); }
+    /* ===== LOGIN ===== */
+    #login-screen {
+      position: fixed; inset: 0;
+      background: radial-gradient(circle at 50% 30%, #1a1a0a 0%, #000 100%);
+      display: flex; align-items: center; justify-content: center; z-index: 9999;
+    }
+    .login-box {
+      background: #111; border: 1px solid rgba(255,223,0,0.35);
+      border-radius: 28px; padding: 40px 32px; width: 300px; text-align: center;
+      box-shadow: 0 0 50px rgba(255,223,0,0.1);
+    }
+    .login-logo { font-size: 48px; margin-bottom: 8px; }
+    .login-box h2 { color: var(--gold); font-size: 22px; font-weight: 900; letter-spacing: 3px; margin-bottom: 28px; }
+    .login-box input {
+      width: 100%; padding: 14px; margin-bottom: 16px;
+      background: #1a1a1a; border: 1px solid #333; color: #fff;
+      border-radius: 14px; text-align: center; font-size: 18px;
+      outline: none; letter-spacing: 4px; font-family: 'Cairo';
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .login-box input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(255,223,0,.12); }
+    .login-btn {
+      width: 100%; padding: 14px;
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      color: #000; border: none; border-radius: 14px;
+      font-weight: 900; font-size: 16px; font-family: 'Cairo';
+      cursor: pointer; transition: transform .15s;
+    }
+    .login-btn:active { transform: scale(0.97); }
+    .login-err { color: var(--red); font-size: 13px; margin-top: 12px; display: none; }
 
+    /* ===== MAIN LAYOUT ===== */
+    #app { display: none; }
 
-        .admin-header { text-align: center; margin-bottom: 40px; }
-        .admin-header h1 { 
-            color: var(--gold); font-size: 2.5rem; margin: 0; 
-            text-shadow: 0 0 15px rgba(255, 223, 0, 0.3);
-        }
-        
-      
-        .add-form { 
-            background: var(--card-bg); padding: 25px; 
-            border-radius: 20px; margin-bottom: 30px; 
-            border: 1px solid #222; display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; 
-        }
-        .add-form input, .add-form select { 
-            background: #1a1a1a; border: 1px solid #333; 
-            color: #fff; padding: 12px; border-radius: 10px; 
-            font-family: 'Cairo'; outline: none;
-        }
-        .add-form input:focus { border-color: var(--gold); }
-        .add-form button { 
-            background: var(--gold); color: #000; border: none; 
-            border-radius: 10px; cursor: pointer; font-weight: bold; 
-            padding: 12px; transition: 0.3s;
-        }
-
-  
-        .table-container { 
-            overflow-x: auto; background: var(--card-bg); 
-            border-radius: 20px; border: 1px solid #222; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-        table { width: 100%; border-collapse: collapse; min-width: 900px; }
-        th { background: #1a1a1a; padding: 18px; text-align: center; color: var(--gold); font-size: 1rem; border-bottom: 2px solid #222; }
-        td { padding: 15px; border-bottom: 1px solid #1a1a1a; text-align: center; }
-        
-       
-        .input-edit { 
-            background: rgba(255,255,255,0.05); border: 1px solid transparent; 
-            color: #fff; text-align: center; width: 90%; padding: 8px; 
-            border-radius: 8px; transition: 0.3s; font-family: 'Cairo'; 
-        }
-        .input-edit:focus { background: #222; border-color: var(--gold); outline: none; }
-        
-      
-        .btn-status { 
-            padding: 8px 16px; border-radius: 8px; border: none; 
-            font-weight: bold; cursor: pointer; font-family: 'Cairo'; font-size: 0.85rem; 
-        }
-        .btn-visible { background: rgba(40, 167, 69, 0.2); color: #28a745; border: 1px solid #28a745; }
-        .btn-hidden { background: rgba(255, 255, 255, 0.1); color: #888; border: 1px solid #444; }
-        .row-is-hidden { opacity: 0.4; filter: grayscale(1); }
-        
-        .del-icon { 
-            background: rgba(255, 68, 68, 0.1); color: #ff4444; 
-            width: 35px; height: 35px; border-radius: 8px; border: 1px solid #ff4444;
-            cursor: pointer; transition: 0.3s;
-        }
-        .del-icon:hover { background: #ff4444; color: #fff; }
-
-        .search-wrapper { margin-bottom: 25px; position: relative; }
-        #adminSearch { 
-            width: 100%; padding: 15px 20px; border-radius: 15px; 
-            background: var(--card-bg); border: 1px solid #333; 
-            color: #fff; font-family: 'Cairo'; font-size: 1rem;
-        }
-        #adminSearch:focus { border-color: var(--gold); outline: none; }
-        @media screen and (max-width: 768px) {
-  
-    .admin-container {
-        display: flex;
-        flex-direction: column;
-        padding: 10px;
+    /* Header */
+    .top-header {
+      background: rgba(10,10,9,0.95);
+      border-bottom: 1px solid rgba(255,223,0,0.18);
+      padding: 14px 20px;
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .header-logo { color: var(--gold); font-size: 20px; font-weight: 900; letter-spacing: 2px; }
+    .header-sub  { color: rgba(255,255,255,0.4); font-size: 11px; margin-top: 1px; }
+    .logout-btn {
+      background: rgba(255,68,68,0.12); border: 1px solid rgba(255,68,68,0.3);
+      color: var(--red); padding: 7px 14px; border-radius: 20px;
+      font-family: 'Cairo'; font-size: 12px; font-weight: 700; cursor: pointer;
     }
 
+    .main-wrap { padding: 16px 14px 80px; max-width: 700px; margin: 0 auto; }
 
-    .sidebar {
-        width: 100% !important;
-        height: auto !important;
-        position: relative;
-        margin-bottom: 20px;
+    /* Stats */
+    .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
+    .stat-card {
+      background: var(--card); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 18px; padding: 14px 10px; text-align: center;
+    }
+    .stat-num { font-size: 26px; font-weight: 900; color: var(--gold); }
+    .stat-lbl { font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 2px; }
+
+    /* Search + Filter */
+    .controls-row { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+    .search-box {
+      flex: 1; min-width: 0;
+      padding: 11px 16px;
+      background: var(--card); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 14px; color: #fff;
+      font-family: 'Cairo'; font-size: 14px; outline: none;
+      transition: border-color .2s;
+    }
+    .search-box:focus { border-color: var(--gold); }
+    .search-box::placeholder { color: rgba(255,255,255,0.28); }
+
+    .filter-cats {
+      display: flex; gap: 6px; overflow-x: auto; padding-bottom: 2px;
+      scrollbar-width: none; width: 100%;
+    }
+    .filter-cats::-webkit-scrollbar { display: none; }
+    .fcat {
+      flex-shrink: 0; padding: 6px 14px; border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.05);
+      color: rgba(255,255,255,0.6);
+      font-family: 'Cairo'; font-size: 12px; font-weight: 700; cursor: pointer;
+      transition: all .2s;
+    }
+    .fcat.active { background: rgba(255,223,0,.15); border-color: var(--gold); color: var(--gold); }
+
+    /* Add Button */
+    .add-fab {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      color: #000; border: none; border-radius: 30px;
+      padding: 15px 32px; font-family: 'Cairo'; font-weight: 900; font-size: 16px;
+      cursor: pointer; z-index: 90;
+      box-shadow: 0 6px 24px rgba(255,223,0,0.45);
+      display: flex; align-items: center; gap: 8px;
+      transition: transform .15s;
+    }
+    .add-fab:active { transform: translateX(-50%) scale(0.96); }
+
+    /* Product Cards */
+    .section-title {
+      font-size: 13px; color: rgba(255,255,255,0.35); font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px;
+      margin: 18px 0 10px; padding-right: 4px;
     }
 
-   
-    .stats-grid {
-        display: grid;
-        grid-template-columns: 1fr !important; 
-        gap: 15px;
+    .prod-card {
+      background: var(--card); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 18px; margin-bottom: 10px; overflow: hidden;
+      transition: border-color .2s;
+    }
+    .prod-card.is-hidden { opacity: 0.45; }
+    .prod-card.is-hidden .card-top { filter: grayscale(0.5); }
+
+    .card-top {
+      display: flex; align-items: center; gap: 12px; padding: 14px;
+    }
+    .card-img {
+      width: 60px; height: 60px; border-radius: 14px;
+      background: #1a1a13; overflow: hidden; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 26px;
+      border: 1px solid rgba(255,255,255,0.07);
+    }
+    .card-img img { width:100%; height:100%; object-fit:cover; display:block; }
+
+    .card-main { flex: 1; min-width: 0; }
+    .card-name-view { font-size: 15px; font-weight: 700; color: #f0f0f0; }
+    .card-meta { display: flex; align-items: center; gap: 8px; margin-top: 4px; flex-wrap: wrap; }
+    .card-price-view { color: var(--gold); font-weight: 900; font-size: 14px; }
+    .cat-badge {
+      background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.5);
+      font-size: 11px; padding: 2px 8px; border-radius: 6px; font-weight: 600;
+    }
+    .item-badge {
+      background: rgba(255,68,0,0.15); color: #ff8844;
+      font-size: 11px; padding: 2px 8px; border-radius: 6px; font-weight: 700;
     }
 
-  
-    .table-wrapper {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
+    /* Toggle switch */
+    .toggle-wrap { display: flex; align-items: center; gap: 6px; margin-right: 4px; }
+    .toggle { position: relative; width: 44px; height: 24px; }
+    .toggle input { display: none; }
+    .toggle-slider {
+      position: absolute; inset: 0; background: #333;
+      border-radius: 24px; cursor: pointer; transition: .25s;
+    }
+    .toggle-slider::before {
+      content: ''; position: absolute;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: #888; left: 3px; top: 3px; transition: .25s;
+    }
+    .toggle input:checked + .toggle-slider { background: rgba(40,212,104,0.25); border: 1px solid var(--green); }
+    .toggle input:checked + .toggle-slider::before { transform: translateX(20px); background: var(--green); }
+
+    /* Expand panel */
+    .card-expand-btn {
+      width: 100%; background: none; border: none; border-top: 1px solid rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.35); font-family: 'Cairo'; font-size: 12px; font-weight: 700;
+      padding: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px;
+      transition: color .2s;
+    }
+    .card-expand-btn:hover { color: var(--gold); }
+
+    .card-edit-panel {
+      display: none; padding: 14px; border-top: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.02);
+    }
+    .card-edit-panel.open { display: block; animation: slideDown .2s ease; }
+
+    @keyframes slideDown { from { opacity:0; transform: translateY(-8px); } to { opacity:1; transform:translateY(0); } }
+
+    .edit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .edit-field { display: flex; flex-direction: column; gap: 5px; }
+    .edit-field.full { grid-column: 1 / -1; }
+    .edit-lbl { font-size: 11px; color: rgba(255,223,0,0.7); font-weight: 700; }
+    .edit-in {
+      padding: 10px 12px; background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1); border-radius: 10px;
+      color: #fff; font-family: 'Cairo'; font-size: 13px; outline: none;
+      transition: border-color .2s;
+    }
+    .edit-in:focus { border-color: var(--gold); }
+    .edit-in option { background: #1a1a1a; }
+
+    .edit-actions { display: flex; gap: 8px; margin-top: 12px; }
+    .save-btn {
+      flex: 1; padding: 11px;
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      border: none; border-radius: 12px; color: #000;
+      font-family: 'Cairo'; font-weight: 900; font-size: 14px; cursor: pointer;
+    }
+    .del-btn {
+      padding: 11px 18px;
+      background: rgba(255,68,68,0.1); border: 1px solid rgba(255,68,68,0.3);
+      border-radius: 12px; color: var(--red);
+      font-family: 'Cairo'; font-weight: 700; font-size: 13px; cursor: pointer;
     }
 
-    table {
-        min-width: 600px; 
+    /* ===== ADD MODAL ===== */
+    .modal-backdrop {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.75); backdrop-filter: blur(5px);
+      z-index: 200;
+    }
+    .modal-backdrop.open { display: flex; align-items: flex-end; justify-content: center; animation: fadeIn .2s ease; }
+
+    .modal-sheet {
+      background: linear-gradient(180deg, #181816, #0e0e0c);
+      border: 1px solid rgba(255,223,0,0.2);
+      border-radius: 28px 28px 0 0; padding: 24px 20px 44px;
+      width: 100%; max-width: 700px; max-height: 90vh; overflow-y: auto;
+    }
+    .modal-handle { width: 40px; height: 4px; background: rgba(255,223,0,.3); border-radius:4px; margin: 0 auto 20px; }
+    .modal-title { font-size: 18px; font-weight: 900; color: #fff; text-align: center; margin-bottom: 20px; }
+
+    .modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .modal-field { display: flex; flex-direction: column; gap: 5px; }
+    .modal-field.full { grid-column: 1 / -1; }
+    .modal-lbl { font-size: 12px; color: rgba(255,223,0,0.75); font-weight: 700; }
+    .modal-in {
+      padding: 12px 14px; background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12); border-radius: 12px;
+      color: #fff; font-family: 'Cairo'; font-size: 14px; outline: none;
+      transition: border-color .2s;
+    }
+    .modal-in:focus { border-color: var(--gold); }
+    .modal-in option { background: #1a1a1a; }
+
+    .modal-save {
+      width: 100%; margin-top: 20px; padding: 15px;
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      border: none; border-radius: 16px; color: #000;
+      font-family: 'Cairo'; font-weight: 900; font-size: 17px; cursor: pointer;
+      box-shadow: 0 4px 20px rgba(255,223,0,0.35);
     }
 
-  
-    .btn-admin {
-        width: 100%;
-        padding: 12px;
-        font-size: 16px;
+    /* Toast */
+    #toast {
+      position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%);
+      background: linear-gradient(135deg,#1a1a0d,#2a2a10);
+      border: 1px solid var(--gold); border-radius: 30px;
+      padding: 12px 24px; color: #fff;
+      font-family: 'Cairo'; font-weight: 700; font-size: 14px;
+      z-index: 9999; white-space: nowrap; display: none;
+      align-items: center; gap: 8px;
+      box-shadow: 0 4px 25px rgba(255,223,0,.3);
+    }
+    #toast.show { display: flex; animation: toastIn .3s cubic-bezier(.34,1.56,.64,1); }
+
+    /* Loading */
+    .loading-wrap { text-align: center; padding: 60px 20px; color: rgba(255,255,255,0.28); }
+    .spinner {
+      width: 36px; height: 36px; border: 3px solid rgba(255,223,0,0.15);
+      border-top-color: var(--gold); border-radius: 50%;
+      animation: spin .8s linear infinite; margin: 0 auto 14px;
     }
 
-   
-    .desktop-only {
-        display: none;
-    }
-}
+    /* Empty */
+    .empty-wrap { text-align: center; padding: 60px 20px; color: rgba(255,255,255,0.28); }
 
-    </style>
+    /* Keyframes */
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+    @keyframes toastIn {
+      from { opacity:0; transform: translateX(-50%) translateY(18px) scale(.9); }
+      to   { opacity:1; transform: translateX(-50%) translateY(0) scale(1);    }
+    }
+  </style>
 </head>
 <body>
 
-    <div id="login-overlay">
-        <div class="login-box">
-            <h2 style="font-weight: 900;">BONJOUR ADMIN</h2>
-            <input type="password" id="pass-input" placeholder="كلمة السر الخاصة بالمدير">
-            <button onclick="checkLogin()">دخول للوحة التحكم 🔑</button>
-            <p id="err-msg" style="color:#ff4444; display:none; margin-top:15px; font-size: 0.9rem;">عذراً، كلمة المرور غير صحيحة!</p>
-        </div>
+<!-- ===== LOGIN ===== -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">☕</div>
+    <h2>BONJOUR ADMIN</h2>
+    <input type="password" id="pass-input" placeholder="كلمة السر"
+           onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="login-btn" onclick="doLogin()">دخول 🔑</button>
+    <p class="login-err" id="login-err">كلمة المرور غير صحيحة!</p>
+  </div>
+</div>
+
+<!-- ===== APP ===== -->
+<div id="app">
+
+  <!-- Header -->
+  <div class="top-header">
+    <div>
+      <div class="header-logo">☕ BONJOUR</div>
+      <div class="header-sub">لوحة الإدارة</div>
+    </div>
+    <button class="logout-btn" onclick="doLogout()">خروج ↩</button>
+  </div>
+
+  <div class="main-wrap">
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-num" id="stat-total">—</div>
+        <div class="stat-lbl">إجمالي الأصناف</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="stat-visible" style="color:#28d468;">—</div>
+        <div class="stat-lbl">ظاهر للعملاء</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="stat-hidden" style="color:#ff6666;">—</div>
+        <div class="stat-lbl">مخفي الآن</div>
+      </div>
     </div>
 
-    <div id="admin-content" style="display: none;">
-        <div class="admin-header">
-            <h1>لوحة إدارة بونجور</h1>
-            <p style="color: var(--gold-dark); font-weight: bold;">تحديث المنيو، الأسعار، والحالة</p>
-        </div> 
+    <!-- Search -->
+    <div class="controls-row">
+      <input id="search-in" class="search-box" type="text" placeholder="🔍 ابحث باسم الصنف..." oninput="filterAndRender()">
+    </div>
 
-        <div class="search-wrapper">
-            <input type="text" id="adminSearch" placeholder="🔍 ابحث عن صنف معين لتعديله..." oninput="loadData()">
+    <!-- Category filter -->
+    <div class="filter-cats" id="filter-cats">
+      <button class="fcat active" data-cat="all" onclick="setCatFilter('all')">الكل</button>
+      <button class="fcat" data-cat="coffee"  onclick="setCatFilter('coffee')">☕ القهوة</button>
+      <button class="fcat" data-cat="hot"     onclick="setCatFilter('hot')">🍵 ساخنة</button>
+      <button class="fcat" data-cat="cold"    onclick="setCatFilter('cold')">🧊 باردة</button>
+      <button class="fcat" data-cat="fresh"   onclick="setCatFilter('fresh')">🍊 فريش</button>
+      <button class="fcat" data-cat="soda"    onclick="setCatFilter('soda')">🫧 غازية</button>
+      <button class="fcat" data-cat="icen"    onclick="setCatFilter('icen')">❄️ انتعاشة</button>
+      <button class="fcat" data-cat="DESEART" onclick="setCatFilter('DESEART')">🍰 حلويات</button>
+      <button class="fcat" data-cat="mix"     onclick="setCatFilter('mix')">🧪 اختراع</button>
+      <button class="fcat" data-cat="extra"   onclick="setCatFilter('extra')">➕ إضافات</button>
+      <button class="fcat" data-cat="shisha"  onclick="setCatFilter('shisha')">💨 شيشة</button>
+    </div>
+
+    <!-- Product list -->
+    <div id="prod-list">
+      <div class="loading-wrap">
+        <div class="spinner"></div>
+        <p>جاري التحميل...</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Add FAB -->
+  <button class="add-fab" onclick="openAddModal()">
+    <span style="font-size:20px">+</span> إضافة صنف جديد
+  </button>
+
+</div>
+
+<!-- ===== ADD MODAL ===== -->
+<div id="add-modal" class="modal-backdrop" onclick="if(event.target===this)closeAddModal()">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">إضافة صنف جديد ✨</div>
+    <div class="modal-grid">
+      <div class="modal-field full">
+        <span class="modal-lbl">اسم الصنف *</span>
+        <input id="m-name" class="modal-in" type="text" placeholder="مثال: كابتشينو">
+      </div>
+      <div class="modal-field">
+        <span class="modal-lbl">السعر الأساسي *</span>
+        <input id="m-price" class="modal-in" type="number" placeholder="مثال: 85">
+      </div>
+      <div class="modal-field">
+        <span class="modal-lbl">السعر بعد الخصم</span>
+        <input id="m-disc" class="modal-in" type="number" placeholder="اختياري">
+      </div>
+      <div class="modal-field">
+        <span class="modal-lbl">شارة</span>
+        <input id="m-badge" class="modal-in" type="text" placeholder="مثال: New, Hot">
+      </div>
+      <div class="modal-field">
+        <span class="modal-lbl">القسم *</span>
+        <select id="m-cat" class="modal-in">
+          <option value="coffee">☕ القهوة</option>
+          <option value="hot">🍵 مشروبات ساخنة</option>
+          <option value="cold">🧊 مشروبات باردة</option>
+          <option value="fresh">🍊 عصائر فريش</option>
+          <option value="soda">🫧 مشروبات غازية</option>
+          <option value="icen">❄️ انتعاشة</option>
+          <option value="DESEART">🍰 الحلويات</option>
+          <option value="mix">🧪 اختراع العميل</option>
+          <option value="extra">➕ الإضافات</option>
+          <option value="shisha">💨 شيشة</option>
+        </select>
+      </div>
+      <div class="modal-field full">
+        <span class="modal-lbl">رابط الصورة</span>
+        <input id="m-img" class="modal-in" type="text" placeholder="https://...">
+      </div>
+    </div>
+    <button class="modal-save" onclick="addItem()">حفظ الصنف الجديد ✅</button>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast"><span id="toast-ico">✅</span><span id="toast-txt"></span></div>
+
+<script>
+  // ===== SUPABASE =====
+  const SB_URL = 'https://uhxgesfiramvubpemytj.supabase.co';
+  const SB_KEY = 'sb_publishable_wU30K91wj7Rsa4QqD0NUOg_ky7N_tGw';
+  const _sb = supabase.createClient(SB_URL, SB_KEY);
+  const PASS = '12345';
+
+  let allProducts = [];
+  let catFilter   = 'all';
+
+  // ===== LOGIN =====
+  function doLogin() {
+    const v = document.getElementById('pass-input').value;
+    if (v === PASS) {
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('app').style.display = 'block';
+      loadData();
+    } else {
+      document.getElementById('login-err').style.display = 'block';
+    }
+  }
+  function doLogout() {
+    document.getElementById('app').style.display = 'none';
+    document.getElementById('login-screen').style.display = 'flex';
+    document.getElementById('pass-input').value = '';
+    document.getElementById('login-err').style.display = 'none';
+  }
+
+  // ===== LOAD DATA =====
+  async function loadData() {
+    const { data, error } = await _sb.from('products').select('*').order('id', { ascending: false });
+    if (error) { showToast('خطأ في التحميل ❌', '❌'); return; }
+    allProducts = data || [];
+    updateStats();
+    filterAndRender();
+  }
+
+  function updateStats() {
+    document.getElementById('stat-total').textContent   = allProducts.length;
+    document.getElementById('stat-visible').textContent = allProducts.filter(p => !p.is_hidden).length;
+    document.getElementById('stat-hidden').textContent  = allProducts.filter(p =>  p.is_hidden).length;
+  }
+
+  // ===== FILTER =====
+  function setCatFilter(cat) {
+    catFilter = cat;
+    document.querySelectorAll('.fcat').forEach(b => b.classList.remove('active'));
+    document.querySelector(`.fcat[data-cat="${cat}"]`)?.classList.add('active');
+    filterAndRender();
+  }
+
+  function filterAndRender() {
+    const q = document.getElementById('search-in').value.trim().toLowerCase();
+    let list = [...allProducts];
+    if (catFilter !== 'all') list = list.filter(p => p.category === catFilter);
+    if (q) list = list.filter(p => p.name.toLowerCase().includes(q));
+    renderList(list);
+  }
+
+  // ===== RENDER =====
+  const CAT_LABELS = {
+    coffee:'القهوة', hot:'مشروبات ساخنة', cold:'مشروبات باردة',
+    fresh:'عصائر فريش', soda:'غازية', icen:'انتعاشة',
+    DESEART:'حلويات', mix:'اختراع العميل', extra:'إضافات', shisha:'شيشة'
+  };
+
+  function renderList(list) {
+    const wrap = document.getElementById('prod-list');
+    if (!list.length) {
+      wrap.innerHTML = '<div class="empty-wrap"><div style="font-size:48px;margin-bottom:12px">☕</div><p style="font-size:14px;font-weight:700;">لا توجد نتائج</p></div>';
+      return;
+    }
+    wrap.innerHTML = list.map(p => cardHTML(p)).join('');
+  }
+
+  function cardHTML(p) {
+    const imgPart = p.image_url
+      ? `<div class="card-img"><img src="${p.image_url}" alt="" onerror="this.parentElement.innerHTML='☕'"></div>`
+      : `<div class="card-img">☕</div>`;
+
+    const discPart = p.discount_price
+      ? `<span style="color:#ff8844;font-size:12px;font-weight:700;text-decoration:line-through;margin-right:4px">${p.price}</span><span class="card-price-view">${p.discount_price} EGP</span>`
+      : `<span class="card-price-view">${p.price} EGP</span>`;
+
+    const badgePart = p.badge ? `<span class="item-badge">${p.badge}</span>` : '';
+
+    return `
+    <div class="prod-card ${p.is_hidden ? 'is-hidden' : ''}" id="card-${p.id}">
+      <div class="card-top">
+        ${imgPart}
+        <div class="card-main">
+          <div class="card-name-view">${p.name}</div>
+          <div class="card-meta">
+            ${discPart}
+            <span class="cat-badge">${CAT_LABELS[p.category] || p.category}</span>
+            ${badgePart}
+          </div>
         </div>
-
-        <div class="add-form">
-            <input type="text" id="newName" placeholder="اسم الصنف">
-            <input type="number" id="newPrice" placeholder="السعر">
-            <input type="number" id="newDisc" placeholder="السعر بعد الخصم">
-            <input type="text" id="newBadge" placeholder="شارة (New, Hot)">
-            <select id="newCat">
-                <optgroup label="☕ المشروبات">
-                    <option value="coffee">القهوة</option>
-                    <option value="fresh">عصائر فريش</option>
-                    <option value="hot">مشروبات ساخنة</option>
-                    <option value="cold">مشروبات باردة</option>
-                    <option value="soda">مشروبات غازيه</option>
-                    <option value="icen"> انتعاشة</option>
-                    <option value="DESEART">الحلويات </option>
-                    <option value="mix"> اختراع العميل</option>
-                    <option value="extra">الاضافات </option>
-                    <option value="shisha">شيشة </option>
-                </optgroup>
+        <div class="toggle-wrap">
+          <label class="toggle">
+            <input type="checkbox" ${!p.is_hidden ? 'checked' : ''} onchange="toggleHide(${p.id}, ${p.is_hidden})">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+      <button class="card-expand-btn" onclick="toggleEdit(${p.id})" id="expand-btn-${p.id}">
+        ✏️ تعديل
+      </button>
+      <div class="card-edit-panel" id="edit-${p.id}">
+        <div class="edit-grid">
+          <div class="edit-field full">
+            <span class="edit-lbl">اسم الصنف</span>
+            <input class="edit-in" id="e-name-${p.id}" value="${p.name || ''}">
+          </div>
+          <div class="edit-field">
+            <span class="edit-lbl">السعر</span>
+            <input class="edit-in" type="number" id="e-price-${p.id}" value="${p.price || ''}">
+          </div>
+          <div class="edit-field">
+            <span class="edit-lbl">بعد الخصم</span>
+            <input class="edit-in" type="number" id="e-disc-${p.id}" value="${p.discount_price || ''}">
+          </div>
+          <div class="edit-field">
+            <span class="edit-lbl">شارة</span>
+            <input class="edit-in" id="e-badge-${p.id}" value="${p.badge || ''}">
+          </div>
+          <div class="edit-field">
+            <span class="edit-lbl">القسم</span>
+            <select class="edit-in" id="e-cat-${p.id}">
+              ${Object.entries(CAT_LABELS).map(([v,l]) =>
+                `<option value="${v}" ${p.category===v?'selected':''}>${l}</option>`
+              ).join('')}
             </select>
-            <input type="text" id="newImage" placeholder="رابط الصورة (URL)">
-            <button onclick="addItem()">إضافة صنف جديد +</button>
+          </div>
+          <div class="edit-field full">
+            <span class="edit-lbl">رابط الصورة</span>
+            <input class="edit-in" id="e-img-${p.id}" value="${p.image_url || ''}" placeholder="https://...">
+          </div>
         </div>
-
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th width="20%">اسم الصنف</th>
-                        <th width="10%">السعر</th>
-                        <th width="10%">بعد الخصم</th>
-                        <th width="12%">الشارة</th>
-                        <th width="15%">القسم</th>
-                        <th width="15%">الحالة بالمنيو</th>
-                        <th width="10%">حذف</th>
-                    </tr>
-                </thead>
-                <tbody id="table-body"></tbody>
-            </table>
+        <div class="edit-actions">
+          <button class="save-btn" onclick="saveItem(${p.id})">حفظ التعديلات ✅</button>
+          <button class="del-btn"  onclick="delItem(${p.id})">🗑️</button>
         </div>
-    </div>
+      </div>
+    </div>`;
+  }
 
-    <script>
- 
-        const SUPABASE_URL = 'https://uhxgesfiramvubpemytj.supabase.co'; 
-        const SUPABASE_KEY = 'sb_publishable_wU30K91wj7Rsa4QqD0NUOg_ky7N_tGw'; 
-        const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  // ===== TOGGLE EDIT PANEL =====
+  function toggleEdit(id) {
+    const panel = document.getElementById(`edit-${id}`);
+    const btn   = document.getElementById(`expand-btn-${id}`);
+    const open  = panel.classList.toggle('open');
+    btn.textContent = open ? '▲ إغلاق' : '✏️ تعديل';
+  }
 
-        const ADMIN_PASS = "12345";
+  // ===== SAVE =====
+  async function saveItem(id) {
+    const updates = {
+      name:           document.getElementById(`e-name-${id}`).value,
+      price:          parseFloat(document.getElementById(`e-price-${id}`).value),
+      discount_price: parseFloat(document.getElementById(`e-disc-${id}`).value) || null,
+      badge:          document.getElementById(`e-badge-${id}`).value || null,
+      category:       document.getElementById(`e-cat-${id}`).value,
+      image_url:      document.getElementById(`e-img-${id}`).value || null,
+    };
+    const { error } = await _sb.from('products').update(updates).eq('id', id);
+    if (error) { showToast('خطأ في الحفظ ❌', '❌'); return; }
 
-        function checkLogin() {
-            const input = document.getElementById('pass-input').value;
-            if (input === ADMIN_PASS) {
-                document.getElementById('login-overlay').style.display = 'none';
-                document.getElementById('admin-content').style.display = 'block';
-                loadData();
-            } else {
-                document.getElementById('err-msg').style.display = 'block';
-            }
-        }
+    const idx = allProducts.findIndex(p => p.id === id);
+    if (idx !== -1) allProducts[idx] = { ...allProducts[idx], ...updates };
+    updateStats();
+    filterAndRender();
+    showToast('تم الحفظ بنجاح ✅');
+  }
 
-        async function loadData() {
-            const { data, error } = await _supabase.from('products').select('*').order('id', {ascending: false});
-            if(error) return console.error(error);
+  // ===== TOGGLE HIDE =====
+  async function toggleHide(id, currentHidden) {
+    const newVal = !currentHidden;
+    const { error } = await _sb.from('products').update({ is_hidden: newVal }).eq('id', id);
+    if (error) { showToast('خطأ ❌', '❌'); return; }
+    const idx = allProducts.findIndex(p => p.id === id);
+    if (idx !== -1) allProducts[idx].is_hidden = newVal;
+    updateStats();
+    filterAndRender();
+    showToast(newVal ? 'تم إخفاء الصنف 🚫' : 'تم إظهار الصنف 👁️', newVal ? '🚫' : '👁️');
+  }
 
-            const tbody = document.getElementById('table-body');
-            const searchTerm = document.getElementById('adminSearch').value.toLowerCase();
+  // ===== DELETE =====
+  async function delItem(id) {
+    const prod = allProducts.find(p => p.id === id);
+    if (!confirm(`هل تريد حذف "${prod?.name}" نهائياً؟`)) return;
+    const { error } = await _sb.from('products').delete().eq('id', id);
+    if (error) { showToast('خطأ في الحذف ❌', '❌'); return; }
+    allProducts = allProducts.filter(p => p.id !== id);
+    updateStats();
+    filterAndRender();
+    showToast('تم الحذف ✅');
+  }
 
-            const filteredData = data.filter(item => 
-                item.name.toLowerCase().includes(searchTerm)
-            );
+  // ===== ADD MODAL =====
+  function openAddModal() {
+    document.getElementById('add-modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeAddModal() {
+    document.getElementById('add-modal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
 
-            tbody.innerHTML = filteredData.map(item => `
-                <tr class="${item.is_hidden ? 'row-is-hidden' : ''}">
-                    <td><input class="input-edit" value="${item.name}" onchange="update(${item.id}, 'name', this.value)"></td>
-                    <td><input class="input-edit" type="number" value="${item.price}" onchange="update(${item.id}, 'price', this.value)"></td>
-                    <td><input class="input-edit" type="number" value="${item.disconunt_price || ''}" onchange="update(${item.id}, 'disconunt_price', this.value)"></td>
-                    <td><input class="input-edit" value="${item.badge || ''}" onchange="update(${item.id}, 'badge', this.value)"></td>
-                    <td style="font-size: 0.85rem; color: #aaa; font-weight: bold;">${item.category}</td>
-                    <td>
-                        <button class="btn-status ${item.is_hidden ? 'btn-hidden' : 'btn-visible'}" onclick="toggleHide(${item.id}, ${item.is_hidden})">
-                            ${item.is_hidden ? '🚫 مخفي الآن' : '👁️ ظاهر للعملاء'}
-                        </button>
-                    </td>
-                    <td><button class="del-icon" onclick="del(${item.id})">🗑️</button></td>
-                </tr>
-            `).join('');
-        }
-async function addItem() {
-    const name = document.getElementById('newName').value;
-    const price = parseFloat(document.getElementById('newPrice').value);
+  async function addItem() {
+    const name  = document.getElementById('m-name').value.trim();
+    const price = parseFloat(document.getElementById('m-price').value);
+    if (!name || !price) { showToast('الاسم والسعر مطلوبان ⚠️', '⚠️'); return; }
 
-    const discPrice = document.getElementById('newDisc').value ? parseFloat(document.getElementById('newDisc').value) : null;
-    const badge = document.getElementById('newBadge').value;
-    const category = document.getElementById('newCat').value;
-    const imageUrl = document.getElementById('newImage').value;
-
-    if(!name || !price) return alert("الاسم والسعر أساسيين!");
-
-    
-
-    const { error } = await _supabase.from('products').insert([{ 
-        name: name, 
-        price: price, 
-      discount_price: discPrice, 
-        badge: badge,
-       
-        category: category,
-        image_url: imageUrl,
-        is_hidden: false 
+    const { error } = await _sb.from('products').insert([{
+      name,
+      price,
+      discount_price: parseFloat(document.getElementById('m-disc').value)  || null,
+      badge:          document.getElementById('m-badge').value.trim()       || null,
+      category:       document.getElementById('m-cat').value,
+      image_url:      document.getElementById('m-img').value.trim()         || null,
+      is_hidden:      false,
     }]);
 
-    if (error) {
-        alert("خطأ: " + error.message);
-    } else {
-        location.reload(); 
-    }
-}
-        async function update(id, field, value) {
-            const { error } = await _supabase.from('products').update({ [field]: value }).eq('id', id);
-            if (error) alert("خطأ في التحديث: " + error.message);
-        }
+    if (error) { showToast('خطأ في الإضافة ❌', '❌'); return; }
 
-        async function toggleHide(id, currentStatus) {
-    const { error } = await _supabase
-        .from('products')
-        .update({ is_hidden: !currentStatus })
-        .eq('id', id);
+    closeAddModal();
+    ['m-name','m-price','m-disc','m-badge','m-img'].forEach(id => document.getElementById(id).value = '');
+    await loadData();
+    showToast('تمت الإضافة بنجاح 🎉', '🎉');
+  }
 
-    if (error) {
-        console.error(error);
-    } else {
-        loadData(); 
-    }
-}
+  // ===== TOAST =====
+  let _tt;
+  function showToast(msg, ico = '✅') {
+    const el = document.getElementById('toast');
+    document.getElementById('toast-ico').textContent = ico;
+    document.getElementById('toast-txt').textContent = msg;
+    el.classList.add('show');
+    clearTimeout(_tt);
+    _tt = setTimeout(() => el.classList.remove('show'), 2500);
+  }
 
-        async function del(id) {
-            if(confirm("هل أنت متأكد من حذف هذا الصنف نهائياً من قائمة بونجور؟")) {
-                const { error } = await _supabase.from('products').delete().eq('id', id);
-                if(error) alert(error.message);
-                else loadData();
-            }
-        }
-        
-    </script>
+  // Enter key for login
+  document.getElementById('pass-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') doLogin();
+  });
+</script>
 </body>
 </html>
+
